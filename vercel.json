@@ -1,20 +1,24 @@
 {
-  "rewrites": [
+  "routes": [
     {
-      "source": "/calculator",
-      "destination": "/index.html"
+      "src": "/calculator/(.*)",
+      "dest": "/index.html"
     },
     {
-      "source": "/calculator/(.*)",
-      "destination": "/index.html"
+      "src": "/calculator",
+      "dest": "/index.html"
     },
     {
-      "source": "/learn",
-      "destination": "/learn/index.html"
+      "src": "/learn",
+      "dest": "/learn/index.html"
     },
     {
-      "source": "/learn/:page",
-      "destination": "/learn/:page.html"
+      "src": "/learn/(.*)",
+      "dest": "/learn/$1.html"
+    },
+    {
+      "src": "/",
+      "dest": "/landing.html"
     }
   ]
 }
