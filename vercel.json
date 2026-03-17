@@ -1,16 +1,49 @@
 {
   "rewrites": [
     {
+      "source": "/calculator",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/calculator/(.*)",
+      "destination": "/index.html"
+    },
+    {
       "source": "/learn",
       "destination": "/learn/index.html"
     },
     {
       "source": "/learn/:page",
       "destination": "/learn/:page.html"
-    },
-    {
-      "source": "/((?!learn|robots.txt|sitemap.xml|favicon.ico|static|og-image.png).*)",
-      "destination": "/index.html"
     }
   ]
 }
+```
+
+This is deliberately minimal — it only rewrites the specific routes that need it. Everything else (including `/`) Vercel serves directly from the `public` folder.
+
+---
+
+## But there's a deeper issue to fix
+
+The React app's build process puts its own `index.html` in the `build` folder, which conflicts with your landing page. The cleanest solution is to **move the calculator to a subfolder**.
+
+Here's the updated structure that makes everything work cleanly:
+```
+veercal/
+  public/
+    index.html          ← landing page (served at /)
+    learn/
+      index.html        ← learn hub
+      how-novated-leases-work.html
+      ev-novated-lease-fbt-exemption.html
+      true-cost-of-car-ownership.html
+      dealer-finance-vs-personal-loan.html
+      cash-vs-finance-opportunity-cost.html
+    robots.txt
+    sitemap.xml
+  src/
+    App.js
+    index.js
+  package.json
+  vercel.json           ← updated version above

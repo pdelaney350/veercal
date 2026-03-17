@@ -1,43 +1,716 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Veercal — Know the True Cost of Your Next Car | Australia</title>
+  <meta name="description" content="Veercal helps Australians understand the true cost of car ownership across every finance structure — cash, personal loan, dealer finance, novated lease, and more." />
+  <meta name="author" content="Veercal" />
+  <meta name="copyright" content="© 2025 Veercal. All rights reserved." />
+  <meta property="og:title" content="Veercal — Know the True Cost of Your Next Car" />
+  <meta property="og:description" content="Compare every car finance option in Australia. See the real numbers before you sign anything." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.veercal.com" />
+  <meta property="og:image" content="https://www.veercal.com/og-image.png" />
+  <link rel="canonical" href="https://www.veercal.com" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+    :root {
+      --brand-900: #1e293b;
+      --brand-700: #1e40af;
+      --brand-500: #2563eb;
+      --brand-50:  #f1f5f9;
+      --orange:    #f97316;
+      --good:      #166534;
+      --text:      #1e293b;
+      --muted:     #64748b;
+      --border:    #dbe4f0;
+      --surface:   #ffffff;
+    }
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+    html { scroll-behavior: smooth; }
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-  </body>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--brand-50);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(30, 41, 59, 0.97);
+      backdrop-filter: blur(8px);
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .nav-logo {
+      width: 34px;
+      height: 34px;
+      flex-shrink: 0;
+    }
+    .nav-wordmark {
+      font-family: 'Arial Black', Arial, sans-serif;
+      font-size: 22px;
+      font-weight: 900;
+      color: white;
+      letter-spacing: -0.09em;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-links a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: all 0.15s;
+    }
+    .nav-links a:hover { color: white; background: rgba(255,255,255,0.08); }
+    .nav-links .nav-cta {
+      background: var(--brand-500);
+      color: white !important;
+      font-weight: 700;
+    }
+    .nav-links .nav-cta:hover { background: #1d4ed8; }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(145deg, #1e293b 0%, #1e3a7a 50%, #1e40af 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+    .hero-glow {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(37,99,235,0.3) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative;
+      max-width: 760px;
+    }
+    .hero-logo-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+    .hero-logo-svg {
+      width: 80px;
+      height: 80px;
+      flex-shrink: 0;
+    }
+    .hero-wordmark {
+      font-family: 'Arial Black', Arial, sans-serif;
+      font-size: 80px;
+      font-weight: 900;
+      color: white;
+      letter-spacing: -0.09em;
+      line-height: 0.92;
+      transform: scaleY(1.12);
+      transform-origin: bottom left;
+      display: block;
+    }
+    .hero-tagline {
+      font-size: 26px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.95);
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+    }
+    .hero-sub {
+      font-size: 17px;
+      color: rgba(255,255,255,0.65);
+      max-width: 560px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: white;
+      color: var(--brand-700);
+      font-weight: 800;
+      font-size: 15px;
+      padding: 14px 28px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: all 0.15s;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    .btn-primary:hover { background: #eff6ff; transform: translateY(-2px); }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.12);
+      color: white;
+      font-weight: 600;
+      font-size: 15px;
+      padding: 14px 28px;
+      border-radius: 10px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: all 0.15s;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.18); transform: translateY(-2px); }
+
+    /* ── Stats strip ── */
+    .stats-strip {
+      background: white;
+      border-bottom: 1px solid var(--border);
+      padding: 20px 32px;
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      flex-wrap: wrap;
+    }
+    .stat-item { text-align: center; }
+    .stat-value {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--brand-700);
+      letter-spacing: -0.02em;
+      font-variant-numeric: tabular-nums;
+    }
+    .stat-label {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    /* ── Features ── */
+    .section {
+      padding: 80px 24px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--brand-500);
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    .section-title {
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--text);
+      text-align: center;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+      line-height: 1.15;
+    }
+    .section-sub {
+      font-size: 17px;
+      color: var(--muted);
+      text-align: center;
+      max-width: 560px;
+      margin: 0 auto 56px;
+      line-height: 1.7;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .feature-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px 26px;
+      box-shadow: 0 1px 4px rgba(30,41,59,0.05);
+      transition: all 0.18s;
+    }
+    .feature-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(30,41,59,0.1); }
+    .feature-icon { font-size: 28px; margin-bottom: 14px; }
+    .feature-title { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .feature-desc { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+    /* ── Finance options ── */
+    .options-section {
+      background: var(--brand-900);
+      padding: 80px 24px;
+    }
+    .options-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+      gap: 14px;
+      margin-top: 48px;
+    }
+    .option-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      transition: all 0.15s;
+    }
+    .option-card:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
+    .option-icon { font-size: 28px; margin-bottom: 10px; }
+    .option-name { font-size: 13px; font-weight: 700; color: white; margin-bottom: 6px; }
+    .option-desc { font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.5; }
+    .options-section .section-label { color: #60a5fa; }
+    .options-section .section-title { color: white; }
+    .options-section .section-sub { color: rgba(255,255,255,0.6); }
+
+    /* ── Learn section ── */
+    .learn-section { padding: 80px 24px; background: var(--brand-50); }
+    .learn-inner { max-width: 1000px; margin: 0 auto; }
+    .learn-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 18px;
+      margin-top: 48px;
+    }
+    .learn-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px 24px;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.18s;
+      display: flex;
+      flex-direction: column;
+    }
+    .learn-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(30,41,59,0.1); border-color: #bfdbfe; }
+    .learn-card-icon { font-size: 24px; margin-bottom: 10px; }
+    .learn-card-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 8px; line-height: 1.3; }
+    .learn-card-desc { font-size: 13px; color: var(--muted); line-height: 1.6; flex: 1; margin-bottom: 14px; }
+    .learn-card-read { font-size: 12px; font-weight: 700; color: var(--brand-500); }
+
+    /* ── CTA section ── */
+    .cta-section {
+      background: linear-gradient(135deg, #2d3eb0, #1e40af);
+      padding: 80px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+    .cta-section h2 {
+      font-size: 36px;
+      font-weight: 800;
+      color: white;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+      position: relative;
+    }
+    .cta-section p {
+      font-size: 17px;
+      color: rgba(255,255,255,0.75);
+      max-width: 500px;
+      margin: 0 auto 32px;
+      position: relative;
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--brand-900);
+      color: rgba(255,255,255,0.6);
+      padding: 48px 32px 32px;
+    }
+    .footer-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 28px;
+    }
+    .footer-brand-name {
+      font-family: 'Arial Black', Arial, sans-serif;
+      font-size: 20px;
+      font-weight: 900;
+      color: white;
+      letter-spacing: -0.09em;
+      margin-bottom: 10px;
+    }
+    .footer-brand-desc {
+      font-size: 13px;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.45);
+      max-width: 240px;
+    }
+    .footer-col-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 14px;
+    }
+    .footer-col a {
+      display: block;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-size: 13px;
+      margin-bottom: 8px;
+      transition: color 0.15s;
+    }
+    .footer-col a:hover { color: white; }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 11px;
+      color: rgba(255,255,255,0.3);
+    }
+    .footer-disclaimer {
+      font-size: 10px;
+      color: rgba(255,255,255,0.25);
+      margin-top: 16px;
+      line-height: 1.6;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .hero-wordmark { font-size: 52px; }
+      .hero-logo-svg { width: 54px; height: 54px; }
+      .hero-tagline { font-size: 22px; }
+      .hero-sub { font-size: 15px; }
+      .stats-strip { gap: 28px; }
+      .section-title { font-size: 28px; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; }
+      .nav-links a:not(.nav-cta) { display: none; }
+      .hero-logo-wrap { gap: 14px; }
+    }
+    @media (max-width: 480px) {
+      .hero-wordmark { font-size: 40px; }
+      .footer-top { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a href="/" class="nav-brand">
+      <svg class="nav-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="46" stroke="white" stroke-width="2" fill="none"/>
+        <rect x="28" y="48" width="8" height="18" fill="white" rx="0.5"/>
+        <rect x="39" y="40" width="8" height="26" fill="white" rx="0.5"/>
+        <rect x="50" y="30" width="8" height="36" fill="white" rx="0.5"/>
+        <rect x="61" y="38" width="8" height="28" fill="white" rx="0.5"/>
+        <path d="M 26 66 A 6 6 0 0 0 38 66 Z" fill="white"/>
+        <path d="M 59 66 A 6 6 0 0 0 71 66 Z" fill="white"/>
+      </svg>
+      <span class="nav-wordmark">VEERCAL</span>
+    </a>
+    <div class="nav-links">
+      <a href="/calculator">Calculator</a>
+      <a href="/learn">Learn</a>
+      <a href="/calculator" class="nav-cta">Get Started →</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <div class="hero-logo-wrap">
+        <svg class="hero-logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="46" stroke="white" stroke-width="2" fill="none"/>
+          <rect x="28" y="48" width="8" height="18" fill="white" rx="0.5"/>
+          <rect x="39" y="40" width="8" height="26" fill="white" rx="0.5"/>
+          <rect x="50" y="30" width="8" height="36" fill="white" rx="0.5"/>
+          <rect x="61" y="38" width="8" height="28" fill="white" rx="0.5"/>
+          <path d="M 26 66 A 6 6 0 0 0 38 66 Z" fill="white"/>
+          <path d="M 59 66 A 6 6 0 0 0 71 66 Z" fill="white"/>
+        </svg>
+        <span class="hero-wordmark">VEERCAL</span>
+      </div>
+
+      <h1 class="hero-tagline">Know the true cost of your next car.<br>Before you sign anything.</h1>
+
+      <p class="hero-sub">
+        Most car calculators show you a monthly repayment. Veercal shows you the full picture — depreciation, stamp duty, running costs, finance charges, and what the car is worth when you sell. Every finance structure, side by side, in plain English.
+      </p>
+
+      <div class="hero-actions">
+        <a href="/calculator" class="btn-primary">
+          Open the Calculator →
+        </a>
+        <a href="/learn" class="btn-secondary">
+          Learn how it works
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <div class="stats-strip">
+    <div class="stat-item">
+      <div class="stat-value">5</div>
+      <div class="stat-label">Finance structures compared</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">8</div>
+      <div class="stat-label">Australian states and territories</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">100%</div>
+      <div class="stat-label">Free to use</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-value">FY25</div>
+      <div class="stat-label">ATO rates verified</div>
+    </div>
+  </div>
+
+  <!-- Features -->
+  <section class="section">
+    <div class="section-label">What Veercal does</div>
+    <h2 class="section-title">The honest car finance calculator</h2>
+    <p class="section-sub">Built for Australian buyers who want to understand what they are actually committing to, not just the headline monthly payment.</p>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <div class="feature-title">True total cost</div>
+        <div class="feature-desc">Every dollar in, every dollar out. Finance costs, running costs, stamp duty, depreciation, and your exit value when you sell. One honest number.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚖️</div>
+        <div class="feature-title">Side by side comparison</div>
+        <div class="feature-desc">Compare cash, personal loan, dealer finance, finance lease, and novated lease using the same vehicle, same hold period, same running costs.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💼</div>
+        <div class="feature-title">Novated lease modelling</div>
+        <div class="feature-desc">Full salary sacrifice and FBT calculation using ATO statutory rates. EV FBT exemption built in. Provider fee input. The most complete novated model available for free.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🚪</div>
+        <div class="feature-title">Exit simulator</div>
+        <div class="feature-desc">What does it cost if you sell at year 2? Year 3? See your true position at any point in the ownership period, including cost per kilometre.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🏷️</div>
+        <div class="feature-title">On-costs included</div>
+        <div class="feature-desc">Stamp duty calculated for all 8 states and territories. Luxury Car Tax modelled. EV government rebates factored in. Nothing hidden.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔗</div>
+        <div class="feature-title">Save and share scenarios</div>
+        <div class="feature-desc">Save your comparison and share it as a link. Open the same scenario on any device. Compare dealer quotes side by side before you walk in.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Finance options -->
+  <div class="options-section">
+    <div class="options-inner">
+      <div class="section-label">What we cover</div>
+      <h2 class="section-title">Every way Australians buy cars</h2>
+      <p class="section-sub">Veercal models all five major car ownership structures used in Australia, with accurate rates and real-world assumptions.</p>
+
+      <div class="options-grid">
+        <div class="option-card">
+          <div class="option-icon">💵</div>
+          <div class="option-name">Cash Purchase</div>
+          <div class="option-desc">Full upfront payment with opportunity cost modelling</div>
+        </div>
+        <div class="option-card">
+          <div class="option-icon">🏦</div>
+          <div class="option-name">Personal Loan</div>
+          <div class="option-desc">Bank or lender finance with full amortisation schedule</div>
+        </div>
+        <div class="option-card">
+          <div class="option-icon">🚗</div>
+          <div class="option-name">Dealer Finance</div>
+          <div class="option-desc">Secured lending with balloon payment modelling</div>
+        </div>
+        <div class="option-card">
+          <div class="option-icon">📄</div>
+          <div class="option-name">Finance Lease</div>
+          <div class="option-desc">ATO statutory residuals, suitable for business use</div>
+        </div>
+        <div class="option-card">
+          <div class="option-icon">💼</div>
+          <div class="option-name">Novated Lease</div>
+          <div class="option-desc">Full salary sacrifice, FBT and EV exemption modelling</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Learn -->
+  <div class="learn-section">
+    <div class="learn-inner">
+      <div class="section-label" style="text-align:center;">Free guides</div>
+      <h2 class="section-title">Understand before you decide</h2>
+      <p class="section-sub">Plain-English guides to every car finance structure in Australia. No jargon, no agenda.</p>
+
+      <div class="learn-grid">
+        <a href="/learn/how-novated-leases-work" class="learn-card">
+          <div class="learn-card-icon">💼</div>
+          <div class="learn-card-title">How Novated Leases Work in Australia</div>
+          <div class="learn-card-desc">Salary sacrifice, FBT, residuals, and who actually benefits. The most complete plain-English explanation available.</div>
+          <span class="learn-card-read">Read guide →</span>
+        </a>
+        <a href="/learn/ev-novated-lease-fbt-exemption" class="learn-card">
+          <div class="learn-card-icon">⚡</div>
+          <div class="learn-card-title">EV Novated Leases and the FBT Exemption</div>
+          <div class="learn-card-desc">Eligible EVs under $89,332 are FBT-exempt. Here is what you save and who qualifies.</div>
+          <span class="learn-card-read">Read guide →</span>
+        </a>
+        <a href="/learn/true-cost-of-car-ownership" class="learn-card">
+          <div class="learn-card-icon">🔍</div>
+          <div class="learn-card-title">The True Cost of Owning a Car in Australia</div>
+          <div class="learn-card-desc">What dealers do not tell you. All eight cost categories with real numbers.</div>
+          <span class="learn-card-read">Read guide →</span>
+        </a>
+        <a href="/learn/dealer-finance-vs-personal-loan" class="learn-card">
+          <div class="learn-card-icon">🚗</div>
+          <div class="learn-card-title">Dealer Finance vs Personal Loan</div>
+          <div class="learn-card-desc">Comparison rates, balloon payments, and the vehicle price trade-off explained.</div>
+          <span class="learn-card-read">Read guide →</span>
+        </a>
+        <a href="/learn/cash-vs-finance-opportunity-cost" class="learn-card">
+          <div class="learn-card-icon">💵</div>
+          <div class="learn-card-title">Should You Pay Cash for a Car?</div>
+          <div class="learn-card-desc">The opportunity cost argument with real numbers, including the mortgage offset scenario.</div>
+          <span class="learn-card-read">Read guide →</span>
+        </a>
+        <a href="/learn" class="learn-card" style="background:#eff6ff;border-color:#bfdbfe;justify-content:center;align-items:center;text-align:center;">
+          <div style="font-size:32px;margin-bottom:10px;">📚</div>
+          <div class="learn-card-title" style="color:#1e40af;">View all guides</div>
+          <div class="learn-card-desc" style="text-align:center;">Browse the full Veercal learning centre</div>
+          <span class="learn-card-read">See all →</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <h2>Ready to see your real numbers?</h2>
+    <p>Enter your vehicle price, state, and how long you plan to keep the car. Veercal does the rest.</p>
+    <div class="hero-actions">
+      <a href="/calculator" class="btn-primary">Open the Calculator →</a>
+      <a href="/learn" class="btn-secondary">Read the guides</a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div>
+          <div class="footer-brand-name">VEERCAL</div>
+          <div class="footer-brand-desc">
+            Australian car ownership cost calculator. Compare every finance structure with accurate rates, real costs, and honest numbers.
+          </div>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Tools</div>
+          <a href="/calculator">Calculator</a>
+          <a href="/calculator">Exit Simulator</a>
+          <a href="/calculator">Novated Lease Model</a>
+          <a href="/calculator">On-Costs Calculator</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Learn</div>
+          <a href="/learn">All Guides</a>
+          <a href="/learn/how-novated-leases-work">Novated Leases</a>
+          <a href="/learn/ev-novated-lease-fbt-exemption">EV FBT Exemption</a>
+          <a href="/learn/true-cost-of-car-ownership">True Cost of Ownership</a>
+          <a href="/learn/dealer-finance-vs-personal-loan">Dealer Finance vs Loan</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Legal</div>
+          <a href="/terms">Terms of Use</a>
+          <a href="/privacy">Privacy Policy</a>
+          <a href="/learn">Disclaimer</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="yr"></span> Veercal. All rights reserved.</span>
+        <span>www.veercal.com</span>
+      </div>
+      <div class="footer-disclaimer">
+        General information only. Veercal is a calculation and comparison tool and does not constitute financial, tax, or legal advice. All figures are indicative estimates based on simplified assumptions. Always consult a licensed financial adviser before making financial decisions. Veercal does not hold an Australian Financial Services Licence.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('yr').textContent = new Date().getFullYear();
+  </script>
+
+</body>
 </html>
