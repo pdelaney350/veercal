@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How Novated Leases Work in Australia (2025 Guide) | Veercal</title>
+  <meta name="description" content="A plain-English guide to novated leases in Australia — how salary sacrifice works, how FBT is calculated, who benefits most, and how to compare the true cost against other car finance options." />
+  <meta name="keywords" content="novated lease Australia, how novated lease works, salary sacrifice car, FBT novated lease, novated lease vs car loan, novated lease calculator" />
+  <meta property="og:title" content="How Novated Leases Work in Australia (2025 Guide)" />
+  <meta property="og:description" content="Plain-English explanation of novated leases — salary sacrifice, FBT, residuals, and who benefits most." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://www.veercal.com/learn/how-novated-leases-work" />
+  <link rel="canonical" href="https://www.veercal.com/learn/how-novated-leases-work" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f1f5f9;
+      color: #1e293b;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* ── Nav ── */
+    nav {
+      background: linear-gradient(135deg, #2d3eb0 0%, #1e40af 100%);
+      padding: 0 32px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-brand {
+      font-family: 'Arial Black', Arial, sans-serif;
+      font-size: 22px;
+      font-weight: 900;
+      color: white;
+      letter-spacing: -0.01em;
+      text-decoration: none;
+    }
+    .nav-links a {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      margin-left: 24px;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: white; }
+    .nav-cta {
+      background: white;
+      color: #1e40af !important;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-weight: 700 !important;
+    }
+
+    /* ── Layout ── */
+    .page-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    /* ── Article header ── */
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .tag {
+      background: #dbeafe;
+      color: #1e40af;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .meta-text {
+      font-size: 12px;
+      color: #64748b;
+    }
+    h1 {
+      font-size: 36px;
+      font-weight: 800;
+      line-height: 1.2;
+      color: #1e293b;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+    .lead {
+      font-size: 18px;
+      color: #475569;
+      line-height: 1.65;
+      margin-bottom: 32px;
+      padding-bottom: 32px;
+      border-bottom: 2px solid #dbe4f0;
+    }
+
+    /* ── TOC ── */
+    .toc {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 40px;
+    }
+    .toc-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #1e40af;
+      margin-bottom: 10px;
+    }
+    .toc ol {
+      padding-left: 18px;
+    }
+    .toc li {
+      margin-bottom: 4px;
+    }
+    .toc a {
+      color: #1e40af;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .toc a:hover { text-decoration: underline; }
+
+    /* ── Article body ── */
+    h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #1e293b;
+      margin: 40px 0 14px;
+      letter-spacing: -0.01em;
+      padding-top: 8px;
+    }
+    h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1e293b;
+      margin: 28px 0 10px;
+    }
+    p { margin-bottom: 16px; }
+
+    strong { font-weight: 700; color: #1e293b; }
+
+    a { color: #1e40af; text-decoration: underline; }
+    a:hover { color: #2563eb; }
+
+    ul, ol {
+      padding-left: 22px;
+      margin-bottom: 16px;
+    }
+    li { margin-bottom: 6px; }
+
+    /* ── Callout boxes ── */
+    .callout {
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin: 24px 0;
+    }
+    .callout-tip {
+      background: #fef3c7;
+      border-left: 4px solid #d97706;
+    }
+    .callout-good {
+      background: #dcfce7;
+      border-left: 4px solid #166534;
+    }
+    .callout-warn {
+      background: #fee2e2;
+      border-left: 4px solid #b91c1c;
+    }
+    .callout-info {
+      background: #eff6ff;
+      border-left: 4px solid #1e40af;
+    }
+    .callout-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 6px;
+    }
+    .callout-tip .callout-label { color: #d97706; }
+    .callout-good .callout-label { color: #166534; }
+    .callout-warn .callout-label { color: #b91c1c; }
+    .callout-info .callout-label { color: #1e40af; }
+    .callout p { margin-bottom: 0; font-size: 14px; }
+
+    /* ── Comparison table ── */
+    .table-wrap { overflow-x: auto; margin: 24px 0; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    thead tr {
+      background: #1e40af;
+      color: white;
+    }
+    th {
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: 0.02em;
+    }
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #dbe4f0;
+      vertical-align: top;
+    }
+    tr:nth-child(even) td { background: #f8fafc; }
+    .tick { color: #166534; font-weight: 700; }
+    .cross { color: #b91c1c; font-weight: 700; }
+
+    /* ── Example box ── */
+    .example-box {
+      background: white;
+      border: 1px solid #dbe4f0;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 24px 0;
+      box-shadow: 0 1px 4px rgba(30,41,59,0.06);
+    }
+    .example-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #64748b;
+      margin-bottom: 12px;
+    }
+    .example-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 14px;
+    }
+    .example-row:last-child { border-bottom: none; font-weight: 700; }
+    .example-label { color: #64748b; }
+    .example-value { font-weight: 600; color: #1e293b; font-variant-numeric: tabular-nums; }
+    .example-value.good { color: #166534; }
+    .example-value.warn { color: #b45309; }
+
+    /* ── CTA block ── */
+    .cta-block {
+      background: linear-gradient(135deg, #2d3eb0, #1e40af);
+      border-radius: 14px;
+      padding: 32px;
+      margin: 40px 0;
+      text-align: center;
+      color: white;
+    }
+    .cta-block h3 {
+      color: white;
+      font-size: 22px;
+      margin-bottom: 10px;
+      margin-top: 0;
+    }
+    .cta-block p {
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 20px;
+      font-size: 15px;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: white;
+      color: #1e40af;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 12px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .cta-btn:hover { background: #eff6ff; color: #1e40af; }
+
+    /* ── Disclaimer footer ── */
+    .disclaimer {
+      background: #fef3c7;
+      border: 1px solid #fde68a;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-top: 48px;
+      font-size: 12px;
+      color: #78350f;
+      line-height: 1.6;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      h1 { font-size: 26px; }
+      h2 { font-size: 20px; }
+      .page-wrap { padding: 24px 16px 60px; }
+      .nav-links { display: none; }
+    }
+  </style>
+
+  <!-- Article structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "How Novated Leases Work in Australia (2025 Guide)",
+    "description": "A plain-English guide to novated leases in Australia — how salary sacrifice works, how FBT is calculated, who benefits most, and how to compare the true cost against other car finance options.",
+    "author": { "@type": "Organization", "name": "Veercal" },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Veercal",
+      "url": "https://www.veercal.com"
+    },
+    "datePublished": "2025-03-01",
+    "dateModified": "2025-03-01",
+    "mainEntityOfPage": "https://www.veercal.com/learn/how-novated-leases-work"
+  }
+  </script>
+  <meta name="author" content="Veercal" />
+  <meta name="copyright" content="© 2025 Veercal. All rights reserved." />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:site_name" content="Veercal" />
+  <meta property="og:url" content="https://www.veercal.com/learn/how-novated-leases-work" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@veercal" />
+</head>
+
+<body>
+
+  <nav>
+    <a class="nav-brand" href="/">VEERCAL</a>
+    <div class="nav-links">
+      <a href="/">Home</a><a href="/calculator">Calculator</a>
+      <a href="/learn">Learn</a>
+      <a href="/terms">Terms</a>
+      <a href="/" class="nav-cta">Open Calculator →</a>
+    </div>
+  </nav>
+
+  <div class="page-wrap">
+
+    <div class="article-meta">
+      <span class="tag">Novated Lease</span>
+      <span class="tag">Salary Packaging</span>
+      <span class="meta-text">Updated March 2025 · 12 min read</span>
+    </div>
+
+    <h1>How Novated Leases Work in Australia — A Plain-English Guide</h1>
+
+    <p class="lead">
+      A novated lease is one of the most powerful — and most misunderstood — car finance options available to Australian employees. Done right, it can save you thousands in income tax every year. Done wrong, or for the wrong person, it can cost more than a standard car loan. This guide explains exactly how it works, who benefits, and what the numbers actually look like.
+    </p>
+
+    <div class="toc">
+      <div class="toc-title">In this article</div>
+      <ol>
+        <li><a href="#what-is">What is a novated lease?</a></li>
+        <li><a href="#how-it-works">How it actually works — the three parties</a></li>
+        <li><a href="#salary-sacrifice">Salary sacrifice and tax saving</a></li>
+        <li><a href="#fbt">What is FBT and why does it matter?</a></li>
+        <li><a href="#ev-exemption">The EV FBT exemption (2025)</a></li>
+        <li><a href="#residual">Residual values and what happens at end of lease</a></li>
+        <li><a href="#worked-example">Worked example: $60,000 car, $100k salary</a></li>
+        <li><a href="#who-suits">Who does a novated lease suit?</a></li>
+        <li><a href="#who-not">Who should probably look elsewhere?</a></li>
+        <li><a href="#compare">How to compare it properly</a></li>
+        <li><a href="#questions">Common questions</a></li>
+      </ol>
+    </div>
+
+    <!-- ── Section 1 ── -->
+    <h2 id="what-is">1. What is a novated lease?</h2>
+
+    <p>
+      A novated lease is a three-way financial arrangement between <strong>you</strong>, <strong>your employer</strong>, and a <strong>finance company</strong>. The finance company owns the vehicle. Your employer leases it from them and then "novates" (transfers) the obligation to you — meaning the payments come out of your salary. When you leave your employer, the lease either transfers to your new employer or reverts entirely to you.
+    </p>
+
+    <p>
+      The key benefit is that your lease payments are deducted from your <strong>pre-tax salary</strong> — reducing your taxable income and therefore how much income tax you pay. Depending on your salary and the vehicle cost, this can be worth $3,000–$10,000+ per year in tax savings.
+    </p>
+
+    <div class="callout callout-info">
+      <div class="callout-label">ℹ️ General information</div>
+      <p>Novated leases are available to <strong>PAYG employees only</strong> — you need an employer willing to participate. Most large employers and many medium-sized businesses offer this as an employee benefit. If you're self-employed or a sole trader, a finance lease is the more relevant option.</p>
+    </div>
+
+    <!-- ── Section 2 ── -->
+    <h2 id="how-it-works">2. How it actually works — the three parties</h2>
+
+    <p>Here's what actually happens when you set up a novated lease:</p>
+
+    <ol>
+      <li>You choose a vehicle and a novated lease provider (e.g. SG Fleet, Fleetpartners, Maxxia, Smartleasing).</li>
+      <li>The finance company purchases the vehicle — or you source it yourself and they finance it.</li>
+      <li>Your employer and the finance company enter a lease agreement for the vehicle.</li>
+      <li>Your employer and you sign a "novation agreement" — transferring the lease obligations to you.</li>
+      <li>Your employer deducts the lease payments (and often running costs) from your gross salary before calculating PAYG tax.</li>
+      <li>At the end of the lease term (typically 1–5 years), you can pay out the residual to own the car, re-lease it, or hand it back.</li>
+    </ol>
+
+    <p>
+      The vehicle is technically leased — you don't own it during the term. But unlike a standard car lease, you have full use and control of the vehicle exactly as if you owned it. You choose the car, you drive it however you like (within standard insurance and registration requirements), and you decide what happens at the end of the term.
+    </p>
+
+    <!-- ── Section 3 ── -->
+    <h2 id="salary-sacrifice">3. Salary sacrifice and the tax saving</h2>
+
+    <p>
+      The tax saving comes from salary sacrifice. When your employer deducts lease payments from your pre-tax salary, your taxable income drops — meaning you pay less income tax.
+    </p>
+
+    <p>
+      The saving is directly proportional to your marginal tax rate. In Australia's 2024–25 tax year, the marginal rates are:
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Taxable Income</th><th>Marginal Rate</th><th>+ Medicare Levy</th><th>Combined</th></tr></thead>
+        <tbody>
+          <tr><td>$0 – $18,200</td><td>0%</td><td>0%</td><td>0%</td></tr>
+          <tr><td>$18,201 – $45,000</td><td>19%</td><td>2%</td><td>21%</td></tr>
+          <tr><td>$45,001 – $135,000</td><td>32.5%</td><td>2%</td><td>34.5%</td></tr>
+          <tr><td>$135,001 – $190,000</td><td>37%</td><td>2%</td><td>39%</td></tr>
+          <tr><td>$190,001+</td><td>45%</td><td>2%</td><td>47%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>
+      If your salary is $100,000 and you salary sacrifice $15,000 per year in novated lease payments, your taxable income drops to $85,000 — saving you approximately <strong>$5,175 in income tax and Medicare levy</strong> (at the 34.5% combined rate). That's the core of why novated leases work.
+    </p>
+
+    <div class="callout callout-tip">
+      <div class="callout-label">💡 Tip</div>
+      <p>Running costs — fuel (or home charging for EVs), insurance, registration, tyres, and servicing — can also be packaged pre-tax under a novated lease. This extends the tax saving significantly beyond just the finance repayment.</p>
+    </div>
+
+    <!-- ── Section 4 ── -->
+    <h2 id="fbt">4. What is FBT and why does it matter?</h2>
+
+    <p>
+      Here's where most people get confused. If salary sacrifice were entirely tax-free, everyone would use it for everything. The government closes this loop with <strong>Fringe Benefits Tax (FBT)</strong> — a tax on non-cash benefits provided to employees.
+    </p>
+
+    <p>
+      For a car benefit, FBT is typically calculated using the <strong>statutory formula method</strong>: 20% of the car's original value, grossed up by a factor of 2.0802 (for GST-registered employers), multiplied by the FBT rate of 47%. The employer pays this tax, but the cost is usually passed on to you as a post-tax contribution — called the Employee Contribution Method (ECM).
+    </p>
+
+    <p>Your annual FBT liability on a $60,000 car works out to approximately:</p>
+
+    <div class="example-box">
+      <div class="example-title">FBT Calculation — $60,000 vehicle (statutory method)</div>
+      <div class="example-row"><span class="example-label">Vehicle price</span><span class="example-value">$60,000</span></div>
+      <div class="example-row"><span class="example-label">Statutory rate</span><span class="example-value">× 20%</span></div>
+      <div class="example-row"><span class="example-label">Taxable value</span><span class="example-value">$12,000</span></div>
+      <div class="example-row"><span class="example-label">Gross-up factor (Type 1)</span><span class="example-value">× 2.0802</span></div>
+      <div class="example-row"><span class="example-label">Grossed-up value</span><span class="example-value">$24,962</span></div>
+      <div class="example-row"><span class="example-label">FBT rate</span><span class="example-value">× 47%</span></div>
+      <div class="example-row"><span class="example-label">Annual FBT payable</span><span class="example-value warn">$11,732</span></div>
+      <div class="example-row"><span class="example-label">Monthly post-tax contribution (ECM)</span><span class="example-value warn">~$978/mo</span></div>
+    </div>
+
+    <p>
+      You make this post-tax contribution to bring your FBT liability to zero. It reduces the net tax saving — but the pre-tax salary sacrifice saving is typically larger, so you still come out ahead.
+    </p>
+
+    <div class="callout callout-warn">
+      <div class="callout-label">⚠️ Important</div>
+      <p>The FBT liability is based on the <strong>original purchase price</strong> of the vehicle for the entire lease term — it doesn't reduce as the car depreciates. This is a key reason why novated leases work better for higher-value vehicles relative to cheaper ones.</p>
+    </div>
+
+    <!-- ── Section 5 ── -->
+    <h2 id="ev-exemption">5. The EV FBT exemption (2025)</h2>
+
+    <p>
+      Since 1 April 2022, <strong>eligible electric and plug-in hybrid vehicles are exempt from FBT entirely</strong>, provided the vehicle's value is below the luxury car tax (LCT) threshold for fuel-efficient vehicles — $89,332 for FY2024–25.
+    </p>
+
+    <p>This is significant. For a $70,000 EV novated over 3 years, the FBT exemption alone saves approximately <strong>$8,000–$12,000</strong> compared to an equivalent petrol vehicle novated lease. Combined with the pre-tax salary sacrifice saving, EVs are now one of the most tax-efficient car options available to Australian employees.
+    </p>
+
+    <div class="callout callout-good">
+      <div class="callout-label">✓ Who benefits most from the EV exemption</div>
+      <p>Employees earning $90,000+ considering an eligible EV under $89,332. The combination of FBT exemption + salary sacrifice can save $6,000–$15,000+ over a 3-year lease compared to buying the same car with a personal loan. Model your specific scenario with the Veercal calculator to see the exact numbers.</p>
+    </div>
+
+    <p>Eligible vehicles include:</p>
+    <ul>
+      <li>Battery electric vehicles (BEV)</li>
+      <li>Plug-in hybrid vehicles (PHEV) <em>— note: PHEV exemption has a scheduled end date, confirm current status</em></li>
+      <li>Hydrogen fuel cell vehicles</li>
+    </ul>
+
+    <p>Standard hybrids (non-plug-in) are <strong>not</strong> eligible for the FBT exemption.</p>
+
+    <!-- ── Section 6 ── -->
+    <h2 id="residual">6. Residual values and what happens at the end</h2>
+
+    <p>
+      At the end of the lease term, there's a <strong>residual value</strong> — a lump sum that must be paid to either own the vehicle outright, or that the finance company recovers if you hand the car back. The ATO sets minimum residual percentages based on your annual km travelled.
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Annual KM</th><th>Minimum Residual %</th><th>Residual on $60k car</th></tr></thead>
+        <tbody>
+          <tr><td>Up to 15,000 km</td><td>52.88%</td><td>$31,728</td></tr>
+          <tr><td>15,001 – 25,000 km</td><td>46.69%</td><td>$28,014</td></tr>
+          <tr><td>25,001 – 35,000 km</td><td>40.50%</td><td>$24,300</td></tr>
+          <tr><td>35,001 – 45,000 km</td><td>34.31%</td><td>$20,586</td></tr>
+          <tr><td>Over 45,000 km</td><td>28.12%</td><td>$16,872</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>At the end of the lease you have three options:</p>
+    <ol>
+      <li><strong>Pay the residual</strong> — own the car outright. If the car is worth more than the residual (common in a strong used car market), this is excellent value.</li>
+      <li><strong>Re-lease the vehicle</strong> — start a new novated lease, often called a "balloon-to-balloon" or "back-to-back" lease.</li>
+      <li><strong>Hand the car back</strong> — the finance company sells the vehicle. If it sells for more than the residual, you may receive the difference (check your specific lease terms).</li>
+    </ol>
+
+    <div class="callout callout-tip">
+      <div class="callout-label">💡 Tip</div>
+      <p>If you underestimate your annual km at the start of the lease, the residual will be set too high. At the end of the term you may owe more than the car is worth — a gap you'll need to fund. Be realistic or slightly conservative with your km estimate.</p>
+    </div>
+
+    <!-- ── Section 7 ── -->
+    <h2 id="worked-example">7. Worked example — $60,000 car, $100,000 salary</h2>
+
+    <p>Let's put all of the above together with a concrete example:</p>
+
+    <div class="example-box">
+      <div class="example-title">Assumptions</div>
+      <div class="example-row"><span class="example-label">Vehicle price</span><span class="example-value">$60,000</span></div>
+      <div class="example-row"><span class="example-label">Gross annual salary</span><span class="example-value">$100,000</span></div>
+      <div class="example-row"><span class="example-label">Lease term</span><span class="example-value">3 years</span></div>
+      <div class="example-row"><span class="example-label">Annual km</span><span class="example-value">20,000 km</span></div>
+      <div class="example-row"><span class="example-label">Finance rate</span><span class="example-value">6.5% p.a.</span></div>
+      <div class="example-row"><span class="example-label">Residual (statutory)</span><span class="example-value">46.69% = $28,014</span></div>
+    </div>
+
+    <div class="example-box">
+      <div class="example-title">Monthly payment breakdown</div>
+      <div class="example-row"><span class="example-label">Pre-tax finance payment</span><span class="example-value">~$1,020/mo</span></div>
+      <div class="example-row"><span class="example-label">Pre-tax running costs (packaged)</span><span class="example-value">~$620/mo</span></div>
+      <div class="example-row"><span class="example-label">Total pre-tax salary sacrifice</span><span class="example-value">~$1,640/mo</span></div>
+      <div class="example-row"><span class="example-label">Income tax + Medicare saving (34.5%)</span><span class="example-value good">−$566/mo</span></div>
+      <div class="example-row"><span class="example-label">FBT post-tax contribution (ECM)</span><span class="example-value warn">+$978/mo</span></div>
+      <div class="example-row"><span class="example-label">Net out-of-pocket per month</span><span class="example-value">~$1,052/mo</span></div>
+    </div>
+
+    <div class="example-box">
+      <div class="example-title">Compare: same car, personal loan at 8.99%, 3yr</div>
+      <div class="example-row"><span class="example-label">Monthly loan repayment</span><span class="example-value">~$1,318/mo</span></div>
+      <div class="example-row"><span class="example-label">Running costs (after-tax)</span><span class="example-value">~$620/mo</span></div>
+      <div class="example-row"><span class="example-label">Total out-of-pocket per month</span><span class="example-value">~$1,938/mo</span></div>
+    </div>
+
+    <p>
+      On these figures the novated lease saves approximately <strong>$886 per month</strong> in after-tax cash flow — around $31,900 over the 3-year term. The actual saving in your specific situation will vary based on your salary, vehicle price, finance rate, and running costs. Use the <a href="/">Veercal calculator</a> to model your exact numbers.
+    </p>
+
+    <div class="callout callout-warn">
+      <div class="callout-label">⚠️ General information only</div>
+      <p>These figures are illustrative estimates based on simplified assumptions. Your actual tax saving, FBT liability, and total cost will depend on your personal circumstances, your employer's payroll arrangements, and the specific novated lease product offered. Always seek advice from a qualified financial adviser or tax professional.</p>
+    </div>
+
+    <!-- ── CTA ── -->
+    <div class="cta-block">
+      <h3>Model your own numbers</h3>
+      <p>The Veercal calculator lets you compare a novated lease against cash, personal loan, and dealer finance — side by side, with your exact salary, vehicle price, and running costs.</p>
+      <a href="/" class="cta-btn">Open the Calculator →</a>
+    </div>
+
+    <!-- ── Section 8 ── -->
+    <h2 id="who-suits">8. Who does a novated lease suit?</h2>
+
+    <div class="callout callout-good">
+      <div class="callout-label">✓ Novated leases tend to work well for</div>
+      <p></p>
+    </div>
+
+    <ul>
+      <li><strong>PAYG employees earning $80,000+</strong> — the tax saving is larger at higher marginal rates. At $80k the combined rate is 34.5%; at $135k+ it's 39–47%.</li>
+      <li><strong>People who drive a reasonable amount</strong> — packaging running costs pre-tax only makes sense if you have meaningful running costs. Less than 10,000 km/year and the benefit shrinks significantly.</li>
+      <li><strong>People who change cars regularly</strong> — a 3-year novated lease suits people who want a new car every few years without the hassle of private selling.</li>
+      <li><strong>EV buyers</strong> — the FBT exemption on eligible EVs makes novated leasing the most tax-efficient way to drive an electric vehicle in Australia, by a significant margin.</li>
+      <li><strong>People whose employer pays all administration fees</strong> — some employers absorb the novated lease management fees as part of their salary packaging benefit. This materially improves the value.</li>
+    </ul>
+
+    <!-- ── Section 9 ── -->
+    <h2 id="who-not">9. Who should probably look elsewhere?</h2>
+
+    <div class="callout callout-warn">
+      <div class="callout-label">Consider alternatives if</div>
+      <p></p>
+    </div>
+
+    <ul>
+      <li><strong>You're self-employed or a sole trader</strong> — no employer means no novated lease. A chattel mortgage or finance lease is your equivalent option.</li>
+      <li><strong>You earn below $60,000</strong> — at the 19% marginal rate, the pre-tax saving is modest. After the FBT contribution, you may not come out ahead versus a competitive personal loan.</li>
+      <li><strong>Your employment situation is unstable</strong> — if you leave your employer, the lease reverts to you personally. You'll need to find a new employer to novate to, or fund the payments from your take-home pay. This risk is real.</li>
+      <li><strong>You drive very few kilometres</strong> — low annual km means a high residual, higher monthly payments, and less pre-tax running costs to package.</li>
+      <li><strong>Your employer charges high administration fees</strong> — some novated lease providers charge $500–$1,500+ per year in management fees. This can consume a significant portion of the tax saving for lower-value vehicles.</li>
+      <li><strong>You want to own the vehicle immediately</strong> — during the lease term you don't own the car. If ownership matters to you, a loan-to-own structure may be preferable.</li>
+    </ul>
+
+    <!-- ── Section 10 ── -->
+    <h2 id="compare">10. How to compare it properly</h2>
+
+    <p>
+      The most common mistake when evaluating a novated lease is comparing the monthly payment against a loan repayment. That's an apples-to-oranges comparison because:
+    </p>
+
+    <ul>
+      <li>The novated lease payment includes running costs; the loan repayment typically doesn't.</li>
+      <li>The novated lease payment is partially pre-tax; the loan repayment is entirely post-tax.</li>
+      <li>The novated lease has a residual at the end; a fully-amortising loan doesn't.</li>
+    </ul>
+
+    <p>
+      A proper comparison requires calculating the <strong>true total cost</strong> for each option over the same hold period — all finance costs, all running costs, minus the estimated exit value of the vehicle. That's exactly what the Veercal calculator models. Enter your salary, vehicle price, and running costs once, and it generates a side-by-side comparison across all five finance structures.
+    </p>
+
+    <!-- ── Section 11 ── -->
+    <h2 id="questions">11. Common questions</h2>
+
+    <h3>Can I choose any car?</h3>
+    <p>Generally yes — most passenger vehicles, SUVs, utes, and vans are eligible. Motorcycles and vehicles over 4.5 tonne are not. Second-hand vehicles can also be novated, though some providers have restrictions on age and km.</p>
+
+    <h3>What happens if I change jobs?</h3>
+    <p>The lease doesn't disappear — it either transfers to your new employer (most common) or reverts to you personally. You'll be responsible for making the repayments from your after-tax pay until a new employer takes over. This is a genuine risk worth planning for.</p>
+
+    <h3>Can my employer refuse to participate?</h3>
+    <p>Yes. Employers are not legally required to offer novated leasing. Most large employers do, but smaller businesses may not have the payroll infrastructure. Ask your HR or payroll team before getting too far into the process.</p>
+
+    <h3>Are there GST benefits?</h3>
+    <p>Your employer may be able to claim the GST input tax credit on the vehicle purchase price, which can reduce the effective vehicle cost by approximately 1/11th. Whether this benefit is passed on to you depends on your employer and the novated lease provider — ask specifically about this.</p>
+
+    <h3>How does it work with a company car?</h3>
+    <p>A company-provided car and a novated lease are different arrangements. A company car is owned and fully managed by your employer; a novated lease is a personal arrangement that sits on your payroll. The tax treatment is different, and you have more control over the vehicle in a novated lease.</p>
+
+    <!-- ── CTA ── -->
+    <div class="cta-block">
+      <h3>Ready to run your numbers?</h3>
+      <p>Enter your salary, vehicle price, and how long you plan to keep the car. Veercal compares a novated lease against cash, personal loan, dealer finance, and a standard finance lease — showing you the true total cost of each option.</p>
+      <a href="/" class="cta-btn">Compare All Options →</a>
+    </div>
+
+    <!-- ── Disclaimer ── -->
+    <div class="disclaimer">
+      <strong>General information only — not financial advice.</strong> This article is intended to provide general educational information about novated leases in Australia. It does not constitute financial, tax, or legal advice and should not be relied upon as such. Your personal circumstances, employer arrangements, and applicable government rates will affect the figures in your situation. ATO rates, thresholds, and FBT treatment are based on FY2024–25 and may change. Always consult a licensed financial adviser, tax accountant, or qualified professional before making financial decisions.
+      <br/><br/>
+      Veercal is a calculation and comparison tool. Veercal is not a licensed financial adviser and does not hold an Australian Financial Services Licence.
+    </div>
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "rewrites": [
+    {
+      "source": "/learn",
+      "destination": "/learn/index.html"
+    },
+    {
+      "source": "/learn/:page",
+      "destination": "/learn/:page.html"
+    },
+    {
+      "source": "/((?!learn|robots.txt|sitemap.xml|favicon.ico|static|og-image.png).*)",
+      "destination": "/index.html"
+    }
+  ]
+}

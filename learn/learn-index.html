@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learn — Car Finance Guides for Australians | Veercal</title>
+  <meta name="description" content="Plain-English guides to car finance in Australia — novated leases, dealer finance, personal loans, EV incentives, stamp duty, and the true cost of car ownership." />
+  <meta property="og:title" content="Car Finance Guides — Veercal Learn" />
+  <meta property="og:url" content="https://www.veercal.com/learn" />
+  <link rel="canonical" href="https://www.veercal.com/learn" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #f1f5f9; color: #1e293b; font-size: 16px; line-height: 1.7; }
+    nav { background: linear-gradient(135deg, #2d3eb0 0%, #1e40af 100%); padding: 0 32px; height: 60px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-brand { font-family: 'Arial Black', Arial, sans-serif; font-size: 22px; font-weight: 900; color: white; letter-spacing: -0.01em; text-decoration: none; }
+    .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 13px; font-weight: 500; margin-left: 24px; transition: color 0.15s; }
+    .nav-links a:hover { color: white; }
+    .nav-links a.active { color: white; font-weight: 700; }
+    .nav-cta { background: white; color: #1e40af !important; padding: 6px 14px; border-radius: 6px; font-weight: 700 !important; }
+
+    /* Hero */
+    .hero { background: linear-gradient(135deg, #2d3eb0 0%, #1e40af 60%, #1a35a0 100%); padding: 56px 32px 52px; text-align: center; position: relative; overflow: hidden; }
+    .hero::before { content: ""; position: absolute; inset: 0; opacity: 0.05; background-image: radial-gradient(circle, #ffffff 1px, transparent 1px); background-size: 28px 28px; }
+    .hero h1 { font-size: 40px; font-weight: 800; color: white; letter-spacing: -0.02em; margin-bottom: 14px; position: relative; }
+    .hero p { font-size: 17px; color: rgba(255,255,255,0.8); max-width: 540px; margin: 0 auto; position: relative; }
+
+    .page-wrap { max-width: 900px; margin: 0 auto; padding: 48px 24px 80px; }
+
+    /* Article grid */
+    .articles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 20px; margin-top: 8px; }
+    .article-card { background: white; border: 1px solid #dbe4f0; border-radius: 14px; padding: 24px 26px; text-decoration: none; color: inherit; transition: all 0.18s; display: flex; flex-direction: column; box-shadow: 0 1px 4px rgba(30,41,59,0.06); }
+    .article-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(30,41,59,0.12); border-color: #bfdbfe; }
+    .card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+    .card-tag { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .card-title { font-size: 18px; font-weight: 800; color: #1e293b; line-height: 1.3; margin-bottom: 10px; letter-spacing: -0.01em; }
+    .card-desc { font-size: 14px; color: #475569; line-height: 1.6; flex: 1; margin-bottom: 16px; }
+    .card-meta { display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: #94a3b8; padding-top: 14px; border-top: 1px solid #f1f5f9; }
+    .card-read { color: #1e40af; font-weight: 600; display: flex; align-items: center; gap: 4px; }
+    .card-icon { font-size: 28px; margin-bottom: 12px; }
+
+    /* Featured (first article) */
+    .featured-card { grid-column: 1 / -1; background: linear-gradient(135deg, #eff6ff, #dbeafe); border-color: #bfdbfe; }
+    .featured-card .card-title { font-size: 22px; }
+
+    /* Section heading */
+    .section-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #64748b; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #dbe4f0; }
+
+    /* Calculator CTA strip */
+    .calc-strip { background: #1e293b; border-radius: 14px; padding: 28px 32px; margin-top: 48px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+    .calc-strip-text h3 { font-size: 20px; font-weight: 800; color: white; margin-bottom: 6px; }
+    .calc-strip-text p { font-size: 14px; color: #94a3b8; }
+    .calc-strip-btn { background: #2563eb; color: white; font-weight: 700; font-size: 14px; padding: 12px 24px; border-radius: 8px; text-decoration: none; white-space: nowrap; transition: background 0.15s; }
+    .calc-strip-btn:hover { background: #1d4ed8; }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 28px; }
+      .articles-grid { grid-template-columns: 1fr; }
+      .featured-card { grid-column: auto; }
+      nav .nav-links { display: none; }
+      .calc-strip { flex-direction: column; }
+    }
+  </style>
+  <meta name="author" content="Veercal" />
+  <meta name="copyright" content="© 2025 Veercal. All rights reserved." />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:site_name" content="Veercal" />
+  <meta property="og:url" content="https://www.veercal.com/learn" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@veercal" />
+</head>
+<body>
+
+  <nav>
+    <a class="nav-brand" href="/">VEERCAL</a>
+    <div class="nav-links">
+      <a href="/">Home</a><a href="/calculator">Calculator</a>
+      <a href="/learn" class="active">Learn</a>
+      <a href="/" class="nav-cta">Open Calculator →</a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <h1>Car Finance — Plain English</h1>
+    <p>Guides to help you understand every car ownership structure in Australia, so you can make an informed decision — not just a convenient one.</p>
+  </div>
+
+  <div class="page-wrap">
+
+    <div class="section-title">All guides</div>
+
+    <div class="articles-grid">
+
+      <!-- Featured: Novated lease -->
+      <a href="/learn/how-novated-leases-work" class="article-card featured-card">
+        <div class="card-icon">💼</div>
+        <div class="card-tags">
+          <span class="card-tag" style="background:#dbeafe;color:#1e40af;">Novated Lease</span>
+          <span class="card-tag" style="background:#dbeafe;color:#1e40af;">Salary Packaging</span>
+          <span class="card-tag" style="background:#dcfce7;color:#166534;">Most Popular</span>
+        </div>
+        <div class="card-title">How Novated Leases Work in Australia — A Plain-English Guide</div>
+        <div class="card-desc">The most powerful — and most misunderstood — car finance option for Australian employees. Covers salary sacrifice, FBT, the ECM method, residuals, and who it actually suits.</div>
+        <div class="card-meta">
+          <span>12 min read · Updated March 2025</span>
+          <span class="card-read">Read guide →</span>
+        </div>
+      </a>
+
+      <!-- EV FBT -->
+      <a href="/learn/ev-novated-lease-fbt-exemption" class="article-card">
+        <div class="card-icon">⚡</div>
+        <div class="card-tags">
+          <span class="card-tag" style="background:#dcfce7;color:#166534;">EV</span>
+          <span class="card-tag" style="background:#dbeafe;color:#1e40af;">FBT Exemption</span>
+        </div>
+        <div class="card-title">Electric Vehicles & Novated Leases: The FBT Exemption Explained</div>
+        <div class="card-desc">Eligible EVs under $89,332 are FBT-exempt under a novated lease — one of the most significant tax incentives in Australian personal finance. Here's exactly what you save and who qualifies.</div>
+        <div class="card-meta">
+          <span>9 min read · Updated March 2025</span>
+          <span class="card-read">Read guide →</span>
+        </div>
+      </a>
+
+      <!-- True cost -->
+      <a href="/learn/true-cost-of-car-ownership" class="article-card">
+        <div class="card-icon">🔍</div>
+        <div class="card-tags">
+          <span class="card-tag" style="background:#fef3c7;color:#d97706;">Car Ownership</span>
+          <span class="card-tag" style="background:#fef3c7;color:#d97706;">Costs</span>
+        </div>
+        <div class="card-title">The True Cost of Owning a Car in Australia — What Dealers Don't Tell You</div>
+        <div class="card-desc">The sticker price is just the beginning. This guide breaks down all eight cost categories — depreciation, stamp duty, finance, fuel, insurance, rego, servicing, and tyres — with real numbers.</div>
+        <div class="card-meta">
+          <span>10 min read · Updated March 2025</span>
+          <span class="card-read">Read guide →</span>
+        </div>
+      </a>
+
+      <!-- Dealer vs personal loan -->
+      <a href="/learn/dealer-finance-vs-personal-loan" class="article-card">
+        <div class="card-icon">🚗</div>
+        <div class="card-tags">
+          <span class="card-tag" style="background:#ede9fe;color:#6d28d9;">Car Finance</span>
+          <span class="card-tag" style="background:#ede9fe;color:#6d28d9;">Loans</span>
+        </div>
+        <div class="card-title">Dealer Finance vs Personal Loan: Which Is Actually Cheaper?</div>
+        <div class="card-desc">Dealers are very good at making their finance look attractive. This guide shows you the real numbers — comparison rates, balloon payments, the vehicle price trade-off, and side-by-side worked examples.</div>
+        <div class="card-meta">
+          <span>9 min read · Updated March 2025</span>
+          <span class="card-read">Read guide →</span>
+        </div>
+      </a>
+
+      <!-- Cash vs finance -->
+      <a href="/learn/cash-vs-finance-opportunity-cost" class="article-card">
+        <div class="card-icon">💵</div>
+        <div class="card-tags">
+          <span class="card-tag" style="background:#dcfce7;color:#166534;">Cash</span>
+          <span class="card-tag" style="background:#dcfce7;color:#166534;">Investing</span>
+        </div>
+        <div class="card-title">Should You Pay Cash for a Car? The Opportunity Cost Argument</div>
+        <div class="card-desc">Paying cash feels smart — no debt, no interest. But your savings could be working elsewhere. We work through the opportunity cost argument with real numbers, including the mortgage offset scenario.</div>
+        <div class="card-meta">
+          <span>8 min read · Updated March 2025</span>
+          <span class="card-read">Read guide →</span>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- Calculator CTA -->
+    <div class="calc-strip">
+      <div class="calc-strip-text">
+        <h3>Ready to run your own numbers?</h3>
+        <p>The Veercal calculator compares all five finance structures side by side — with your exact vehicle price, salary, and running costs.</p>
+      </div>
+      <a href="/" class="calc-strip-btn">Open the Calculator →</a>
+    </div>
+
+  </div>
+
+</body>
+</html>

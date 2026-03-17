@@ -1,3 +1,9 @@
-# https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Allow: /
+
+# Veercal — Car Ownership Cost Calculator
+# https://www.veercal.com.au
+# © 2025 Veercal. All rights reserved.
+# Unauthorised scraping or reproduction of content is prohibited.
+
+Sitemap: https://www.veercal.com.au/sitemap.xml
