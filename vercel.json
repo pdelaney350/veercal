@@ -17,6 +17,10 @@
       "dest": "/learn/$1.html"
     },
     {
+      "src": "/privacy",
+      "dest": "/privacy.html"
+    }
+    {
       "src": "/",
       "dest": "/landing.html"
     }
