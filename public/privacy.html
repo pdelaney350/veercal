@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy | Veercal</title>
+  <meta name="description" content="Veercal Privacy Policy — how we collect, use, and protect your personal information." />
+  <meta name="author" content="Veercal" />
+  <meta name="copyright" content="© 2025 Veercal. All rights reserved." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.veercal.com/privacy" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f1f5f9;
+      color: #1e293b;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* Nav */
+    nav {
+      background: linear-gradient(135deg, #2d3eb0 0%, #1e40af 100%);
+      padding: 0 32px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .nav-wordmark {
+      font-family: 'Arial Black', Arial, sans-serif;
+      font-size: 20px;
+      font-weight: 900;
+      color: white;
+      letter-spacing: -0.09em;
+    }
+    .nav-links { display: flex; gap: 8px; align-items: center; }
+    .nav-links a {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: all 0.15s;
+    }
+    .nav-links a:hover { color: white; background: rgba(255,255,255,0.1); }
+    .nav-cta { background: white; color: #1e40af !important; font-weight: 700 !important; }
+
+    /* Page header */
+    .page-header {
+      background: linear-gradient(135deg, #2d3eb0, #1e40af);
+      padding: 48px 32px;
+      text-align: center;
+    }
+    .page-header h1 {
+      font-size: 32px;
+      font-weight: 800;
+      color: white;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .page-header p {
+      color: rgba(255,255,255,0.7);
+      font-size: 14px;
+    }
+
+    /* Content */
+    .content-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    .policy-card {
+      background: white;
+      border-radius: 14px;
+      border: 1px solid #dbe4f0;
+      padding: 40px 48px;
+      box-shadow: 0 1px 4px rgba(30,41,59,0.06);
+    }
+
+    /* Typography inside policy */
+    .policy-card h2 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1e293b;
+      margin: 32px 0 10px;
+      padding-top: 8px;
+      border-top: 1px solid #f1f5f9;
+    }
+    .policy-card h2:first-child { border-top: none; margin-top: 0; }
+
+    .policy-card h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1e293b;
+      margin: 20px 0 8px;
+    }
+
+    .policy-card p {
+      font-size: 14px;
+      color: #475569;
+      line-height: 1.75;
+      margin-bottom: 12px;
+    }
+
+    .policy-card ul, .policy-card ol {
+      padding-left: 22px;
+      margin-bottom: 12px;
+    }
+    .policy-card li {
+      font-size: 14px;
+      color: #475569;
+      line-height: 1.75;
+      margin-bottom: 4px;
+    }
+
+    .policy-card a {
+      color: #1e40af;
+      text-decoration: underline;
+    }
+    .policy-card a:hover { color: #2563eb; }
+
+    .policy-card strong { color: #1e293b; font-weight: 600; }
+    .policy-card em { color: #475569; }
+
+    /* Table of contents */
+    .toc {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 24px 0 32px;
+    }
+    .toc-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #1e40af;
+      margin-bottom: 10px;
+    }
+    .toc ol { padding-left: 18px; }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: #1e40af; text-decoration: none; font-size: 13px; font-weight: 500; }
+    .toc a:hover { text-decoration: underline; }
+
+    /* Summary box */
+    .summary-box {
+      background: #f8fafc;
+      border: 1px solid #dbe4f0;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 24px 0;
+    }
+    .summary-box p { margin-bottom: 8px; font-size: 14px; }
+    .summary-box p:last-child { margin-bottom: 0; }
+
+    /* Date badge */
+    .date-badge {
+      display: inline-block;
+      background: #dbeafe;
+      color: #1e40af;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+    }
+
+    /* Footer */
+    footer {
+      background: #1e293b;
+      color: rgba(255,255,255,0.5);
+      padding: 32px;
+      text-align: center;
+      font-size: 12px;
+    }
+    footer a { color: rgba(255,255,255,0.6); text-decoration: none; margin: 0 10px; }
+    footer a:hover { color: white; }
+    .footer-brand {
+      font-family: 'Arial Black', Arial, sans-serif;
+      font-size: 16px;
+      font-weight: 900;
+      color: white;
+      letter-spacing: -0.09em;
+      margin-bottom: 14px;
+    }
+    .footer-links { margin: 12px 0; }
+    .footer-copy { font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 10px; }
+
+    @media (max-width: 600px) {
+      .policy-card { padding: 24px 20px; }
+      .nav-links a:not(.nav-cta) { display: none; }
+      .page-header h1 { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-brand">
+      <svg width="28" height="28" viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="46" stroke="white" stroke-width="2" fill="none"/>
+        <rect x="28" y="48" width="8" height="18" fill="white" rx="0.5"/>
+        <rect x="39" y="40" width="8" height="26" fill="white" rx="0.5"/>
+        <rect x="50" y="30" width="8" height="36" fill="white" rx="0.5"/>
+        <rect x="61" y="38" width="8" height="28" fill="white" rx="0.5"/>
+        <path d="M 26 66 A 6 6 0 0 0 38 66 Z" fill="white"/>
+        <path d="M 59 66 A 6 6 0 0 0 71 66 Z" fill="white"/>
+      </svg>
+      <span class="nav-wordmark">VEERCAL</span>
+    </a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/calculator">Calculator</a>
+      <a href="/learn">Learn</a>
+      <a href="/calculator" class="nav-cta">Open Calculator →</a>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <h1>Privacy Policy</h1>
+    <p>How Veercal collects, uses, and protects your personal information</p>
+  </div>
+
+  <div class="content-wrap">
+    <div class="policy-card">
+
+      <span class="date-badge">Last updated March 23, 2026</span>
+
+      <p>This Privacy Notice for <strong>Veercal Pty. Ltd.</strong> (doing business as <strong>Veercal</strong>) describes how and why we might access, collect, store, use, and/or share your personal information when you use our services, including when you visit our website at <a href="https://www.veercal.com">www.veercal.com</a>, use our mobile application, or use Veercal — an online vehicle finance comparison calculator tool which enables the user to compare the true cost of vehicle ownership between different financing options.</p>
+
+      <p><strong>Questions or concerns?</strong> Reading this Privacy Notice will help you understand your privacy rights and choices. If you do not agree with our policies and practices, please do not use our Services. If you still have any questions or concerns, please contact us at <a href="mailto:privacy@veercal.com">privacy@veercal.com</a>.</p>
+
+      <div class="summary-box">
+        <p><strong>Summary of key points</strong></p>
+        <p>We collect personal information you provide to us and information automatically collected when you use our Services (such as IP address and device data). We do not collect information from third parties. We process your information to provide and improve our Services, communicate with you, and comply with law. We may share information with vendors, analytics providers, and business partners. We keep your information only as long as necessary. You have rights to access, correct, or delete your data.</p>
+      </div>
+
+      <div class="toc">
+        <div class="toc-title">Table of Contents</div>
+        <ol>
+          <li><a href="#infocollect">What information do we collect?</a></li>
+          <li><a href="#infouse">How do we process your information?</a></li>
+          <li><a href="#whoshare">When and with whom do we share your personal information?</a></li>
+          <li><a href="#3pwebsites">What is our stance on third-party websites?</a></li>
+          <li><a href="#cookies">Do we use cookies and other tracking technologies?</a></li>
+          <li><a href="#inforetain">How long do we keep your information?</a></li>
+          <li><a href="#infosafe">How do we keep your information safe?</a></li>
+          <li><a href="#infominors">Do we collect information from minors?</a></li>
+          <li><a href="#privacyrights">What are your privacy rights?</a></li>
+          <li><a href="#DNT">Controls for Do-Not-Track features</a></li>
+          <li><a href="#otherlaws">Do other regions have specific privacy rights?</a></li>
+          <li><a href="#policyupdates">Do we make updates to this notice?</a></li>
+          <li><a href="#contact">How can you contact us about this notice?</a></li>
+          <li><a href="#request">How can you review, update, or delete the data we collect from you?</a></li>
+        </ol>
+      </div>
+
+      <h2 id="infocollect">1. What information do we collect?</h2>
+
+      <h3>Personal information you disclose to us</h3>
+      <p>We collect personal information that you voluntarily provide to us when you express an interest in obtaining information about us or our products and Services, when you participate in activities on the Services, or otherwise when you contact us.</p>
+
+      <p><strong>Sensitive information.</strong> When necessary, with your consent or as otherwise permitted by applicable law, we process the following categories of sensitive information: financial data.</p>
+
+      <p>All personal information that you provide to us must be true, complete, and accurate, and you must notify us of any changes to such personal information.</p>
+
+      <h3>Information automatically collected</h3>
+      <p>We automatically collect certain information when you visit, use, or navigate the Services. This information does not reveal your specific identity (like your name or contact information) but may include device and usage information, such as your IP address, browser and device characteristics, operating system, language preferences, referring URLs, device name, country, location, information about how and when you use our Services, and other technical information. This information is primarily needed to maintain the security and operation of our Services, and for our internal analytics and reporting purposes.</p>
+
+      <p>Like many businesses, we also collect information through cookies and similar technologies. The information we collect includes:</p>
+      <ul>
+        <li><em>Log and Usage Data.</em> Service-related, diagnostic, usage, and performance information our servers automatically collect when you access or use our Services, including your IP address, device information, browser type, and information about your activity in the Services.</li>
+        <li><em>Device Data.</em> Information about your computer, phone, tablet, or other device you use to access the Services, including IP address, device and application identification numbers, location, browser type, hardware model, Internet service provider and/or mobile carrier, operating system, and system configuration information.</li>
+        <li><em>Location Data.</em> Information about your device's location, which can be either precise or imprecise, based on your IP address. You can opt out of allowing us to collect this information by disabling your Location setting on your device.</li>
+      </ul>
+
+      <h2 id="infouse">2. How do we process your information?</h2>
+      <p>We process your personal information for a variety of reasons, depending on how you interact with our Services, including:</p>
+      <ul>
+        <li><strong>To deliver and facilitate delivery of services to the user.</strong> We may process your information to provide you with the requested service.</li>
+        <li><strong>To respond to user inquiries and offer support to users.</strong> We may process your information to respond to your inquiries and solve any potential issues you might have with the requested service.</li>
+        <li><strong>To send administrative information to you.</strong> We may process your information to send you details about our products and services, changes to our terms and policies, and other similar information.</li>
+        <li><strong>To request feedback.</strong> We may process your information when necessary to request feedback and to contact you about your use of our Services.</li>
+        <li><strong>To send you marketing and promotional communications.</strong> We may process the personal information you send to us for our marketing purposes, if this is in accordance with your marketing preferences. You can opt out of our marketing emails at any time.</li>
+        <li><strong>To deliver targeted advertising to you.</strong> We may process your information to develop and display personalised content and advertising tailored to your interests, location, and more.</li>
+        <li><strong>To evaluate and improve our Services, products, marketing, and your experience.</strong> We may process your information when we believe it is necessary to identify usage trends and determine the effectiveness of our promotional campaigns.</li>
+        <li><strong>To identify usage trends.</strong> We may process information about how you use our Services to better understand how they are being used so we can improve them.</li>
+        <li><strong>To comply with our legal obligations.</strong> We may process your information to comply with our legal obligations, respond to legal requests, and exercise, establish, or defend our legal rights.</li>
+      </ul>
+
+      <h2 id="whoshare">3. When and with whom do we share your personal information?</h2>
+      <p><strong>Vendors, Consultants, and Other Third-Party Service Providers.</strong> We may share your data with third-party vendors, service providers, contractors, or agents who perform services for us or on our behalf and require access to such information to do that work. We have contracts in place with our third parties, which are designed to help safeguard your personal information.</p>
+
+      <p>The categories of third parties we may share personal information with include:</p>
+      <ul>
+        <li>Finance and Accounting Tools</li>
+        <li>Data Analytics Services</li>
+        <li>AI Platforms</li>
+        <li>Affiliate Marketing Programs</li>
+        <li>Payment Processors</li>
+        <li>Sales and Marketing Tools</li>
+        <li>Testing Tools</li>
+        <li>Website Hosting Service Providers</li>
+        <li>Performance Monitoring Tools</li>
+      </ul>
+
+      <p>We also may need to share your personal information in the following situations:</p>
+      <ul>
+        <li><strong>Business Transfers.</strong> We may share or transfer your information in connection with, or during negotiations of, any merger, sale of company assets, financing, or acquisition of all or a portion of our business to another company.</li>
+        <li><strong>Affiliates.</strong> We may share your information with our affiliates, in which case we will require those affiliates to honour this Privacy Notice.</li>
+        <li><strong>Business Partners.</strong> We may share your information with our business partners to offer you certain products, services, or promotions.</li>
+      </ul>
+
+      <h2 id="3pwebsites">4. What is our stance on third-party websites?</h2>
+      <p>The Services may link to third-party websites, online services, or mobile applications and/or contain advertisements from third parties that are not affiliated with us. We do not make any guarantee regarding any such third parties, and we will not be liable for any loss or damage caused by the use of such third-party websites, services, or applications. We are not responsible for the content or privacy and security practices and policies of any third parties. You should review the policies of such third parties and contact them directly to respond to your questions.</p>
+
+      <h2 id="cookies">5. Do we use cookies and other tracking technologies?</h2>
+      <p>We may use cookies and similar tracking technologies (like web beacons and pixels) to gather information when you interact with our Services. Some online tracking technologies help us maintain the security of our Services, prevent crashes, fix bugs, save your preferences, and assist with basic site functions.</p>
+
+      <p>We also permit third parties and service providers to use online tracking technologies on our Services for analytics and advertising, including to help manage and display advertisements and to tailor advertisements to your interests.</p>
+
+      <p>Specific information about how we use such technologies and how you can refuse certain cookies is set out in our Cookie Notice.</p>
+
+      <h3>Google Analytics</h3>
+      <p>We may share your information with Google Analytics to track and analyse the use of the Services. To opt out of being tracked by Google Analytics across the Services, visit <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">https://tools.google.com/dlpage/gaoptout</a>. You can also opt out through <a href="https://adssettings.google.com/" target="_blank" rel="noopener">Google Ads Settings</a>. For more information on the privacy practices of Google, please visit the <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy and Terms page</a>.</p>
+
+      <h2 id="inforetain">6. How long do we keep your information?</h2>
+      <p>We will only keep your personal information for as long as it is necessary for the purposes set out in this Privacy Notice, unless a longer retention period is required or permitted by law (such as tax, accounting, or other legal requirements).</p>
+      <p>When we have no ongoing legitimate business need to process your personal information, we will either delete or anonymise such information, or, if this is not possible, then we will securely store your personal information and isolate it from any further processing until deletion is possible.</p>
+
+      <h2 id="infosafe">7. How do we keep your information safe?</h2>
+      <p>We have implemented appropriate and reasonable technical and organisational security measures designed to protect the security of any personal information we process. However, despite our safeguards and efforts to secure your information, no electronic transmission over the Internet or information storage technology can be guaranteed to be 100% secure, so we cannot promise or guarantee that hackers, cybercriminals, or other unauthorised third parties will not be able to defeat our security and improperly collect, access, steal, or modify your information. You should only access the Services within a secure environment.</p>
+
+      <h2 id="infominors">8. Do we collect information from minors?</h2>
+      <p>We do not knowingly collect, solicit data from, or market to children under 18 years of age, nor do we knowingly sell such personal information. By using the Services, you represent that you are at least 18 or that you are the parent or guardian of such a minor and consent to such minor dependent's use of the Services. If we learn that personal information from users less than 18 years of age has been collected, we will deactivate the account and take reasonable measures to promptly delete such data from our records. If you become aware of any data we may have collected from children under age 18, please contact us at <a href="mailto:contact@veercal.com">contact@veercal.com</a>.</p>
+
+      <h2 id="privacyrights">9. What are your privacy rights?</h2>
+      <p>You may review, change, or terminate your account at any time, depending on your country, province, or state of residence.</p>
+
+      <p><strong>Withdrawing your consent:</strong> If we are relying on your consent to process your personal information, you have the right to withdraw your consent at any time by contacting us using the contact details provided in the section below.</p>
+
+      <p><strong>Opting out of marketing and promotional communications:</strong> You can unsubscribe from our marketing and promotional communications at any time by clicking on the unsubscribe link in the emails that we send, or by contacting us using the details provided below.</p>
+
+      <p><strong>Cookies and similar technologies:</strong> Most web browsers are set to accept cookies by default. If you prefer, you can usually choose to set your browser to remove cookies and to reject cookies. If you choose to remove cookies or reject cookies, this could affect certain features or services of our Services.</p>
+
+      <p>If you have questions or comments about your privacy rights, you may email us at <a href="mailto:privacy@veercal.com">privacy@veercal.com</a>.</p>
+
+      <h2 id="DNT">10. Controls for Do-Not-Track features</h2>
+      <p>Most web browsers and some mobile operating systems and mobile applications include a Do-Not-Track (DNT) feature or setting you can activate to signal your privacy preference not to have data about your online browsing activities monitored and collected. At this stage, no uniform technology standard for recognising and implementing DNT signals has been finalised. As such, we do not currently respond to DNT browser signals or any other mechanism that automatically communicates your choice not to be tracked online. If a standard for online tracking is adopted that we must follow in the future, we will inform you about that practice in a revised version of this Privacy Notice.</p>
+
+      <h2 id="otherlaws">11. Do other regions have specific privacy rights?</h2>
+
+      <h3>Australia and New Zealand</h3>
+      <p>We collect and process your personal information under the obligations and conditions set by Australia's Privacy Act 1988 and New Zealand's Privacy Act 2020.</p>
+      <p>This Privacy Notice satisfies the notice requirements defined in both Privacy Acts, in particular: what personal information we collect from you, from which sources, for which purposes, and other recipients of your personal information.</p>
+      <p>At any time, you have the right to request access to or correction of your personal information. You can make such a request by contacting us using the contact details provided in the section below.</p>
+      <p>If you believe we are unlawfully processing your personal information, you have the right to submit a complaint about a breach of the Australian Privacy Principles to the <a href="https://www.oaic.gov.au/privacy/privacy-complaints/lodge-a-privacy-complaint-with-us" target="_blank" rel="noopener">Office of the Australian Information Commissioner</a>.</p>
+
+      <h2 id="policyupdates">12. Do we make updates to this notice?</h2>
+      <p>We may update this Privacy Notice from time to time. The updated version will be indicated by an updated date at the top of this Privacy Notice. If we make material changes to this Privacy Notice, we may notify you either by prominently posting a notice of such changes or by directly sending you a notification. We encourage you to review this Privacy Notice frequently to be informed of how we are protecting your information.</p>
+
+      <h2 id="contact">13. How can you contact us about this notice?</h2>
+      <p>If you have questions or comments about this notice, you may email us at <a href="mailto:contact@veercal.com">contact@veercal.com</a> or contact us by post at:</p>
+      <p>
+        Veercal Pty. Ltd.<br>
+        679 Drummond St<br>
+        Carlton North VIC 3054<br>
+        Australia
+      </p>
+
+      <h2 id="request">14. How can you review, update, or delete the data we collect from you?</h2>
+      <p>You have the right to request access to the personal information we collect from you, details about how we have processed it, correct inaccuracies, or delete your personal information. You may also have the right to withdraw your consent to our processing of your personal information. These rights may be limited in some circumstances by applicable law. To request to review, update, or delete your personal information, please <a href="https://app.termly.io/dsar/7e790c65-f857-4270-981f-cd9350a3ebb1" target="_blank" rel="noopener">submit a data subject access request</a>.</p>
+
+      <p style="margin-top: 32px; padding-top: 20px; border-top: 1px solid #f1f5f9; font-size: 12px; color: #94a3b8;">This Privacy Policy was created using <a href="https://termly.io/products/privacy-policy-generator/" target="_blank" rel="noopener" style="color: #94a3b8;">Termly's Privacy Policy Generator</a>.</p>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-brand">VEERCAL</div>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/calculator">Calculator</a>
+      <a href="/learn">Learn</a>
+      <a href="/terms">Terms of Use</a>
+      <a href="/privacy">Privacy Policy</a>
+    </div>
+    <div class="footer-copy">© <span id="yr"></span> Veercal Pty. Ltd. All rights reserved. · General information only — not financial advice.</div>
+  </footer>
+
+  <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+
+</body>
+</html>
