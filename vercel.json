@@ -28,6 +28,10 @@
       "src": "/",
       "dest": "/landing.html"
     }
+    { 
+      "src": "/compare", 
+      "dest": "/index.html" 
+    }
   ]
 }
 

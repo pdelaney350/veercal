@@ -8,3 +8,10 @@ root.render(
     <App />
   </React.StrictMode>
 );
+
+const path = window.location.pathname;
+if (path === '/compare') {
+  root.render(<QuickCompare />);
+} else {
+  root.render(<App />);
+}
