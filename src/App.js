@@ -14,7 +14,6 @@ import React, { useState, useMemo, useCallback } from "react";
  */
 import { LineChart, Line, AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine } from "recharts";
 
-import { RATES, calcStampDuty, calcLCT, getMarginalRate } from './veercal.rates.config';
 
 /* ─── Google Fonts (idempotent — won't duplicate on hot reload) ─────────── */
 if (!document.getElementById("veercal-fonts")) {
