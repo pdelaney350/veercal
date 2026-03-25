@@ -34,7 +34,7 @@
     },
       "src": "/compare/(.*)", 
       "dest": "/index.html"
-  }
+    }
   ]
 }
 
