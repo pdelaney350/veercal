@@ -189,6 +189,73 @@ const DEFAULTS = {
   refinanceYear: 0, refinanceRate: 0.059,
 };
 
+/* ─── RATES CONFIG — update annually each July 1 ────────────────────────────
+   These are the only government-set values in the entire codebase.
+   Last verified: March 2025 (FY2024-25)
+   Next review due: 1 July 2025
+─────────────────────────────────────────────────────────────────────────── */
+const RATES = {
+  /* ATO FBT */
+  fbtGrossUpType1:    2.0802,   /* FBT gross-up rate (GST creditable) */
+  fbtGrossUpType2:    1.8868,   /* FBT gross-up rate (non-creditable) */
+  fbtEmployerRate:    0.47,     /* FBT rate (employer) */
+  fbtStatutory:       0.20,     /* Statutory formula % for car benefit */
+
+  /* LCT — FY2024-25 */
+  lctThresholdStd:    80567,    /* Standard vehicles */
+  lctThresholdFE:     89332,    /* Fuel-efficient (<7L/100km), EV, PHEV */
+  lctRate:            0.33,
+
+  /* ATO statutory residuals by annual km band (novated/lease) */
+  residualByKm: {
+    15000: 0.5288,
+    25000: 0.4669,
+    35000: 0.4050,
+    45000: 0.3431,
+    over45: 0.2812,
+  },
+
+  /* Medicare levy threshold (FY2024-25) */
+  medicareLevyThreshold: 26000,
+  medicareLevy:          0.02,
+
+  /* Tax brackets (FY2024-25) — keep in sync with mtr() function below */
+  taxBrackets: [
+    { min: 0,      max: 18200,  rate: 0,     base: 0 },
+    { min: 18201,  max: 45000,  rate: 0.19,  base: 0 },
+    { min: 45001,  max: 135000, rate: 0.325, base: 5092 },
+    { min: 135001, max: 190000, rate: 0.37,  base: 31288 },
+    { min: 190001, max: Infinity, rate: 0.45, base: 51638 },
+  ],
+
+  /* Review metadata */
+  lastReviewed:  "March 2025",
+  nextReviewDue: "1 July 2025",
+  source:        "ato.gov.au / state revenue offices",
+};
+
+
+
+/* ─── Stamp duty ─────────────────────────────────────────────────────────── */
+const SD = {
+  VIC: (p) => p <= 57000 ? p * 0.035 : p <= 100000 ? 1995 + (p - 57000) * 0.05 : p * 0.06,
+  NSW: (p) => {
+    /* Revenue NSW motor vehicle duty — no step discontinuity */
+    if (p <= 45000)  return p * 0.03;
+    if (p <= 65000)  return 1350 + (p - 45000) * 0.035;
+    if (p <= 100000) return 2050 + (p - 65000) * 0.04;
+    return 3450 + (p - 100000) * 0.05;
+  },
+  QLD: (p) => p <= 100000 ? p * 0.031 : p * 0.035,
+  WA:  (p) => p <= 25000 ? p * 0.026 : p <= 50000 ? 650 + (p - 25000) * 0.0265 : p <= 100000 ? 1312.5 + (p - 50000) * 0.030 : p * 0.034,
+  SA:  (p) => p * 0.04,
+  TAS: (p) => p * 0.03,
+  ACT: (p) => p * 0.03,
+  NT:  (p) => p * 0.03,
+};
+const LCT_STD = 80567, LCT_FE = 89332, LCT_RATE = 0.33;
+const calcLCT = (p, ev) => { const t = ev ? LCT_FE : LCT_STD; return p > t ? ((p - t) / 1.1) * LCT_RATE : 0; };
+const calcSD  = (p, st) => (SD[st] || SD.VIC)(p);
 
 /* ─── Finance maths ─────────────────────────────────────────────────────── */
 function pmt(rate, nper, pv, fv = 0) {
