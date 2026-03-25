@@ -30,8 +30,8 @@
     }
     { 
       "src": "/compare", 
-      "dest": "/index.html" 
-    }
+      "dest": "/index.html"
+  }
   ]
 }
 
