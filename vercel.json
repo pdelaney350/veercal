@@ -24,6 +24,9 @@
       "src": "/learn/(.*)",
       "dest": "/learn/$1.html"
     },
+    { "src": "/faq", 
+      "dest": "/faq.html"
+    },
     {
       "src": "/privacy",
       "dest": "/privacy.html"

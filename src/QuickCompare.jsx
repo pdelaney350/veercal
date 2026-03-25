@@ -300,17 +300,40 @@ function Field({ label, hint, children }) {
   );
 }
 
-function NumberInput({ value, onChange, prefix = "$", min, max, step = 1 }) {
+function NumberInput({ value, onChange, prefix = "$", min, max }) {
+  /* Use a text input so users can freely type — converts to number on blur.
+     Avoids the browser stepping/validation behaviour of type="number"
+     which prevents typing mid-number on some browsers. */
+  const [local, setLocal] = React.useState(String(value));
+
+  React.useEffect(() => {
+    /* Sync if parent value changes externally (e.g. reset) */
+    setLocal(String(value));
+  }, [value]);
+
+  const commit = () => {
+    const parsed = parseFloat(local.replace(/[^0-9.]/g, ""));
+    if (!isNaN(parsed)) {
+      const clamped = min != null && parsed < min ? min
+                    : max != null && parsed > max ? max
+                    : parsed;
+      onChange(clamped);
+      setLocal(String(clamped));
+    } else {
+      setLocal(String(value)); /* revert if invalid */
+    }
+  };
+
   return (
     <div style={{ display: "flex", alignItems: "center", background: C.bg, border: `1px solid ${C.border}`, borderRadius: 8, padding: "0 12px", height: 42 }}>
       {prefix && <span style={{ fontSize: 14, color: C.muted, marginRight: 6 }}>{prefix}</span>}
       <input
-        type="number"
-        value={value}
-        min={min}
-        max={max}
-        step={step}
-        onChange={(e) => onChange(Number(e.target.value))}
+        type="text"
+        inputMode="numeric"
+        value={local}
+        onChange={(e) => setLocal(e.target.value)}
+        onBlur={commit}
+        onKeyDown={(e) => e.key === "Enter" && commit()}
         style={{ flex: 1, border: "none", background: "transparent", fontSize: 15, fontWeight: 600, color: C.text, outline: "none", fontFamily: "inherit" }}
         aria-label={prefix}
       />
@@ -700,23 +723,62 @@ export default function QuickCompare() {
   return (
     <div style={{ fontFamily: "'Inter', sans-serif", background: C.bg, minHeight: "100vh" }}>
 
-      {/* Header */}
-      <div style={{ background: `linear-gradient(135deg, #2d3eb0, #1e40af)`, padding: "16px 24px", display: "flex", alignItems: "center", gap: 12 }}>
-        <svg width="32" height="32" viewBox="0 0 100 100" fill="none">
-          <circle cx="50" cy="50" r="46" stroke="white" strokeWidth="2" fill="none"/>
-          <rect x="28" y="48" width="8" height="18" fill="white" rx="0.5"/>
-          <rect x="39" y="40" width="8" height="26" fill="white" rx="0.5"/>
-          <rect x="50" y="30" width="8" height="36" fill="white" rx="0.5"/>
-          <rect x="61" y="38" width="8" height="28" fill="white" rx="0.5"/>
-          <path d="M 26 66 A 6 6 0 0 0 38 66 Z" fill="white"/>
-          <path d="M 59 66 A 6 6 0 0 0 71 66 Z" fill="white"/>
-        </svg>
-        <div>
-          <div style={{ fontFamily: "'Arial Black', Arial, sans-serif", fontSize: 20, fontWeight: 900, color: "white", letterSpacing: "-0.09em", lineHeight: 1 }}>VEERCAL</div>
-          <div style={{ fontSize: 11, color: "rgba(255,255,255,0.6)", marginTop: 2 }}>Quick Compare</div>
+      {/* Header — matches full calculator banner */}
+      <div style={{
+        background: "linear-gradient(135deg, #2d3eb0 0%, #1e40af 50%, #1a35a0 100%)",
+        padding: "22px 32px 20px",
+        display: "flex", flexDirection: "column", justifyContent: "space-between",
+        position: "relative", overflow: "hidden",
+        boxShadow: "0 4px 24px rgba(30,41,59,0.30)",
+        minHeight: 120,
+      }}>
+        {/* Dot-grid texture */}
+        <div style={{ position: "absolute", inset: 0, opacity: 0.055,
+          backgroundImage: "radial-gradient(circle, #ffffff 1px, transparent 1px)",
+          backgroundSize: "26px 26px", pointerEvents: "none" }} />
+        {/* Right-side radial glow */}
+        <div style={{ position: "absolute", right: -80, top: -80, width: 380, height: 380,
+          borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 65%)",
+          pointerEvents: "none" }} />
+
+        {/* Top row: logo + wordmark + nav link */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", position: "relative" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+            <svg width="52" height="52" viewBox="0 0 100 100" fill="none">
+              <circle cx="50" cy="50" r="46" stroke="white" strokeWidth="2" fill="none"/>
+              <rect x="28" y="48" width="8" height="18" fill="white" rx="0.5"/>
+              <rect x="39" y="40" width="8" height="26" fill="white" rx="0.5"/>
+              <rect x="50" y="30" width="8" height="36" fill="white" rx="0.5"/>
+              <rect x="61" y="38" width="8" height="28" fill="white" rx="0.5"/>
+              <path d="M 26 66 A 6 6 0 0 0 38 66 Z" fill="white"/>
+              <path d="M 59 66 A 6 6 0 0 0 71 66 Z" fill="white"/>
+            </svg>
+            <div style={{
+              fontFamily: "'Arial Black', Arial, sans-serif",
+              fontSize: 46,
+              fontWeight: 900,
+              color: "#ffffff",
+              letterSpacing: "-0.09em",
+              lineHeight: 0.92,
+              transform: "scaleY(1.12)",
+              transformOrigin: "bottom left",
+              display: "block",
+            }}>VEERCAL</div>
+          </div>
+          <a href="/calculator" style={{ color: "rgba(255,255,255,0.65)", fontSize: 12, fontWeight: 500, textDecoration: "none", paddingTop: 4 }}>
+            Full calculator →
+          </a>
         </div>
-        <div style={{ marginLeft: "auto" }}>
-          <a href="/calculator" style={{ color: "rgba(255,255,255,0.7)", fontSize: 12, textDecoration: "none" }}>Full calculator →</a>
+
+        {/* Bottom row: tagline */}
+        <div style={{ position: "relative", marginTop: 14 }}>
+          <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.9)", letterSpacing: "0.01em", marginBottom: 2 }}>
+            Quick Compare
+          </div>
+          <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, color: "rgba(255,255,255,0.45)", letterSpacing: "0.02em" }}>
+            www.veercal.com
+          </div>
         </div>
       </div>
 

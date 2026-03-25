@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAQ — Veercal Car Finance Calculator | Frequently Asked Questions</title>
+  <meta name="description" content="Answers to common questions about using the Veercal car finance calculator, interpreting your results, and understanding key car finance terms used in Australia." />
+  <meta name="author" content="Veercal" />
+  <meta name="copyright" content="© 2025 Veercal. All rights reserved." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.veercal.com/faq" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #f1f5f9; color: #1e293b; font-size: 16px; line-height: 1.7; }
+
+    nav { background: linear-gradient(135deg, #2d3eb0 0%, #1e40af 100%); padding: 0 32px; height: 60px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-wordmark { font-family: 'Arial Black', Arial, sans-serif; font-size: 20px; font-weight: 900; color: white; letter-spacing: -0.09em; }
+    .nav-links { display: flex; gap: 8px; align-items: center; }
+    .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 13px; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.15s; }
+    .nav-links a:hover { color: white; background: rgba(255,255,255,0.1); }
+    .nav-cta { background: white; color: #1e40af !important; font-weight: 700 !important; }
+
+    .page-header {
+      background: linear-gradient(135deg, #2d3eb0, #1e40af);
+      padding: 48px 32px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+    .page-header h1 { font-size: 32px; font-weight: 800; color: white; letter-spacing: -0.02em; margin-bottom: 8px; position: relative; }
+    .page-header p { color: rgba(255,255,255,0.7); font-size: 15px; position: relative; }
+
+    .content-wrap { max-width: 820px; margin: 0 auto; padding: 48px 24px 80px; }
+
+    /* Section tabs */
+    .section-nav { display: flex; gap: 8px; margin-bottom: 32px; flex-wrap: wrap; }
+    .section-tab { padding: 8px 18px; border-radius: 8px; border: 2px solid #dbe4f0; background: white; color: #4a5a6b; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; text-decoration: none; }
+    .section-tab:hover { border-color: #1e40af; color: #1e40af; }
+    .section-tab.active { border-color: #1e40af; background: #eff6ff; color: #1e40af; }
+
+    /* Section heading */
+    .section-head { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 2px solid #dbe4f0; }
+    .section-head-icon { font-size: 24px; }
+    .section-head h2 { font-size: 20px; font-weight: 800; color: #1e293b; letter-spacing: -0.01em; }
+    .section-head p { font-size: 13px; color: #4a5a6b; margin-top: 2px; }
+
+    /* FAQ accordion */
+    .faq-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 48px; }
+    .faq-item { background: white; border: 1px solid #dbe4f0; border-radius: 12px; overflow: hidden; transition: box-shadow 0.15s; }
+    .faq-item:hover { box-shadow: 0 2px 12px rgba(30,41,59,0.08); }
+    .faq-item.open { border-color: #bfdbfe; box-shadow: 0 2px 12px rgba(30,41,59,0.08); }
+    .faq-q { width: 100%; background: none; border: none; padding: 18px 20px; text-align: left; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; font-family: inherit; }
+    .faq-q-text { font-size: 15px; font-weight: 700; color: #1e293b; line-height: 1.4; }
+    .faq-item.open .faq-q-text { color: #1e40af; }
+    .faq-chevron { font-size: 12px; color: #94a3b8; transition: transform 0.2s; flex-shrink: 0; }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); color: #1e40af; }
+    .faq-a { display: none; padding: 0 20px 18px; font-size: 14px; color: #475569; line-height: 1.75; border-top: 1px solid #f1f5f9; }
+    .faq-item.open .faq-a { display: block; }
+    .faq-a p { margin-bottom: 10px; }
+    .faq-a p:last-child { margin-bottom: 0; }
+    .faq-a strong { color: #1e293b; font-weight: 600; }
+    .faq-a a { color: #1e40af; }
+    .faq-a ul { padding-left: 20px; margin: 8px 0; }
+    .faq-a li { margin-bottom: 4px; }
+
+    /* Inline example box */
+    .faq-example { background: #f8fafc; border: 1px solid #dbe4f0; border-radius: 8px; padding: 12px 16px; margin: 10px 0; font-size: 13px; }
+    .faq-example-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #4a5a6b; margin-bottom: 6px; }
+    .faq-row { display: flex; justify-content: space-between; padding: 3px 0; }
+    .faq-row-label { color: #4a5a6b; }
+    .faq-row-value { font-weight: 600; color: #1e293b; }
+
+    /* Glossary */
+    .glossary-grid { display: flex; flex-direction: column; gap: 8px; margin-bottom: 48px; }
+    .glossary-item { background: white; border: 1px solid #dbe4f0; border-radius: 12px; padding: 18px 20px; }
+    .glossary-term { font-size: 15px; font-weight: 800; color: #1e40af; margin-bottom: 6px; }
+    .glossary-def { font-size: 14px; color: #475569; line-height: 1.7; }
+    .glossary-def strong { color: #1e293b; }
+
+    /* CTA */
+    .cta-block { background: linear-gradient(135deg, #2d3eb0, #1e40af); border-radius: 14px; padding: 32px; text-align: center; color: white; margin-bottom: 48px; }
+    .cta-block h3 { color: white; font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+    .cta-block p { color: rgba(255,255,255,0.75); font-size: 14px; margin-bottom: 20px; }
+    .cta-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .cta-btn { display: inline-block; background: white; color: #1e40af; font-weight: 700; font-size: 13px; padding: 10px 22px; border-radius: 8px; text-decoration: none; }
+    .cta-btn-ghost { background: rgba(255,255,255,0.12); color: white; border: 1px solid rgba(255,255,255,0.25); }
+
+    /* Footer */
+    footer { background: #1e293b; color: rgba(255,255,255,0.5); padding: 32px; text-align: center; font-size: 12px; }
+    footer a { color: rgba(255,255,255,0.6); text-decoration: none; margin: 0 10px; }
+    footer a:hover { color: white; }
+    .footer-brand { font-family: 'Arial Black', Arial, sans-serif; font-size: 16px; font-weight: 900; color: white; letter-spacing: -0.09em; margin-bottom: 12px; }
+    .footer-links { margin: 10px 0 14px; }
+    .footer-copy { font-size: 11px; color: rgba(255,255,255,0.3); }
+
+    @media (max-width: 600px) {
+      .page-header h1 { font-size: 24px; }
+      .content-wrap { padding: 28px 16px 60px; }
+      nav .nav-links a:not(.nav-cta) { display: none; }
+    }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "What does true total cost mean?",
+        "acceptedAnswer": { "@type": "Answer", "text": "True total cost is every dollar you spend on a car over your hold period — purchase price, stamp duty, finance interest, fuel, insurance, registration, servicing, and tyres — minus the exit sale value. It is the single most honest measure of what a car actually costs you. General information only." }},
+      { "@type": "Question", "name": "What is a novated lease?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A novated lease is a three-way arrangement between you, your employer, and a finance company. Your employer deducts lease payments from your pre-tax salary, reducing your taxable income. It is only available to permanent PAYG employees whose employer offers salary packaging. General information only." }},
+      { "@type": "Question", "name": "What is Luxury Car Tax?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Luxury Car Tax is a federal tax of 33% on the GST-exclusive portion of a vehicle price above a set threshold. For fuel-efficient vehicles and EVs the threshold is $91,387 in FY2025-26. General information only." }},
+      { "@type": "Question", "name": "What is an FBT exemption for EVs?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Battery electric vehicles provided under a novated lease are exempt from Fringe Benefits Tax if priced below the fuel-efficient LCT threshold. This significantly reduces the after-tax cost of novated leasing an EV. General information only — verify current status with the ATO." }}
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="nav-brand">
+      <svg width="28" height="28" viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="46" stroke="white" stroke-width="2" fill="none"/>
+        <rect x="28" y="48" width="8" height="18" fill="white" rx="0.5"/>
+        <rect x="39" y="40" width="8" height="26" fill="white" rx="0.5"/>
+        <rect x="50" y="30" width="8" height="36" fill="white" rx="0.5"/>
+        <rect x="61" y="38" width="8" height="28" fill="white" rx="0.5"/>
+        <path d="M 26 66 A 6 6 0 0 0 38 66 Z" fill="white"/>
+        <path d="M 59 66 A 6 6 0 0 0 71 66 Z" fill="white"/>
+      </svg>
+      <span class="nav-wordmark">VEERCAL</span>
+    </a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/calculator">Calculator</a>
+      <a href="/learn">Learn</a>
+      <a href="/calculator" class="nav-cta">Open Calculator →</a>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <h1>Frequently Asked Questions</h1>
+    <p>How to use the calculator, interpret your results, and understand the key terms</p>
+  </div>
+
+  <div class="content-wrap">
+
+    <div class="section-nav">
+      <a href="#using" class="section-tab active">Using the calculator</a>
+      <a href="#results" class="section-tab">Interpreting results</a>
+      <a href="#quickcompare" class="section-tab">Quick Compare</a>
+      <a href="#glossary" class="section-tab">Financial terms</a>
+    </div>
+
+    <!-- SECTION 1: Using the calculator -->
+    <div id="using">
+      <div class="section-head">
+        <span class="section-head-icon">🧮</span>
+        <div>
+          <h2>Using the calculator</h2>
+          <p>How to enter your details and get the most accurate comparison</p>
+        </div>
+      </div>
+
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggle(this)">
+            <span class="faq-q-text">Where do I start? What should I enter first?</span>
+            <span class="faq-chevron">▼</span>
+          </button>
+          <div class="faq-a">
+            <p>Start with the <strong>Vehicle tab</strong> in the left sidebar. Enter the drive-away price — this is the price you will actually pay at the dealership including dealer delivery, but before stamp duty (the calculator adds stamp duty for you based on your state).</p>
+            <p>Then select your state, enter your annual kilometres, and set how many years you plan to keep the car. These three inputs have the biggest effect on the comparison results.</p>
+            <p>Once you have those set, the Overview tab will show you a ranked comparison of all active finance structures immediately.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggle(this)">
+            <span class="faq-q-text">What price should I enter — list price or drive-away?</span>
+            <span class="faq-chevron">▼</span>
+          </button>
+          <div class="faq-a">
+            <p>Enter the <strong>drive-away price</strong> — the total you will pay the dealer before any government charges. This is the negotiated price including dealer delivery and any accessories you are having fitted, but excluding stamp duty, CTP, and registration.</p>
+            <p>The calculator automatically adds stamp duty on top of this price based on the state you select. It also calculates Luxury Car Tax (LCT) if the vehicle price exceeds the relevant threshold and you have the LCT toggle enabled in the Extras tab.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggle(this)">
+            <span class="faq-q-text">How do I compare novated lease vs personal loan vs cash?</span>
+            <span class="faq-chevron">▼</span>
+          </button>
+          <div class="faq-a">
+            <p>All five finance structures are calculated simultaneously. The <strong>Overview tab</strong> shows them ranked from cheapest to most expensive by true total cost. You can click the method badges at the top of the screen to show or hide specific options.</p>
+            <p>For novated lease to appear in the comparison, you need to enter your gross salary in the <strong>Novated tab</strong> of the sidebar. The calculation uses your marginal tax rate and the ATO statutory FBT formula.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggle(this)">
+            <span class="faq-q-text">What running costs should I enter?</span>
+            <span class="faq-chevron">▼</span>
+          </button>
+          <div class="faq-a">
+            <p>Running costs are in the <strong>Running tab</strong>. The defaults are reasonable averages for an Australian driver but you should adjust them for your situation:</p>
+            <ul>
+              <li><strong>Fuel:</strong> Check your usual servo price and your car's stated fuel consumption. For an EV, adjust the charging rate to your home electricity tariff.</li>
+              <li><strong>Insurance:</strong> Get a real quote — insurance varies enormously by age, location, and vehicle. A young driver in Sydney will pay much more than the default.</li>
+              <li><strong>Servicing:</strong> European premium brands cost more to service than Japanese brands. Budget $800–$1,500/yr for European brands, $400–$700 for Japanese.</li>
+              <li><strong>Registration:</strong> Check your state transport authority for the current fee for your vehicle type.</li>
+            </ul>
+            <p>More accurate running costs produce a more meaningful comparison — particularly if you are a high-km driver where fuel costs dominate.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggle(this)">
+            <span class="faq-q-text">How do I model a novated lease accurately?</span>
+            <span class="faq-chevron">▼</span>
+          </button>
+          <div class="faq-a">
+            <p>In the <strong>Novated tab</strong>, enter your gross annual salary (before tax, including super if your salary is quoted that way — check your payslip). Then set the lease term and your expected annual kilometres.</p>
+            <p>The calculator sets the ATO statutory residual automatically based on your km input. If your novated lease provider has quoted a specific residual percentage, you can override this.</p>
+            <p>If your employer charges a management fee through the novated lease, enter it in the provider fee field — this is often $500–$1,500/year and has a meaningful effect on the comparison.</p>
+            <p>If you are considering an EV, toggle the EV switch in the Extras tab and select BEV — if the vehicle price is below the LCT fuel-efficient threshold, the FBT exemption will be applied automatically.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggle(this)">
+            <span class="faq-q-text">Can I save my scenario and come back to it?</span>
+            <span class="faq-chevron">▼</span>
+          </button>
+          <div class="faq-a">
+            <p>Yes — use the <strong>Save</strong> button in the toolbar at the top of the calculator. Give your scenario a name (e.g. "Toyota RAV4 – 5yr personal loan") and it will be saved to your browser's local storage.</p>
+            <p>You can save multiple scenarios and switch between them using the scenario panel. This is useful for comparing two different vehicles, or the same vehicle with different finance terms.</p>
+            <p>You can also use the <strong>Share</strong> button to generate a URL that encodes all your current inputs — paste it into a bookmark, send it to yourself, or share it with a partner to review together.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggle(this)">
+            <span class="faq-q-text">What is the opportunity cost rate and should I change it?</span>
+            <span class="faq-chevron">▼</span>
+          </button>
+          <div class="faq-a">
+            <p>The opportunity cost rate (in the Extras tab) is only relevant for the <strong>Cash Purchase</strong> option. It represents what your money could earn if you invested it instead of buying a car outright.</p>
+            <p>The default is 5% — a conservative estimate for a diversified investment portfolio. Some useful benchmarks:</p>
+            <ul>
+              <li><strong>4%:</strong> High-yield savings account or term deposit</li>
+              <li><strong>5–6%:</strong> Balanced investment portfolio</li>
+              <li><strong>6–7%:</strong> Your mortgage rate (money in offset effectively earns your mortgage rate tax-free)</li>
+              <li><strong>7–9%:</strong> Long-term growth portfolio estimate</li>
+            </ul>
+            <p>If you have a mortgage at 6.2%, setting the opportunity cost to 6.2% is a reasonable choice — it models the cost of not having that money in your offset account.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggle(this)">
+            <span class="faq-q-text">How do I model dealer finance with a balloon payment?</span>
+            <span class="faq-chevron">▼</span>
+          </button>
+          <div class="faq-a">
+            <p>In the <strong>Finance tab</strong> of the sidebar, the Dealer Finance section has a balloon percentage slider. The default is 25% — meaning 25% of the vehicle price is owed as a lump sum at the end of the loan term.</p>
+            <p>A balloon reduces your monthly repayment but leaves a lump sum owing at the end. The calculator shows both the monthly repayment and the total cost including the balloon in the comparison.</p>
+            <p>Set balloon to 0% to model dealer finance without a balloon (equivalent to a standard principal-and-interest loan secured against the vehicle).</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggle(this)">
+            <span class="faq-q-text">What does the LCT toggle do?</span>
+            <span class="faq-chevron">▼</span>
+          </button>
+          <div class="faq-a">
+            <p>Luxury Car Tax is a federal tax on vehicles priced above a threshold ($80,567 for standard vehicles, $91,387 for EVs and fuel-efficient vehicles in FY2025-26). It is charged at 33% on the GST-exclusive value above the threshold.</p>
+            <p>The LCT toggle in the <strong>Extras tab</strong> adds LCT to the effective purchase price when calculating total cost. Turn it on if your vehicle is priced above the relevant threshold. For vehicles below the threshold it has no effect.</p>
+            <p>Note: the EU-Australia Free Trade Agreement (signed March 2026) proposes raising the fuel-efficient threshold to $120,000, but this requires legislation to take effect. Check the <a href="/learn/eu-australia-trade-deal-lct-ev">EU trade deal article</a> for the latest.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SECTION 2: Interpreting results -->
+    <div id="results">
+      <div class="section-head">
+        <span class="section-head-icon">📊</span>
+        <div>
+          <h2>Interpreting your results</h2>
+          <p>Understanding what the numbers mean and how to use them</p>
+        </div>
+      </div>
+
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggle(this)">
+            <span class="faq-q-text">What is "true total cost" and why does it matter?</span>
+            <span class="faq-chevron">▼</span>
+          </button>
+          <div class="faq-a">
+            <p>True total cost is <strong>every dollar spent</strong> on your car over the hold period, minus the amount you recover when you sell it. It is calculated as:</p>
+            <div class="faq-example">
+              <div class="faq-example-title">True total cost formula</div>
+              <div class="faq-row"><span class="faq-row-label">Purchase price + on-costs (stamp duty, LCT)</span><span class="faq-row-value">+</span></div>
+              <div class="faq-row"><span class="faq-row-label">Finance costs (interest paid)</span><span class="faq-row-value">+</span></div>
+              <div class="faq-row"><span class="faq-row-label">Running costs over the hold period</span><span class="faq-row-value">+</span></div>
+              <div class="faq-row"><span class="faq-row-label">Exit sale value</span><span class="faq-row-value">−</span></div>
+              <div class="faq-row"><span class="faq-row-label"><strong>True total cost</strong></span><span class="faq-row-value"><strong>= result</strong></span></div>
+            </div>
+            <p>Most car finance tools only show the monthly repayment. That number is designed to make borrowing look affordable. True total cost is the honest answer to the question: what does this car actually cost me?</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggle(this)">
+            <span class="faq-q-text">Why is the cash option not always the cheapest?</span>
+            <span class="faq-chevron">▼</span>
+          </button>
+          <div class="faq-a">
+            <p>Cash looks cheap because there is no interest to pay. But the calculator adds an <strong>opportunity cost</strong> to the cash option — the return you could have earned by investing that money instead.</p>
+            <p>If your savings are in a mortgage offset account at 6.2% and you can get a car loan at 5.9%, financing the car and keeping your money in the offset actually costs less over time. The spread between the opportunity cost rate and the loan rate determines which wins.</p>
+            <p>If you set the opportunity cost to 0%, cash will always show as the cheapest option (no interest, no opportunity cost). The default of 5% is a reasonable estimate for most people with some savings or investments.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggle(this)">
+            <span class="faq-q-text">The novated lease shows a much lower cost — is that right?</span>
+            <span class="faq-chevron">▼</span>
+          </button>
+          <div class="faq-a">
+            <p>For employees earning above $80,000 with a supportive employer, novated leasing genuinely is significantly cheaper — especially for EVs where the FBT exemption removes what would otherwise be a large post-tax contribution.</p>
+            <p>The saving comes from two places: salary packaging reduces your taxable income (saving income tax on every dollar of lease and running cost), and for eligible EVs the FBT exemption means no post-tax contribution is required at all.</p>
+            <p>However, there are real constraints: you must be a permanent PAYG employee, your employer must offer salary packaging, and the vehicle reverts to the finance company if you leave your job (you can typically pay it out, but the terms vary). Make sure you understand the exit provisions before committing.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggle(this)">
+            <span class="faq-q-text">What is the exit simulator and when should I use it?</span>
+            <span class="faq-chevron">▼</span>
+          </button>
+          <div class="faq-a">
+            <p>The <strong>Exit Simulator</strong> tab shows what it costs you to exit each finance structure at any point during your hold period — year by year. It shows your vehicle's estimated market value, your remaining loan balance, and the net cost of ownership to that point.</p>
+            <p>Use it when you are not sure how long you will keep the car, or when you are considering dealer finance with a balloon and want to understand your position at the end of the loan term. It also shows the residual buyout cost for novated and finance leases, and the gap or surplus between market value and residual.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggle(this)">
+            <span class="faq-q-text">Why does the hold period change the comparison so much?</span>
+            <span class="faq-chevron">▼</span>
+          </button>
+          <div class="faq-a">
+            <p>Depreciation — the loss in vehicle value over time — is steepest in the first 1–2 years and flattens out over time. If you only keep a car for 2 years you absorb the worst of the depreciation curve. Over 7 years the depreciation cost per year is much lower.</p>
+            <p>Finance structures also have different term lengths. A novated lease is typically 3 years; a personal loan may be 5–7 years. Comparing them over your actual planned hold period gives you a much more honest picture than comparing them over their respective terms.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggle(this)">
+            <span class="faq-q-text">How accurate is the depreciation estimate?</span>
+            <span class="faq-chevron">▼</span>
+          </button>
+          <div class="faq-a">
+            <p>The depreciation model uses a declining-balance formula — a percentage is applied each year to the remaining value. The defaults (15% year 1, 12% year 2, 10% year 3+) represent a broadly average Australian passenger vehicle.</p>
+            <p>Actual depreciation varies significantly by make, model, colour, km, and market conditions. Toyota and Mazda SUVs depreciate slower than average; European premium brands typically depreciate faster. You can adjust the depreciation rates in the <strong>Extras tab</strong> to better reflect your specific vehicle.</p>
+            <p>For a more accurate estimate, look up your specific make and model on RedBook or CarsGuide to see typical 3–5 year resale values, then back-calculate the effective annual rate.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SECTION 3: Quick Compare -->
+    <div id="quickcompare">
+      <div class="section-head">
+        <span class="section-head-icon">⚡</span>
+        <div>
+          <h2>Quick Compare</h2>
+          <p>Questions about the guided step-through comparison tool</p>
+        </div>
+      </div>
+
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggle(this)">
+            <span class="faq-q-text">What is Quick Compare and how is it different from the full calculator?</span>
+            <span class="faq-chevron">▼</span>
+          </button>
+          <div class="faq-a">
+            <p>Quick Compare guides you through five steps to collect just the key inputs, then shows a simplified comparison result. It is designed for people who want a fast answer without navigating all the settings in the full calculator.</p>
+            <p>The full calculator has six analysis tabs (Overview, Cash Flow, Equity, Exit Simulator, Deep Dive, On-Costs) and exposes every input. Quick Compare uses sensible defaults for the inputs it does not ask about. If you want to go deeper — adjust depreciation rates, model a refinance, or see year-by-year equity — use the full calculator.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggle(this)">
+            <span class="faq-q-text">Can I go back and change my answers in Quick Compare?</span>
+            <span class="faq-chevron">▼</span>
+          </button>
+          <div class="faq-a">
+            <p>Yes — use the Back button at the bottom of each card, or click any completed step in the progress bar at the top to jump back to it. Your answers are preserved when you go back.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggle(this)">
+            <span class="faq-q-text">Why is novated lease not showing in my Quick Compare results?</span>
+            <span class="faq-chevron">▼</span>
+          </button>
+          <div class="faq-a">
+            <p>You need to toggle <strong>Novated lease</strong> on in Step 3 (Finance Options), and then enter your gross salary in Step 4 (Your Details). If salary is left at zero the novated calculation will not run.</p>
+            <p>Also note that novated leasing is only available to permanent PAYG employees whose employer offers salary packaging. If that does not apply to you, the comparison is not relevant to your situation.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SECTION 4: Glossary -->
+    <div id="glossary">
+      <div class="section-head">
+        <span class="section-head-icon">📖</span>
+        <div>
+          <h2>Financial terms explained</h2>
+          <p>Key terms used in the calculator and in car finance generally</p>
+        </div>
+      </div>
+
+      <div class="glossary-grid">
+
+        <div class="glossary-item">
+          <div class="glossary-term">Amortisation</div>
+          <div class="glossary-def">The process of paying off a loan through regular scheduled payments. Each payment covers both interest and a portion of the principal. Early payments are mostly interest; later payments are mostly principal. The Veercal calculator builds a full amortisation schedule for every loan structure.</div>
+        </div>
+
+        <div class="glossary-item">
+          <div class="glossary-term">Balloon payment</div>
+          <div class="glossary-def">A lump sum due at the end of a loan term, typically in dealer finance. A balloon reduces monthly repayments because you are not paying down the full principal during the term. At the end of the loan you must pay the balloon amount — either in cash, by refinancing, or by trading the vehicle in. If the car is worth less than the balloon at that point, you are in negative equity.</div>
+        </div>
+
+        <div class="glossary-item">
+          <div class="glossary-term">Comparison rate</div>
+          <div class="glossary-def">A standardised rate that includes the interest rate plus most fees and charges, expressed as a single annual percentage. It is more useful than the advertised rate for comparing loan products. Required by law on consumer credit advertisements in Australia. Always compare comparison rates, not headline rates.</div>
+        </div>
+
+        <div class="glossary-item">
+          <div class="glossary-term">Depreciation</div>
+          <div class="glossary-def">The loss in market value of a vehicle over time. It is typically the largest single cost of car ownership — often larger than finance costs and running costs combined. A new $50,000 car may lose $15,000–$20,000 in value in its first three years. Veercal models depreciation as a declining-balance formula applied annually.</div>
+        </div>
+
+        <div class="glossary-item">
+          <div class="glossary-term">ECM (Employee Contribution Method)</div>
+          <div class="glossary-def">A method used in novated leasing to offset the Fringe Benefits Tax liability. Under ECM, the employee makes a post-tax contribution equal to the FBT amount, which reduces the taxable value of the benefit to nil. For EVs that are FBT-exempt, the ECM contribution is zero — meaning all payments are pre-tax.</div>
+        </div>
+
+        <div class="glossary-item">
+          <div class="glossary-term">Effective monthly cost</div>
+          <div class="glossary-def">The true total cost of ownership divided by the number of months in the hold period. It normalises the comparison across different finance structures — a cash purchase with a high upfront cost and a loan with monthly repayments can both be expressed as an effective monthly figure for comparison.</div>
+        </div>
+
+        <div class="glossary-item">
+          <div class="glossary-term">FBT (Fringe Benefits Tax)</div>
+          <div class="glossary-def">A tax paid by employers on certain non-cash benefits provided to employees, including cars under a novated lease. The FBT rate is 47%, applied using a gross-up factor on the taxable value of the benefit. Under the statutory formula, the taxable value of a car benefit is 20% of the vehicle's base value. Battery EVs below the fuel-efficient LCT threshold are currently exempt from FBT under a novated lease.</div>
+        </div>
+
+        <div class="glossary-item">
+          <div class="glossary-term">Finance lease</div>
+          <div class="glossary-def">A commercial leasing arrangement where the lessee (you) has use of the vehicle but the finance company retains legal ownership. At the end of the term you pay a residual amount (set by the ATO based on km travelled) to acquire the vehicle, or hand it back. Common for business use. Unlike novated leasing, there is no salary sacrifice element.</div>
+        </div>
+
+        <div class="glossary-item">
+          <div class="glossary-term">LCT (Luxury Car Tax)</div>
+          <div class="glossary-def">A federal tax of 33% on the GST-exclusive portion of a vehicle price above a threshold. For FY2025-26 the standard threshold is $80,567 (petrol/diesel) and the fuel-efficient threshold is $91,387 (EVs, PHEVs, vehicles using less than 7L/100km). The proposed EU-Australia FTA threshold is $120,000 for fuel-efficient vehicles — not yet legislated.</div>
+        </div>
+
+        <div class="glossary-item">
+          <div class="glossary-term">Marginal tax rate</div>
+          <div class="glossary-def">The tax rate applied to the last dollar of your income. In Australia, income tax is progressive — different portions of your income are taxed at different rates. For salary packaging and novated lease calculations, the marginal rate on your total salary is the relevant figure. For FY2024-25 onwards (Stage 3 cuts): 0% up to $18,200; 19% to $45,000; 32.5% to $135,000; 37% to $190,000; 45% above $190,000.</div>
+        </div>
+
+        <div class="glossary-item">
+          <div class="glossary-term">Negative equity</div>
+          <div class="glossary-def">When you owe more on a vehicle than it is worth. This occurs most commonly with dealer finance balloon payments where the vehicle has depreciated faster than expected, or when a loan is refinanced and fees are capitalised. Veercal's Exit Simulator shows your equity position year by year to help you identify negative equity risk.</div>
+        </div>
+
+        <div class="glossary-item">
+          <div class="glossary-term">Novated lease</div>
+          <div class="glossary-def">A three-way arrangement between an employee, their employer, and a finance company. The employer deducts lease payments from the employee's pre-tax salary. This reduces the employee's taxable income, saving income tax. Running costs (fuel, insurance, rego, servicing) can also be packaged pre-tax. Available to permanent PAYG employees whose employer offers salary packaging.</div>
+        </div>
+
+        <div class="glossary-item">
+          <div class="glossary-term">Opportunity cost</div>
+          <div class="glossary-def">The return you forgo by deploying capital into one use rather than another. In the context of a cash car purchase, the opportunity cost is the investment return you could have earned on the cash if you had borrowed for the car instead. Veercal uses compound growth to calculate this — the formula is: purchase price × ((1 + rate)^years - 1).</div>
+        </div>
+
+        <div class="glossary-item">
+          <div class="glossary-term">Principal</div>
+          <div class="glossary-def">The original amount borrowed, excluding interest. On a $45,000 car with a $5,000 deposit, the principal is $40,000. Each monthly repayment reduces the outstanding principal by a small amount — more so as the loan matures and the interest component of each payment shrinks.</div>
+        </div>
+
+        <div class="glossary-item">
+          <div class="glossary-term">Residual value</div>
+          <div class="glossary-def">The minimum value of a vehicle at the end of a lease term, set by the ATO based on the total kilometres driven over the term. At the end of the lease, you can pay the residual to own the vehicle outright, re-lease on a new term, or return the vehicle. The ATO residual schedule ranges from 52.88% for vehicles driven under 15,000 km/year to 28.12% for over 45,000 km/year.</div>
+        </div>
+
+        <div class="glossary-item">
+          <div class="glossary-term">Salary sacrifice / salary packaging</div>
+          <div class="glossary-def">An arrangement where you agree to forgo a portion of your pre-tax salary in exchange for non-cash benefits (like a car). Because you receive less salary, you pay less income tax. The tax saving is the benefit. In a novated lease, your employer pays the lease and running costs from your pre-tax salary, and you receive a lower gross wage.</div>
+        </div>
+
+        <div class="glossary-item">
+          <div class="glossary-term">Stamp duty (motor vehicle)</div>
+          <div class="glossary-def">A state government tax on the purchase of a motor vehicle, calculated as a percentage of the vehicle's market value. Rates vary by state — from around 3% in some states to up to 6% in VIC for vehicles over $100,000. Stamp duty is paid at the time of registration transfer and cannot be financed in a standard consumer loan.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-block">
+      <h3>Ready to run your numbers?</h3>
+      <p>Use Quick Compare for a fast guided result, or open the full calculator for detailed analysis across all six tabs.</p>
+      <div class="cta-btns">
+        <a href="/compare" class="cta-btn">Quick Compare →</a>
+        <a href="/calculator" class="cta-btn cta-btn-ghost">Full Calculator →</a>
+      </div>
+    </div>
+
+    <div style="font-size: 12px; color: #94a3b8; line-height: 1.6;">
+      General information only — not financial, tax, or legal advice. All explanations are simplified for educational purposes. Rates and thresholds are current as at March 2026 and subject to change. Always verify current figures with the ATO and consult a licensed financial adviser before making financial decisions. Veercal does not hold an Australian Financial Services Licence.
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-brand">VEERCAL</div>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/calculator">Calculator</a>
+      <a href="/compare">Quick Compare</a>
+      <a href="/learn">Learn</a>
+      <a href="/faq">FAQ</a>
+      <a href="/privacy">Privacy Policy</a>
+      <a href="/terms">Terms of Use</a>
+    </div>
+    <div class="footer-copy">© <span id="yr"></span> Veercal Pty. Ltd. All rights reserved. · General information only.</div>
+  </footer>
+
+  <script>
+    document.getElementById('yr').textContent = new Date().getFullYear();
+
+    function toggle(btn) {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      /* Close all open items */
+      document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+      /* Open this one if it was closed */
+      if (!isOpen) item.classList.add('open');
+    }
+
+    /* Handle section tab clicks — smooth scroll + active state */
+    document.querySelectorAll('.section-tab').forEach(tab => {
+      tab.addEventListener('click', function(e) {
+        document.querySelectorAll('.section-tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
+    /* Open first item in each section by default */
+    document.querySelectorAll('.faq-list').forEach(list => {
+      const first = list.querySelector('.faq-item');
+      if (first) first.classList.add('open');
+    });
+  </script>
+
+</body>
+</html>
