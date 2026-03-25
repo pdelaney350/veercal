@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useCallback } from "react";
+import { Analytics } from "@vercel/analytics/react";
 
 /**
  * Veercal — Car Ownership Cost Calculator
