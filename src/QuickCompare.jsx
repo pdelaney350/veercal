@@ -164,42 +164,48 @@ function calcResults(inputs) {
     });
   }
 
-  /* Personal loan */
+  /* Personal loan — mirrors calcLoan() in App.js */
   if (includeLoan) {
-    const principal = Math.max(0, vehiclePrice - deposit);
+    const financedAmount = Math.max(0, vehiclePrice - deposit);
     const months = loanTerm * 12;
-    const mp = pmt(loanRate, months, principal);
-    const totalPaid = deposit + mp * Math.min(months, holdYears * 12);
-    const totalInt = mp * months - principal;
+    const mp = pmt(loanRate, months, financedAmount);
+    const holdMonths = Math.min(holdYears * 12, months);
+    const totalPaid = deposit + stampDuty + holdMonths * mp;  /* stamp duty upfront */
+    const totalInt = mp * months - financedAmount;
     const totalCost = totalPaid + totalRunning - exitValue;
     results.push({
       method: "loan", label: "Personal Loan", icon: "🏦", color: "#1e40af",
       monthlyPayment: Math.round(mp),
       totalCost: Math.round(totalCost),
       effectiveMonthly: Math.round(totalCost / (holdYears * 12)),
-      upfront: deposit,
+      upfront: deposit + stampDuty,
       totalInterest: Math.round(totalInt),
       note: `${(loanRate * 100).toFixed(2)}% interest rate, ${loanTerm}-year term`,
     });
   }
 
-  /* Dealer finance */
+  /* Dealer finance — mirrors calcLoan() in App.js exactly */
   if (includeDealer) {
     const dep = 2000;
     const balloon = vehiclePrice * 0.25;
-    const principal = Math.max(0, vehiclePrice - dep);
+    /* Finance vehicle price minus deposit (stamp duty paid upfront, not financed) */
+    const financedAmount = Math.max(0, vehiclePrice - dep);
     const months = dealerTerm * 12;
-    const mp = pmt(dealerRate, months, principal, -balloon);
-    const totalPaid = dep + mp * Math.min(months, holdYears * 12);
-    const totalInt = mp * months + balloon - principal;
-    const totalCost = totalPaid + totalRunning - exitValue + (holdYears >= dealerTerm ? Math.max(0, balloon - exitValue) : 0);
+    const mp = pmt(dealerRate, months, financedAmount, -balloon);
+    const holdMonths = Math.min(holdYears * 12, months);
+    const totalPaid = dep + stampDuty + holdMonths * mp;   /* stamp duty is upfront cash */
+    /* Remaining balloon at end of hold: if still in loan term, balloon still owing */
+    const balloonOwing = holdYears >= dealerTerm ? balloon : 0;
+    const totalInt = mp * months - (financedAmount - balloon);
+    const totalCost = totalPaid + totalRunning - exitValue + Math.max(0, balloonOwing);
     results.push({
       method: "dealer", label: "Dealer Finance", icon: "🚗", color: "#ea580c",
       monthlyPayment: Math.round(mp),
       totalCost: Math.round(totalCost),
       effectiveMonthly: Math.round(totalCost / (holdYears * 12)),
-      upfront: dep,
+      upfront: dep + stampDuty,
       totalInterest: Math.round(totalInt),
+      balloonOwing: Math.round(balloonOwing),
       note: `25% balloon · ${(dealerRate * 100).toFixed(2)}% rate · ${dealerTerm}yr term`,
     });
   }
@@ -569,6 +575,150 @@ function StepDetails({ inputs, upd }) {
   );
 }
 
+/* ─── Insight flip cards ─────────────────────────────────────────────────── */
+function InsightCards({ results, inputs }) {
+  const [flipped, setFlipped] = React.useState({});
+  const flip = (id) => setFlipped(p => ({ ...p, [id]: !p[id] }));
+
+  const lowestMonthly = [...results].sort((a, b) => a.monthlyPayment - b.monthlyPayment)[0];
+  const lowestTotal   = results[0]; /* already sorted by totalCost */
+  const novated       = results.find(r => r.method === "novated");
+  const loan          = results.find(r => r.method === "loan");
+  const cash          = results.find(r => r.method === "cash");
+  const dealer        = results.find(r => r.method === "dealer");
+
+  const cards = [];
+
+  /* Card 1: lowest monthly payment */
+  if (lowestMonthly) {
+    cards.push({
+      id: "monthly",
+      icon: "💳",
+      front_title: "Lowest monthly payment",
+      front_value: fmt(lowestMonthly.monthlyPayment || 0) + "/mo",
+      front_label: lowestMonthly.label,
+      front_color: lowestMonthly.color,
+      back_title: "Why this is lowest",
+      back_body: lowestMonthly.method === "cash"
+        ? `Paying cash means no monthly finance repayment at all — your only ongoing costs are running expenses of ${fmt(Math.round(inputs.annualKm / 100 * inputs.fuelL100km * inputs.fuelPerL / 12 + (inputs.tyres + inputs.service + inputs.insurance + inputs.rego) / 12))}/mo. However the true total cost includes the full purchase price upfront.`
+        : lowestMonthly.method === "dealer"
+        ? `Dealer finance with a 25% balloon keeps monthly payments low because you are not paying down the full loan balance — ${fmt(lowestMonthly.balloonOwing || Math.round(inputs.vehiclePrice * 0.25))} remains owing at the end of the term.`
+        : lowestMonthly.method === "novated"
+        ? `Salary sacrifice reduces your effective monthly out-of-pocket to ${fmt(lowestMonthly.monthlyPayment)}/mo. You are saving ${fmt(lowestMonthly.taxSavingMonthly)}/mo in income tax${lowestMonthly.fbtExempt ? " and paying no FBT (EV exemption applies)" : ""}.`
+        : `A ${inputs.loanTerm}-year loan at ${(inputs.loanRate * 100).toFixed(2)}% spreads the cost over ${inputs.loanTerm * 12} monthly payments of ${fmt(lowestMonthly.monthlyPayment)}.`,
+    });
+  }
+
+  /* Card 2: lowest true total cost */
+  if (lowestTotal) {
+    const secondCheapest = results[1];
+    cards.push({
+      id: "total",
+      icon: "🏆",
+      front_title: "Lowest true total cost",
+      front_value: fmt(lowestTotal.totalCost),
+      front_label: `over ${inputs.holdYears} years — ${lowestTotal.label}`,
+      front_color: lowestTotal.color,
+      back_title: "What makes it cheapest",
+      back_body: secondCheapest
+        ? `${lowestTotal.label} costs ${fmt(lowestTotal.totalCost)} over ${inputs.holdYears} years — that is ${fmt(secondCheapest.totalCost - lowestTotal.totalCost)} less than ${secondCheapest.label} (${fmt(secondCheapest.totalCost)}). True total cost includes all finance, running costs, stamp duty, and exit value.`
+        : `${lowestTotal.label} is the only option selected. Add more options in Step 3 to compare.`,
+    });
+  }
+
+  /* Card 3: novated tax saving (if applicable) */
+  if (novated) {
+    cards.push({
+      id: "novated",
+      icon: "💼",
+      front_title: "Novated tax saving",
+      front_value: fmt(novated.taxSavingMonthly * 12) + "/yr",
+      front_label: `${fmt(novated.taxSavingMonthly)}/mo income tax saved`,
+      front_color: "#b45309",
+      back_title: "How your novated saving works",
+      back_body: `On a ${fmt(inputs.salary)} salary, your marginal rate is approximately ${Math.round((novated.taxSavingMonthly / ((novated.monthlyPayment + novated.taxSavingMonthly))) * 100)}%. Packaging ${fmt(novated.monthlyPayment + novated.taxSavingMonthly)}/mo pre-tax saves you ${fmt(novated.taxSavingMonthly)}/mo or ${fmt(novated.taxSavingMonthly * 12)}/yr in income tax.${novated.fbtExempt ? " Your EV is FBT-exempt so no post-tax contribution is required." : ""} Over ${inputs.holdYears} years that is ${fmt(novated.taxSavingMonthly * 12 * inputs.holdYears)} in total tax savings.`,
+    });
+  }
+
+  /* Card 4: cash vs loan — interest cost insight */
+  if (cash && loan) {
+    const interestSaving = loan.totalInterest;
+    cards.push({
+      id: "cashvloan",
+      icon: "💵",
+      front_title: "Interest cost — loan",
+      front_value: fmt(interestSaving),
+      front_label: "total interest on personal loan",
+      front_color: "#1e40af",
+      back_title: "Cash vs loan trade-off",
+      back_body: `Financing at ${(inputs.loanRate * 100).toFixed(2)}% costs ${fmt(interestSaving)} in interest over ${inputs.loanTerm} years. Cash avoids this — but the opportunity cost of not investing ${fmt(inputs.vehiclePrice)} adds approximately ${fmt(cash.opportunityCostTotal || Math.round(inputs.vehiclePrice * (Math.pow(1 + inputs.opportunityCost, inputs.holdYears) - 1)))} over ${inputs.holdYears} years at ${(inputs.opportunityCost * 100).toFixed(0)}% assumed return. ${interestSaving < (cash.opportunityCostTotal || 0) ? "In this scenario investing the cash and financing the car is mathematically cheaper." : "In this scenario cash is mathematically cheaper — the loan interest exceeds the opportunity cost."}`,
+    });
+  }
+
+  if (cards.length === 0) return null;
+
+  return (
+    <div style={{ marginBottom: 20 }}>
+      <div style={{ fontSize: 11, fontWeight: 700, color: C.muted, textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 12 }}>
+        Tap any card for insight
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 10 }}>
+        {cards.map(card => (
+          <div key={card.id}
+            onClick={() => flip(card.id)}
+            style={{
+              borderRadius: 12, cursor: "pointer", minHeight: 110,
+              perspective: 600,
+              WebkitPerspective: 600,
+            }}
+          >
+            <div style={{
+              position: "relative", width: "100%", height: "100%", minHeight: 110,
+              transformStyle: "preserve-3d",
+              WebkitTransformStyle: "preserve-3d",
+              transition: "transform 0.4s ease",
+              transform: flipped[card.id] ? "rotateY(180deg)" : "rotateY(0deg)",
+            }}>
+              {/* Front */}
+              <div style={{
+                position: "absolute", inset: 0,
+                backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden",
+                background: "white", border: `2px solid ${card.front_color}20`,
+                borderRadius: 12, padding: "14px 16px",
+                display: "flex", flexDirection: "column", justifyContent: "space-between",
+              }}>
+                <div style={{ fontSize: 11, fontWeight: 700, color: C.muted, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 6 }}>
+                  {card.icon} {card.front_title}
+                </div>
+                <div>
+                  <div style={{ fontSize: 20, fontWeight: 800, color: card.front_color, letterSpacing: "-0.01em" }}>{card.front_value}</div>
+                  <div style={{ fontSize: 11, color: C.muted, marginTop: 3 }}>{card.front_label}</div>
+                </div>
+                <div style={{ fontSize: 10, color: "#cbd5e1", marginTop: 8, textAlign: "right" }}>tap for insight →</div>
+              </div>
+              {/* Back */}
+              <div style={{
+                position: "absolute", inset: 0,
+                backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden",
+                transform: "rotateY(180deg)",
+                background: `linear-gradient(135deg, ${card.front_color}15, ${card.front_color}08)`,
+                border: `2px solid ${card.front_color}40`,
+                borderRadius: 12, padding: "14px 16px",
+              }}>
+                <div style={{ fontSize: 11, fontWeight: 700, color: card.front_color, marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                  {card.back_title}
+                </div>
+                <div style={{ fontSize: 12, color: C.text, lineHeight: 1.6 }}>{card.back_body}</div>
+                <div style={{ fontSize: 10, color: "#cbd5e1", marginTop: 8, textAlign: "right" }}>tap to flip back ↩</div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function StepResults({ inputs }) {
   const { results, stampDuty, lct, exitValue, runPerYear } = useMemo(
     () => calcResults(inputs),
@@ -679,13 +829,16 @@ function StepResults({ inputs }) {
         </div>
       )}
 
+      {/* ── Insight flip cards ─────────────────────────────────────────── */}
+      {hasResults && <InsightCards results={results} inputs={inputs} />}
+
       {/* CTA to full calculator */}
       <div style={{ background: C.navy, borderRadius: 12, padding: "20px 22px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 14, flexWrap: "wrap" }}>
         <div>
           <div style={{ fontSize: 14, fontWeight: 700, color: "white", marginBottom: 4 }}>Want the full picture?</div>
           <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)" }}>The full Veercal calculator adds 6 analysis tabs — cash flow, equity, exit simulator, deep dive, on-costs, and year-by-year data.</div>
         </div>
-        <a href="/calculator" style={{ background: "white", color: C.brand, fontWeight: 700, fontSize: 13, padding: "10px 20px", borderRadius: 8, textDecoration: "none", whiteSpace: "nowrap", flexShrink: 0 }}>
+        <a href={buildCalcUrl(inputs)} style={{ background: "white", color: C.brand, fontWeight: 700, fontSize: 13, padding: "10px 20px", borderRadius: 8, textDecoration: "none", whiteSpace: "nowrap", flexShrink: 0 }}>
           Open Full Calculator →
         </a>
       </div>
@@ -695,6 +848,48 @@ function StepResults({ inputs }) {
       </div>
     </div>
   );
+}
+
+/* ─── URL state bridge: encode QC inputs for full calculator ────────────── */
+function buildCalcUrl(inputs) {
+  /* Maps QuickCompare input keys to the full calculator's DEFAULTS keys,
+     encodes as base64 JSON in the URL hash — same format the full calculator uses */
+  try {
+    const mapped = {
+      vehiclePrice: inputs.vehiclePrice,
+      state: inputs.state,
+      isEV: inputs.isEV,
+      evType: inputs.evType,
+      holdYears: inputs.holdYears,
+      annualKm: inputs.annualKm,
+      loanDeposit: inputs.deposit,
+      loanRate: inputs.loanRate,
+      loanTermYears: inputs.loanTerm,
+      dealerRate: inputs.dealerRate,
+      dealerTermYears: inputs.dealerTerm,
+      dealerDeposit: 2000,
+      balloonPct: 0.25,
+      grossSalary: inputs.salary,
+      novatedRate: inputs.novatedRate,
+      novatedTermYears: inputs.novatedTerm,
+      fuelPerL: inputs.fuelPerL,
+      fuelL100km: inputs.fuelL100km,
+      evEfficiencyKwh: inputs.evEffKwh,
+      evHomeChargeKwh: inputs.evChargeRate,
+      tyresPerYear: inputs.tyres,
+      servicesPerYear: inputs.service,
+      insurancePerYear: inputs.insurance,
+      regPerYear: inputs.rego,
+      depYr1: inputs.dep1,
+      depYr2: inputs.dep2,
+      depYrN: inputs.depN,
+      opportunityCostPct: inputs.opportunityCost,
+    };
+    const encoded = btoa(JSON.stringify(mapped));
+    return `/calculator#s=${encoded}`;
+  } catch {
+    return "/calculator";
+  }
 }
 
 /* ─── Main component ─────────────────────────────────────────────────────── */

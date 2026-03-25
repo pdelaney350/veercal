@@ -3,11 +3,6 @@ import React, { useState, useMemo, useCallback } from "react";
 /**
  * Veercal — Car Ownership Cost Calculator
  * © 2025 Veercal. All rights reserved.
- * https://www.veercalimport React, { useState, useMemo, useCallback } from "react";
-
-/**
- * Veercal — Car Ownership Cost Calculator
- * © 2025 Veercal. All rights reserved.
  * https://www.veercal.com
  *
  * This source code is proprietary and confidential.
@@ -18,7 +13,6 @@ import React, { useState, useMemo, useCallback } from "react";
  * General information only — not financial advice.
  */
 import { LineChart, Line, AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine } from "recharts";
-
 
 /* ─── Google Fonts (idempotent — won't duplicate on hot reload) ─────────── */
 if (!document.getElementById("veercal-fonts")) {
@@ -310,6 +304,7 @@ function calcCash(d) {
     const oppCost = ep * (Math.pow(1 + d.opportunityCostPct, y) - 1);
     yd.push({ year: y, assetValue: Math.round(av), equity: Math.round(av),
       totalSpent: Math.round(ep + run * y),
+      annualSpent: y === 1 ? Math.round(ep + run) : Math.round(run),  /* upfront in yr1, running only after */
       monthlyEquivalent: Math.round(ep / (yrs * 12) + run / 12),
       netPosition: Math.round(av - ep - run * y),
       opportunityCost: Math.round(oppCost) });
@@ -350,9 +345,11 @@ function calcLoan(d, type) {
     const mIdx = Math.min(y * 12, months) - 1;
     const lb = y * 12 <= months ? rows[mIdx].balance : (isD ? balloon : 0);
     const tp = dep + Math.min(y * 12, months) * monthlyPayment;
+    const prevTp = dep + Math.min((y-1)*12, months) * monthlyPayment;
     yd.push({ year: y, assetValue: Math.round(av), loanBalance: Math.round(lb),
       equity: Math.round(av - lb),
       totalSpent: Math.round(tp + run * y),
+      annualSpent: Math.round((tp - prevTp) + run),  /* payments this year + annual running */
       monthlyEquivalent: Math.round(monthlyPayment + run / 12),
       netPosition: Math.round(av - lb - run * y) });
   }
@@ -377,6 +374,7 @@ function calcLease(d) {
     const lp = Math.min(y, d.leaseTermYears) * 12 * monthlyPayment;
     yd.push({ year: y, assetValue: 0, equity: 0,
       totalSpent: Math.round(lp + run * y),
+      annualSpent: Math.round(Math.min(12, Math.max(0, d.leaseTermYears*12 - (y-1)*12)) * monthlyPayment + run),
       monthlyEquivalent: Math.round(monthlyPayment + run / 12),
       netPosition: Math.round(-(lp + run * y)) });
   }
@@ -407,6 +405,7 @@ function calcNovated(d) {
     /* Show real market value so exit sim can display residual vs market gap */
     yd.push({ year: y, assetValue: Math.round(av), equity: 0,
       totalSpent: Math.round(trueNet * 12 * y),
+      annualSpent: Math.round(trueNet * 12),
       monthlyEquivalent: Math.round(trueNet),
       taxSavingAnnual: Math.round(saving * 12),
       netPosition: Math.round(-trueNet * 12 * y),
@@ -685,7 +684,19 @@ function InfoTip({ id, openModal }) {
   );
 }
 
-function Slider({ label, value, onChange, min, max, step = 1, fmt: f = (v) => v, sub, info, openModal }) {
+function Slider({ label, value, onChange, min, max, step = 1, fmt: f = (v) => v, sub, info, openModal, isRate = false }) {
+  /* isRate=true adds a click-to-type text box for exact rate entry to 2 decimal places */
+  const [editing, setEditing] = React.useState(false);
+  const [draft, setDraft] = React.useState("");
+  const startEdit = () => { setDraft((value * 100).toFixed(2)); setEditing(true); };
+  const commitEdit = () => {
+    setEditing(false);
+    const parsed = parseFloat(draft);
+    if (!isNaN(parsed) && parsed >= 0 && parsed <= 50) {
+      onChange(Math.round(parsed * 10000) / 1000000 * 100); /* careful: % -> decimal */
+      onChange(parsed / 100);
+    }
+  };
   return (
     <div style={{ marginBottom: 12 }}>
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 2, alignItems: "center" }}>
@@ -693,7 +704,29 @@ function Slider({ label, value, onChange, min, max, step = 1, fmt: f = (v) => v,
           {label}
           {info && openModal && <InfoTip id={info} openModal={openModal} />}
         </span>
-        <span style={{ fontSize: 12, color: C.brand500, fontWeight: 700, fontFamily: NUM }}>{f(value)}</span>
+        {isRate && editing ? (
+          <div style={{ display: "flex", alignItems: "center", gap: 3 }}>
+            <input
+              type="text" inputMode="decimal" value={draft}
+              onChange={(e) => setDraft(e.target.value)}
+              onBlur={commitEdit}
+              onKeyDown={(e) => e.key === "Enter" && commitEdit()}
+              autoFocus
+              style={{ width: 48, textAlign: "right", fontFamily: NUM, fontSize: 12, fontWeight: 700,
+                color: C.brand500, border: `1px solid ${C.brand500}`, borderRadius: 4,
+                padding: "1px 3px", outline: "none", background: C.surfaceAlt }}
+            />
+            <span style={{ fontSize: 10, color: C.muted }}>%</span>
+          </div>
+        ) : isRate ? (
+          <span onClick={startEdit} title="Click to type exact rate"
+            style={{ fontSize: 12, color: C.brand500, fontWeight: 700, fontFamily: NUM,
+              cursor: "text", borderBottom: `1px dashed ${C.brand500}`, paddingBottom: 1 }}>
+            {f(value)} ✎
+          </span>
+        ) : (
+          <span style={{ fontSize: 12, color: C.brand500, fontWeight: 700, fontFamily: NUM }}>{f(value)}</span>
+        )}
       </div>
       {sub && <div style={{ fontSize: 10, color: C.muted, marginBottom: 2 }}>{sub}</div>}
       <input type="range" min={min} max={max} step={step} value={value}
@@ -701,6 +734,25 @@ function Slider({ label, value, onChange, min, max, step = 1, fmt: f = (v) => v,
         aria-label={label} aria-valuetext={f(value)}
         style={{ width: "100%", accentColor: C.brand500, cursor: "pointer" }} />
     </div>
+  );
+}
+
+/* Free-typing number input — avoids browser type=number stepping issues */
+function NIInput({ value, onChange, label }) {
+  const [local, setLocal] = React.useState(String(value));
+  React.useEffect(() => { setLocal(String(value)); }, [value]);
+  const commit = () => {
+    const p = parseFloat(local.replace(/[^0-9.]/g, ""));
+    if (!isNaN(p)) { onChange(p); setLocal(String(p)); }
+    else setLocal(String(value));
+  };
+  return (
+    <input type="text" inputMode="numeric" value={local}
+      onChange={(e) => setLocal(e.target.value)}
+      onBlur={commit}
+      onKeyDown={(e) => e.key === "Enter" && commit()}
+      aria-label={label}
+      style={{ background: "transparent", border: "none", color: C.text, fontSize: 13, width: "100%", outline: "none", fontFamily: NUM }} />
   );
 }
 
@@ -714,9 +766,7 @@ function NI({ label, value, onChange, pre = "$", suf, sub, info, openModal }) {
       {sub && <div style={{ fontSize: 10, color: C.muted, marginBottom: 2 }}>{sub}</div>}
       <div style={{ display: "flex", alignItems: "center", background: C.surface2, border: `1px solid ${C.border}`, borderRadius: 6, padding: "5px 8px" }}>
         {pre && <span style={{ color: C.muted, fontSize: 12, marginRight: 3 }}>{pre}</span>}
-        <input type="number" value={value} onChange={(e) => onChange(Number(e.target.value))}
-          aria-label={label}
-          style={{ background: "transparent", border: "none", color: C.text, fontSize: 13, width: "100%", outline: "none", fontFamily: NUM }} />
+        <NIInput value={value} onChange={onChange} label={label} />
         {suf && <span style={{ color: C.muted, fontSize: 12 }}>{suf}</span>}
       </div>
     </div>
@@ -1113,6 +1163,7 @@ export default function App() {
     results.forEach((r) => {
       const yd = r.yearlyData[i];
       row[`${r.method}_t`] = yd?.totalSpent;
+      row[`${r.method}_as`] = yd?.annualSpent;   /* annual (non-cumulative) spend */
       row[`${r.method}_a`] = yd?.assetValue;
       row[`${r.method}_n`] = yd?.netPosition;
       row[`${r.method}_m`] = yd?.monthlyEquivalent;
@@ -1349,15 +1400,15 @@ export default function App() {
             <Slider label="Investment return rate" value={d.opportunityCostPct} info="opportunityCost" openModal={openModal} onChange={(v) => upd("opportunityCostPct", v)} min={0.01} max={0.12} step={0.005} fmt={fmtP} sub="What lump sum cash could earn" />
             <SHead color={C.info} info="personalLoan" openModal={openModal}>Personal Loan</SHead>
             <NI label="Deposit" value={d.loanDeposit} onChange={(v) => upd("loanDeposit", v)} />
-            <Slider label="Interest rate" value={d.loanRate} onChange={(v) => upd("loanRate", v)} min={0.04} max={0.20} step={0.005} fmt={fmtP} />
+            <Slider isRate={true} label="Interest rate" value={d.loanRate} onChange={(v) => upd("loanRate", v)} min={0.04} max={0.20} step={0.005} fmt={fmtP} />
             <Slider label="Term" value={d.loanTermYears} onChange={(v) => upd("loanTermYears", v)} min={1} max={7} fmt={(v) => `${v} yrs`} />
             <SHead color={C.orange500} info="dealerFinance" openModal={openModal}>Dealer Finance</SHead>
             <NI label="Deposit" value={d.dealerDeposit} onChange={(v) => upd("dealerDeposit", v)} />
-            <Slider label="Interest rate" value={d.dealerRate} onChange={(v) => upd("dealerRate", v)} min={0.02} max={0.15} step={0.005} fmt={fmtP} />
+            <Slider isRate={true} label="Interest rate" value={d.dealerRate} onChange={(v) => upd("dealerRate", v)} min={0.02} max={0.15} step={0.005} fmt={fmtP} />
             <Slider label="Term" value={d.dealerTermYears} onChange={(v) => upd("dealerTermYears", v)} min={1} max={7} fmt={(v) => `${v} yrs`} />
             <Slider label="Balloon %" value={d.balloonPct} info="balloonPayment" openModal={openModal} onChange={(v) => upd("balloonPct", v)} min={0} max={0.40} step={0.01} fmt={fmtP} />
             <SHead color="#6d28d9" info="financeLease" openModal={openModal}>Finance Lease</SHead>
-            <Slider label="Rate" value={d.leaseRate} onChange={(v) => upd("leaseRate", v)} min={0.03} max={0.12} step={0.005} fmt={fmtP} />
+            <Slider isRate={true} label="Rate" value={d.leaseRate} onChange={(v) => upd("leaseRate", v)} min={0.03} max={0.12} step={0.005} fmt={fmtP} />
             <Slider label="Term" value={d.leaseTermYears} onChange={(v) => upd("leaseTermYears", v)} min={1} max={5} fmt={(v) => `${v} yrs`} />
             <Slider label="Residual %" value={d.leaseResidualPct} info="residualATO" openModal={openModal} onChange={(v) => upd("leaseResidualPct", v)} min={0.28} max={0.65} step={0.01} fmt={fmtP} sub="ATO statutory by km band" />
             <SHead>Refinance Modelling</SHead>
@@ -1394,7 +1445,7 @@ export default function App() {
               <DRow label="Medicare levy" value={fmtP(med(d.grossSalary))} />
               <DRow label="Combined rate" value={fmtP(mtr(d.grossSalary) + med(d.grossSalary))} good bold />
             </div>
-            <Slider label="Rate" value={d.novatedRate} onChange={(v) => upd("novatedRate", v)} min={0.03} max={0.12} step={0.005} fmt={fmtP} />
+            <Slider isRate={true} label="Rate" value={d.novatedRate} onChange={(v) => upd("novatedRate", v)} min={0.03} max={0.12} step={0.005} fmt={fmtP} />
             <Slider label="Term" value={d.novatedTermYears} onChange={(v) => upd("novatedTermYears", v)} min={1} max={5} fmt={(v) => `${v} yrs`} />
             <NI label="Provider management fee / yr" value={d.novatedProviderFeeAnnual} onChange={(v) => upd("novatedProviderFeeAnnual", v)} sub="Annual fee charged by novated lease provider ($0 if employer pays)" />
             <Slider label="Residual %" value={d.novatedResidualPct} info="residualATO" openModal={openModal} onChange={(v) => upd("novatedResidualPct", v)} min={0.28} max={0.65} step={0.01} fmt={fmtP} />
@@ -1512,7 +1563,7 @@ export default function App() {
           {tab === "cashflow" && <>
             <Panel>
               <div style={{ fontFamily: HEAD_FONT, fontWeight: 700, color: C.text }}>Annual Cash Outflow</div>
-              <div style={{ fontSize: 11, color: C.muted, marginBottom: 12 }}>Finance repayments + running costs per year</div>
+              <div style={{ fontSize: 11, color: C.muted, marginBottom: 12 }}>Actual spend each year — finance payments + running costs (not cumulative)</div>
               <ResponsiveContainer width="100%" height={240}>
                 <BarChart data={cd} margin={{ top: 5, right: 8, bottom: 0, left: 8 }}>
                   <CartesianGrid {...cp} />
@@ -1520,7 +1571,7 @@ export default function App() {
                   <YAxis tickFormatter={fmtK} tick={at} />
                   <Tooltip content={<TT />} />
                   <Legend wrapperStyle={{ fontSize: 11 }} />
-                  {results.map((r) => <Bar key={r.method} dataKey={`${r.method}_t`} name={METHOD_META[r.method].label} fill={METHOD_META[r.method].color} radius={[3, 3, 0, 0]} />)}
+                  {results.map((r) => <Bar key={r.method} dataKey={`${r.method}_as`} name={METHOD_META[r.method].label} fill={METHOD_META[r.method].color} radius={[3, 3, 0, 0]} />)}
                 </BarChart>
               </ResponsiveContainer>
             </Panel>
