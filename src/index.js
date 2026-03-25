@@ -3,15 +3,10 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import QuickCompare from './QuickCompare';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
-
 const path = window.location.pathname;
-if (path === '/compare') {
+const root = ReactDOM.createRoot(document.getElementById('root'));
+
+if (path === '/compare' || path.startsWith('/compare/')) {
   root.render(<QuickCompare />);
 } else {
   root.render(<App />);

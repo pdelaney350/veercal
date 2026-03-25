@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculator Coming Soon | Veercal</title>
+  <meta name="description" content="The Veercal car finance calculator is being updated. Check back soon." />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(145deg, #1e293b 0%, #1e3a7a 55%, #1e40af 100%);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 30px 30px;
+      pointer-events: none;
+    }
+    .glow {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(37,99,235,0.25) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .card {
+      position: relative;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 20px;
+      padding: 52px 48px;
+      max-width: 560px;
+      width: 100%;
+      text-align: center;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.3);
+    }
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+    .wordmark {
+      font-family: 'Arial Black', Arial, sans-serif;
+      font-size: 40px;
+      font-weight: 900;
+      color: white;
+      letter-spacing: -0.09em;
+      line-height: 0.92;
+      transform: scaleY(1.12);
+      transform-origin: bottom left;
+      display: block;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.85);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #fbbf24;
+      animation: pulse 1.8s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 800;
+      line-height: 1.25;
+      color: white;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+    }
+    .sub {
+      font-size: 15px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.7;
+      margin-bottom: 36px;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .divider {
+      height: 1px;
+      background: rgba(255,255,255,0.1);
+      margin: 32px 0;
+    }
+    .links-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 16px;
+    }
+    .nav-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .nav-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-decoration: none;
+      color: white;
+      text-align: left;
+      transition: all 0.15s;
+    }
+    .nav-card:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.2);
+      transform: translateY(-2px);
+    }
+    .nav-card-icon { font-size: 20px; margin-bottom: 6px; }
+    .nav-card-title { font-size: 13px; font-weight: 700; margin-bottom: 3px; }
+    .nav-card-desc { font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.4; }
+    .notify-form {
+      display: flex;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .notify-input {
+      flex: 1;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: white;
+      font-size: 13px;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .notify-input::placeholder { color: rgba(255,255,255,0.35); }
+    .notify-input:focus { border-color: rgba(255,255,255,0.4); }
+    .notify-btn {
+      background: white;
+      color: #1e40af;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .notify-btn:hover { background: #eff6ff; }
+    .notify-success {
+      display: none;
+      background: rgba(22,101,52,0.3);
+      border: 1px solid rgba(22,101,52,0.5);
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 13px;
+      color: #86efac;
+      text-align: center;
+    }
+    .footer-note {
+      font-size: 11px;
+      color: rgba(255,255,255,0.3);
+      margin-top: 28px;
+    }
+    .footer-note a { color: rgba(255,255,255,0.45); text-decoration: none; margin: 0 6px; }
+    .footer-note a:hover { color: rgba(255,255,255,0.7); }
+    @media (max-width: 480px) {
+      .card { padding: 36px 24px; }
+      .wordmark { font-size: 32px; }
+      h1 { font-size: 22px; }
+      .nav-cards { grid-template-columns: 1fr; }
+      .notify-form { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="glow"></div>
+
+  <div class="card">
+
+    <div class="logo-wrap">
+      <svg width="48" height="48" viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="46" stroke="white" stroke-width="2" fill="none"/>
+        <rect x="28" y="48" width="8" height="18" fill="white" rx="0.5"/>
+        <rect x="39" y="40" width="8" height="26" fill="white" rx="0.5"/>
+        <rect x="50" y="30" width="8" height="36" fill="white" rx="0.5"/>
+        <rect x="61" y="38" width="8" height="28" fill="white" rx="0.5"/>
+        <path d="M 26 66 A 6 6 0 0 0 38 66 Z" fill="white"/>
+        <path d="M 59 66 A 6 6 0 0 0 71 66 Z" fill="white"/>
+      </svg>
+      <span class="wordmark">VEERCAL</span>
+    </div>
+
+    <div class="badge">
+      <span class="badge-dot"></span>
+      Calculator update in progress
+    </div>
+
+    <h1>Something better is being built</h1>
+
+    <p class="sub">
+      The Veercal calculator is being upgraded. We will be back shortly with an improved experience. In the meantime, our guides and learning resources are all available below.
+    </p>
+
+    <div class="divider"></div>
+
+    <div class="links-label">Available now</div>
+
+    <div class="nav-cards">
+      <a href="/learn" class="nav-card">
+        <div class="nav-card-icon">📚</div>
+        <div class="nav-card-title">Learn Hub</div>
+        <div class="nav-card-desc">Plain-English guides to every car finance structure in Australia</div>
+      </a>
+      <a href="/learn/how-novated-leases-work" class="nav-card">
+        <div class="nav-card-icon">💼</div>
+        <div class="nav-card-title">Novated Leases</div>
+        <div class="nav-card-desc">How salary sacrifice and FBT work in plain English</div>
+      </a>
+      <a href="/learn/eu-australia-trade-deal-lct-ev" class="nav-card">
+        <div class="nav-card-icon">🇪🇺</div>
+        <div class="nav-card-title">EU Trade Deal</div>
+        <div class="nav-card-desc">New LCT changes and what they mean for EV buyers</div>
+      </a>
+      <a href="/learn/true-cost-of-car-ownership" class="nav-card">
+        <div class="nav-card-icon">🔍</div>
+        <div class="nav-card-title">True Cost Guide</div>
+        <div class="nav-card-desc">What your car actually costs beyond the sticker price</div>
+      </a>
+    </div>
+
+    <div class="links-label">Get notified when the calculator is back</div>
+
+    <div class="notify-form" id="notifyForm">
+      <input type="email" class="notify-input" placeholder="your@email.com" id="notifyEmail" />
+      <button class="notify-btn" onclick="handleNotify()">Notify me</button>
+    </div>
+    <div class="notify-success" id="notifySuccess">
+      Thanks — we will let you know when the calculator is live.
+    </div>
+
+    <div class="footer-note">
+      <a href="/">Home</a>
+      <a href="/privacy">Privacy Policy</a>
+      <a href="/terms">Terms of Use</a>
+      <span style="display:block;margin-top:8px;">© <span id="yr"></span> Veercal Pty. Ltd. All rights reserved.</span>
+    </div>
+
+  </div>
+
+  <script>
+    document.getElementById('yr').textContent = new Date().getFullYear();
+
+    function handleNotify() {
+      const email = document.getElementById('notifyEmail').value;
+      if (!email || !email.includes('@')) {
+        document.getElementById('notifyEmail').style.borderColor = '#f87171';
+        return;
+      }
+      document.getElementById('notifyForm').style.display = 'none';
+      document.getElementById('notifySuccess').style.display = 'block';
+      // Wire this up to your email service (Mailchimp, ConvertKit etc) when ready
+    }
+
+    document.getElementById('notifyEmail').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') handleNotify();
+    });
+  </script>
+
+</body>
+</html>

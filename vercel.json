@@ -2,11 +2,11 @@
   "routes": [
     {
       "src": "/calculator/(.*)",
-      "dest": "/coming-soon.html"
+      "dest": "/index.html"
     },
     {
       "src": "/calculator",
-      "dest": "/coming-soon.html"
+      "dest": "/index.html"
     },
     {
       "src": "/learn",
@@ -30,6 +30,9 @@
     },
     { 
       "src": "/compare", 
+      "dest": "/index.html"
+    },
+      "src": "/compare/(.*)", 
       "dest": "/index.html"
   }
   ]

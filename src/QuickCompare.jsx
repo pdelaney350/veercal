@@ -1,5 +1,78 @@
 import React, { useState, useMemo } from "react";
-import { RATES, calcStampDuty, calcLCT, getMarginalRate, getResidual, isEvFbtExempt } from "./veercal.rates.config";
+
+/* ─── RATES — update annually each 1 July ────────────────────────────────────
+   FY2025-26 values. Sources: ato.gov.au / state revenue offices.
+   Next review due: 1 July 2026
+   NOTE: EU-AU FTA proposes raising lctThresholdFE to $120,000 once legislated.
+────────────────────────────────────────────────────────────────────────────── */
+const QC_RATES = {
+  lastReviewed:   "March 2026",
+  financialYear:  "FY2025-26",
+  /* FBT */
+  fbtRate:            0.47,
+  fbtGrossUpType1:    2.0802,
+  fbtStatutoryRate:   0.20,
+  evFbtExemptActive:  true,
+  phevFbtExemptActive: false,
+  /* LCT */
+  lctThresholdStd:    80567,
+  lctThresholdFE:     91387,   /* Update to 120000 once EU-AU FTA legislation passes */
+  lctRate:            0.33,
+  /* Income tax — FY2024-25 Stage-3 brackets */
+  medicareLevy:       0.02,
+  medicareLevyThreshold: 26000,
+  /* ATO statutory residuals */
+  residuals: { 15000: 0.5288, 25000: 0.4669, 35000: 0.4050, 45000: 0.3431, over45: 0.2812 },
+  /* Stamp duty calculators by state */
+  stampDuty: {
+    VIC: (p) => p <= 57000 ? p * 0.035 : p <= 100000 ? 1995 + (p - 57000) * 0.05 : p * 0.06,
+    NSW: (p) => p <= 45000 ? p * 0.03 : p <= 65000 ? 1350 + (p - 45000) * 0.035 : p <= 100000 ? 2050 + (p - 65000) * 0.04 : 3450 + (p - 100000) * 0.05,
+    QLD: (p) => p <= 100000 ? p * 0.031 : p * 0.035,
+    WA:  (p) => p <= 25000 ? p * 0.026 : p <= 50000 ? 650 + (p - 25000) * 0.0265 : p <= 100000 ? 1312.5 + (p - 50000) * 0.030 : p * 0.034,
+    SA:  (p) => p * 0.04,
+    TAS: (p) => p * 0.03,
+    ACT: (p) => p * 0.03,
+    NT:  (p) => p * 0.03,
+  },
+  /* Default running cost assumptions */
+  defaults: {
+    fuelPerL: 2.10, fuelL100km: 9, evEffKwh: 18, evChargeRate: 0.28,
+    tyres: 600, service: 800, insurance: 1800, rego: 900,
+    dep1: 0.15, dep2: 0.12, depN: 0.10, opportunityCost: 0.05,
+  },
+  /* Benchmark finance rates */
+  rates: { personalLoan: 0.0899, dealerFinance: 0.0699, novatedLease: 0.0650 },
+};
+
+/* ─── Rate helpers ────────────────────────────────────────────────────────── */
+function calcStampDuty(price, state) {
+  const fn = QC_RATES.stampDuty[state] || QC_RATES.stampDuty.VIC;
+  return fn(price);
+}
+function calcLCT(price, isEV) {
+  const t = isEV ? QC_RATES.lctThresholdFE : QC_RATES.lctThresholdStd;
+  return price > t ? ((price - t) / 1.1) * QC_RATES.lctRate : 0;
+}
+function getMarginalRate(salary) {
+  if (salary <= 18200)  return 0;
+  if (salary <= 45000)  return 0.19;
+  if (salary <= 135000) return 0.325;
+  if (salary <= 190000) return 0.37;
+  return 0.45;
+}
+function getResidual(annualKm) {
+  const r = QC_RATES.residuals;
+  if (annualKm <= 15000) return r[15000];
+  if (annualKm <= 25000) return r[25000];
+  if (annualKm <= 35000) return r[35000];
+  if (annualKm <= 45000) return r[45000];
+  return r.over45;
+}
+function isEvFbtExempt(price, evType) {
+  if (evType === 'phev') return QC_RATES.phevFbtExemptActive;
+  if (!QC_RATES.evFbtExemptActive) return false;
+  return price <= QC_RATES.lctThresholdFE;
+}
 
 /**
  * QuickCompare — Veercal Guided Flow Calculator
@@ -134,7 +207,7 @@ function calcResults(inputs) {
   /* Novated lease */
   if (includeNovated && salary > 0) {
     const mtr = getMarginalRate(salary);
-    const medLevy = salary > RATES.medicareLevyThreshold ? RATES.medicareLevy : 0;
+    const medLevy = salary > QC_RATES.medicareLevyThreshold ? QC_RATES.medicareLevy : 0;
     const effectiveTaxRate = mtr + medLevy;
     const residualPct = getResidual(annualKm);
     const residual = vehiclePrice * residualPct;
@@ -145,7 +218,7 @@ function calcResults(inputs) {
     const taxSaving = preTax * effectiveTaxRate;
     const netMo = preTax - taxSaving;
     const evExempt = isEvFbtExempt(vehiclePrice, evType);
-    const fbtMo = evExempt ? 0 : (vehiclePrice * RATES.fbtStatutoryRate * RATES.fbtGrossUpType1 * RATES.fbtRate) / 12;
+    const fbtMo = evExempt ? 0 : (vehiclePrice * QC_RATES.fbtStatutoryRate * QC_RATES.fbtGrossUpType1 * QC_RATES.fbtRate) / 12;
     const trueNetMo = netMo + fbtMo;
     const totalCost = trueNetMo * holdYears * 12;
     results.push({
@@ -195,25 +268,25 @@ const INITIAL = {
   includeDealer: true,
   includeNovated: false,
   deposit: 5000,
-  loanRate: RATES.benchmarkRates.personalLoan,
+  loanRate: QC_RATES.rates.personalLoan,
   loanTerm: 5,
-  dealerRate: RATES.benchmarkRates.dealerFinance,
+  dealerRate: QC_RATES.rates.dealerFinance,
   dealerTerm: 5,
   salary: 100000,
-  novatedRate: RATES.benchmarkRates.novatedLease,
+  novatedRate: QC_RATES.rates.novatedLease,
   novatedTerm: 3,
-  fuelPerL: RATES.defaults.fuelPerL,
-  fuelL100km: RATES.defaults.fuelL100km,
-  evEffKwh: RATES.defaults.evEfficiencyKwh,
-  evChargeRate: RATES.defaults.evHomeChargeKwh,
-  tyres: RATES.defaults.tyresPerYear,
-  service: RATES.defaults.servicesPerYear,
-  insurance: RATES.defaults.insurancePerYear,
-  rego: RATES.defaults.regPerYear,
-  dep1: RATES.defaults.depYr1,
-  dep2: RATES.defaults.depYr2,
-  depN: RATES.defaults.depYrN,
-  opportunityCost: RATES.defaults.opportunityCost,
+  fuelPerL: QC_RATES.defaults.fuelPerL,
+  fuelL100km: QC_RATES.defaults.fuelL100km,
+  evEffKwh: QC_RATES.defaults.evEffKwh,
+  evChargeRate: QC_RATES.defaults.evChargeRate,
+  tyres: QC_RATES.defaults.tyres,
+  service: QC_RATES.defaults.service,
+  insurance: QC_RATES.defaults.insurance,
+  rego: QC_RATES.defaults.rego,
+  dep1: QC_RATES.defaults.dep1,
+  dep2: QC_RATES.defaults.dep2,
+  depN: QC_RATES.defaults.depN,
+  opportunityCost: QC_RATES.defaults.opportunityCost,
 };
 
 /* ─── Reusable input components ──────────────────────────────────────────── */
@@ -595,7 +668,7 @@ function StepResults({ inputs }) {
       </div>
 
       <div style={{ marginTop: 14, fontSize: 11, color: "#94a3b8", lineHeight: 1.6 }}>
-        General information only — not financial advice. All figures are indicative estimates based on the inputs provided and simplified assumptions. Rates verified {RATES.lastReviewed}. Always consult a licensed financial adviser before making financial decisions.
+        General information only — not financial advice. All figures are indicative estimates based on the inputs provided and simplified assumptions. Rates verified {QC_RATES.lastReviewed}. Always consult a licensed financial adviser before making financial decisions.
       </div>
     </div>
   );
