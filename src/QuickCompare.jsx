@@ -128,7 +128,9 @@ function runningCost(inputs) {
   const fuel = isEV
     ? (annualKm / 100) * evEffKwh * evChargeRate
     : (annualKm / 100) * fuelL100km * fuelPerL;
-  return fuel + tyres + service + insurance + rego;
+  /* EVs have ~40% lower servicing costs — matches full calculator */
+  const effectiveService = isEV ? service * 0.6 : service;
+  return fuel + tyres + effectiveService + insurance + rego;
 }
 
 function calcResults(inputs) {
@@ -138,11 +140,12 @@ function calcResults(inputs) {
     fuelPerL, fuelL100km, evEffKwh, evChargeRate,
     tyres, service, insurance, rego,
     dep1, dep2, depN, opportunityCost,
-    includeNovated, includeLoan, includeCash, includeDealer, dealerRate, dealerTerm,
+    includeNovated, includeLoan, includeCash, includeDealer, dealerRate, dealerTerm, dealerDeposit = 2000,
   } = inputs;
 
   const stampDuty = calcStampDuty(vehiclePrice, state);
-  const lct = calcLCT(vehiclePrice, isEV);
+  /* LCT: only applies if vehicle exceeds threshold (matches full calculator default) */
+  const lct = calcLCT(vehiclePrice, isEV);   /* returns 0 if under threshold */
   const effectivePrice = vehiclePrice + stampDuty + lct;
   const exitValue = vehVal(vehiclePrice, holdYears, dep1, dep2, depN);
   const runPerYear = runningCost({ annualKm, isEV, fuelPerL, fuelL100km, evEffKwh, evChargeRate, tyres, service, insurance, rego });
@@ -186,7 +189,7 @@ function calcResults(inputs) {
 
   /* Dealer finance — mirrors calcLoan() in App.js exactly */
   if (includeDealer) {
-    const dep = 2000;
+    const dep = dealerDeposit;
     const balloon = vehiclePrice * 0.25;
     /* Finance vehicle price minus deposit (stamp duty paid upfront, not financed) */
     const financedAmount = Math.max(0, vehiclePrice - dep);
@@ -206,15 +209,15 @@ function calcResults(inputs) {
       upfront: dep + stampDuty,
       totalInterest: Math.round(totalInt),
       balloonOwing: Math.round(balloonOwing),
-      note: `25% balloon · ${(dealerRate * 100).toFixed(2)}% rate · ${dealerTerm}yr term`,
+      note: `25% balloon · $${dep.toLocaleString("en-AU")} deposit · ${(dealerRate * 100).toFixed(2)}% rate · ${dealerTerm}yr`,
     });
   }
 
-  /* Novated lease */
+  /* Novated lease — multi-phase: lease term + residual + post-lease running */
   if (includeNovated && salary > 0) {
-    const mtr = getMarginalRate(salary);
+    const mtrRate = getMarginalRate(salary);
     const medLevy = salary > QC_RATES.medicareLevyThreshold ? QC_RATES.medicareLevy : 0;
-    const effectiveTaxRate = mtr + medLevy;
+    const effectiveTaxRate = mtrRate + medLevy;
     const residualPct = getResidual(annualKm);
     const residual = vehiclePrice * residualPct;
     const months = novatedTerm * 12;
@@ -226,17 +229,20 @@ function calcResults(inputs) {
     const evExempt = isEvFbtExempt(vehiclePrice, evType);
     const fbtMo = evExempt ? 0 : (vehiclePrice * QC_RATES.fbtStatutoryRate * QC_RATES.fbtGrossUpType1 * QC_RATES.fbtRate) / 12;
     const trueNetMo = netMo + fbtMo;
-    const totalCost = trueNetMo * holdYears * 12;
+    /* Phase 1: lease payments; Phase 2: post-lease running only; + residual buyout */
+    const postLeaseYears = Math.max(0, holdYears - novatedTerm);
+    const totalCost = trueNetMo * months + residual + runPerYear * postLeaseYears - exitValue;
     results.push({
       method: "novated", label: "Novated Lease", icon: "💼", color: "#b45309",
       monthlyPayment: Math.round(trueNetMo),
       totalCost: Math.round(totalCost),
-      effectiveMonthly: Math.round(trueNetMo),
+      effectiveMonthly: Math.round(totalCost / (holdYears * 12)),
       upfront: 0,
       totalInterest: 0,
       taxSavingMonthly: Math.round(taxSaving),
       fbtExempt: evExempt,
       residual: Math.round(residual),
+      opportunityCostTotal: 0,
       note: evExempt
         ? `FBT exempt (EV) · ${(effectiveTaxRate * 100).toFixed(0)}% combined tax rate`
         : `FBT applies · ${(effectiveTaxRate * 100).toFixed(0)}% combined tax rate`,
@@ -274,6 +280,7 @@ const INITIAL = {
   includeDealer: true,
   includeNovated: false,
   deposit: 5000,
+  dealerDeposit: 2000,
   loanRate: QC_RATES.rates.personalLoan,
   loanTerm: 5,
   dealerRate: QC_RATES.rates.dealerFinance,
@@ -533,6 +540,9 @@ function StepDetails({ inputs, upd }) {
 
       {inputs.includeDealer && (
         <>
+          <Field label="Dealer deposit" hint="Amount you will pay upfront to the dealer">
+            <NumberInput value={inputs.dealerDeposit} onChange={(v) => upd("dealerDeposit", v)} min={0} />
+          </Field>
           <Field label="Dealer finance rate" hint="Ask the dealer for their comparison rate">
             <NumberInput value={Math.round(inputs.dealerRate * 10000) / 100} onChange={(v) => upd("dealerRate", v / 100)} prefix="%" min={0} max={50} step={0.01} />
           </Field>
@@ -868,7 +878,7 @@ function buildCalcUrl(inputs) {
       loanTermYears: inputs.loanTerm,
       dealerRate: inputs.dealerRate,
       dealerTermYears: inputs.dealerTerm,
-      dealerDeposit: 2000,
+      dealerDeposit: inputs.dealerDeposit,
       balloonPct: 0.25,
       grossSalary: inputs.salary,
       novatedRate: inputs.novatedRate,
@@ -887,7 +897,7 @@ function buildCalcUrl(inputs) {
       opportunityCostPct: inputs.opportunityCost,
     };
     const encoded = btoa(JSON.stringify(mapped));
-    return `/calculator#s=${encoded}`;
+    return `/calculator#s:${encoded}`;
   } catch {
     return "/calculator";
   }

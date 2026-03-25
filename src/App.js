@@ -386,37 +386,68 @@ function calcLease(d) {
 }
 
 function calcNovated(d) {
-  const rate = mtr(d.grossSalary) + med(d.grossSalary);
-  /* BEV: FBT exempt if under threshold (ongoing, no end date legislated Mar 2025)
-     PHEV: exemption had a scheduled end date of 1 Apr 2025 — modelled as exempt
-           but flagged with a warning to verify current ATO position */
+  const taxRate = mtr(d.grossSalary) + med(d.grossSalary);
   const evExempt = d.isEV && d.vehiclePrice <= LCT_FE;
-  const months = d.novatedTermYears * 12, res = d.vehiclePrice * d.novatedResidualPct;
-  const { monthlyPayment: gf } = buildAmort(d.vehiclePrice, d.novatedRate, months, res);
-  const runMo = running(d) / 12, preTax = gf + runMo, saving = preTax * rate, net = preTax - saving;
+  const leaseMos = d.novatedTermYears * 12;
+  const res = d.vehiclePrice * d.novatedResidualPct;
+  const { monthlyPayment: gf } = buildAmort(d.vehiclePrice, d.novatedRate, leaseMos, res);
+  const runMo = running(d) / 12;
+  const preTax = gf + runMo;                  /* salary sacrifice amount/mo */
+  const saving = preTax * taxRate;            /* income tax saved/mo */
+  const net = preTax - saving;                /* after-tax cost of sacrifice */
   const fbtMo = evExempt ? 0 : (d.vehiclePrice * 0.20 * 2.0802 * 0.47) / 12;
-  /* Provider management fee (annual) — post-tax, passed through as a real cost */
   const providerFeeMo = (d.novatedProviderFeeAnnual || 0) / 12;
-  const trueNet = net + fbtMo + providerFeeMo;
-  const yrs = d.holdYears;
+  const trueNet = net + fbtMo + providerFeeMo; /* true monthly out-of-pocket during lease */
+
+  const yrs = d.holdYears, leaseTerm = d.novatedTermYears;
+  const runPerYear = running(d);
   const yd = [];
+
+  /* Cumulative cost tracker */
+  let cumCost = 0;
   for (let y = 1; y <= yrs; y++) {
     const av = vehVal(d.vehiclePrice, y, d);
-    /* Show real market value so exit sim can display residual vs market gap */
-    yd.push({ year: y, assetValue: Math.round(av), equity: 0,
-      totalSpent: Math.round(trueNet * 12 * y),
-      annualSpent: Math.round(trueNet * 12),
-      monthlyEquivalent: Math.round(trueNet),
-      taxSavingAnnual: Math.round(saving * 12),
-      netPosition: Math.round(-trueNet * 12 * y),
-      residualBuyout: Math.round(res) });
+    if (y <= leaseTerm) {
+      /* Phase 1: lease active — salary sacrifice covers finance + running */
+      const annualCost = trueNet * 12;
+      cumCost += annualCost;
+      /* Add residual in the final lease year */
+      if (y === leaseTerm) cumCost += res;
+      yd.push({ year: y, assetValue: Math.round(av), equity: Math.round(av - res),
+        totalSpent: Math.round(cumCost),
+        annualSpent: Math.round(y === leaseTerm ? annualCost + res : annualCost),
+        monthlyEquivalent: Math.round(trueNet),
+        taxSavingAnnual: Math.round(saving * 12),
+        netPosition: Math.round(av - cumCost),
+        residualBuyout: Math.round(res) });
+    } else {
+      /* Phase 2: post-lease — own the car, only running costs */
+      cumCost += runPerYear;
+      yd.push({ year: y, assetValue: Math.round(av), equity: Math.round(av),
+        totalSpent: Math.round(cumCost),
+        annualSpent: Math.round(runPerYear),
+        monthlyEquivalent: Math.round(runPerYear / 12),
+        taxSavingAnnual: 0,
+        netPosition: Math.round(av - cumCost),
+        residualBuyout: 0 });
+    }
   }
-  return { method: "novated", yearlyData: yd, totalCost: Math.round(trueNet * 12 * yrs),
-    upfrontCost: 0, monthlyPayment: Math.round(trueNet),
+
+  const exitValue = vehVal(d.vehiclePrice, yrs, d);
+  const postLeaseRunning = runPerYear * Math.max(0, yrs - leaseTerm);
+  const totalCost = trueNet * leaseMos + res + postLeaseRunning - exitValue;
+
+  return { method: "novated", yearlyData: yd,
+    totalCost: Math.round(totalCost),
+    upfrontCost: 0,
+    monthlyPayment: Math.round(trueNet),
     grossMonthly: Math.round(preTax), taxSavingMonthly: Math.round(saving),
     fbtMonthly: Math.round(fbtMo), fbtExempt: evExempt,
-    exitValue: 0, residualBuyout: Math.round(res), totalInterest: 0,
-    effectiveMonthly: Math.round(trueNet), taxRate: Math.round(rate * 100), onCosts: 0, lct: 0, stampDuty: 0 };
+    exitValue: Math.round(exitValue),
+    residualBuyout: Math.round(res),
+    totalInterest: 0,
+    effectiveMonthly: Math.round(totalCost / (yrs * 12)),
+    taxRate: Math.round(taxRate * 100), onCosts: 0, lct: 0, stampDuty: 0 };
 }
 
 /* ─── Formatters ────────────────────────────────────────────────────────── */
