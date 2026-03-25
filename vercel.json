@@ -1,11 +1,19 @@
 {
   "routes": [
     {
-      "src": "/calculator/(.*)",
+      "src": "/compare",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/compare/(.*)",
       "dest": "/index.html"
     },
     {
       "src": "/calculator",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/calculator/(.*)",
       "dest": "/index.html"
     },
     {
@@ -27,14 +35,6 @@
     {
       "src": "/",
       "dest": "/landing.html"
-    },
-    { 
-      "src": "/compare", 
-      "dest": "/index.html"
-    },
-      "src": "/compare/(.*)", 
-      "dest": "/index.html"
     }
   ]
 }
-
