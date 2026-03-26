@@ -172,8 +172,8 @@ const DEFAULTS = {
   opportunityCostPct: 0.05,
   loanRate: 0.0899, loanTermYears: 5, loanDeposit: 5000,
   dealerRate: 0.0699, dealerTermYears: 5, dealerDeposit: 2000, balloonPct: 0.25,
-  leaseRate: 0.065, leaseResidualPct: 0.46, leaseTermYears: 3,
-  grossSalary: 100000, novatedRate: 0.065, novatedTermYears: 3, novatedResidualPct: 0.46, novatedProviderFeeAnnual: 0,
+  leaseRate: 0.065, leaseResidualPct: 0.5288, leaseTermYears: 3,
+  grossSalary: 100000, novatedRate: 0.065, novatedTermYears: 3, novatedResidualPct: 0.5288, novatedProviderFeeAnnual: 0,
   fuelPerL: 2.10, fuelL100km: 9, tyresPerYear: 600,
   servicesPerYear: 800, insurancePerYear: 1800, regPerYear: 900,
   depYr1: 0.15, depYr2: 0.12, depYrN: 0.10,
@@ -281,6 +281,19 @@ function mtr(sal) {
   return 0.45;
 }
 function med(sal) { return sal > 26000 ? 0.02 : 0; }
+
+/* ─── ATO statutory residual by annual km ────────────────────────────────────
+   Source: ato.gov.au/businesses/leasing/
+   These are MINIMUM residuals — providers may use higher values.
+   Used to auto-suggest the correct residual when km input changes.
+─────────────────────────────────────────────────────────────────────────── */
+function atoResidual(annualKm) {
+  if (annualKm <= 15000) return 0.5288;
+  if (annualKm <= 25000) return 0.4669;
+  if (annualKm <= 35000) return 0.4050;
+  if (annualKm <= 45000) return 0.3431;
+  return 0.2812;
+}
 function running(d) {
   if (d.isEV) return (d.annualKm / 100) * d.evEfficiencyKwh * d.evHomeChargeKwh + d.tyresPerYear + d.servicesPerYear * 0.6 + d.insurancePerYear + d.regPerYear;
   return (d.annualKm / 100) * d.fuelL100km * d.fuelPerL + d.tyresPerYear + d.servicesPerYear + d.insurancePerYear + d.regPerYear;
@@ -356,8 +369,9 @@ function calcLoan(d, type) {
   const ev = vehVal(d.vehiclePrice, yrs, d);
   const lb = yrs * 12 <= months ? rows[Math.min(yrs * 12, months) - 1].balance : (isD ? balloon : 0);
   const tp = dep + Math.min(yrs * 12, months) * monthlyPayment;
-  const tc = tp + run * yrs - ev + Math.max(0, lb);
-  return { method: type, yearlyData: yd, totalCost: Math.round(tc), upfrontCost: dep,
+  const sd = calcSD(d.vehiclePrice, d.state);           /* stamp duty: upfront cost, not financed */
+  const tc = tp + sd + run * yrs - ev + Math.max(0, lb);
+  return { method: type, yearlyData: yd, totalCost: Math.round(tc), upfrontCost: Math.round(dep + sd),
     monthlyPayment: Math.round(monthlyPayment), exitValue: Math.round(ev),
     totalInterest: Math.round(totalInterest), effectiveMonthly: Math.round(tc / (yrs * 12)),
     balloon: Math.round(balloon), loanBalance: Math.round(lb),
@@ -1479,6 +1493,16 @@ export default function App() {
             <Slider isRate={true} label="Rate" value={d.novatedRate} onChange={(v) => upd("novatedRate", v)} min={0.03} max={0.12} step={0.005} fmt={fmtP} />
             <Slider label="Term" value={d.novatedTermYears} onChange={(v) => upd("novatedTermYears", v)} min={1} max={5} fmt={(v) => `${v} yrs`} />
             <NI label="Provider management fee / yr" value={d.novatedProviderFeeAnnual} onChange={(v) => upd("novatedProviderFeeAnnual", v)} sub="Annual fee charged by novated lease provider ($0 if employer pays)" />
+            <div style={{ fontSize: 10, color: C.muted, marginBottom: 2 }}>
+              ATO minimum for {d.annualKm.toLocaleString()} km/yr:{" "}
+              <strong style={{ color: C.good }}>{fmtP(atoResidual(d.annualKm))}</strong>
+              {Math.abs(d.novatedResidualPct - atoResidual(d.annualKm)) > 0.005 && (
+                <button onClick={() => upd("novatedResidualPct", atoResidual(d.annualKm))}
+                  style={{ marginLeft: 6, fontSize: 10, color: C.brand500, background: "none", border: `1px solid ${C.brand500}`, borderRadius: 4, padding: "1px 6px", cursor: "pointer", fontFamily: BODY_FONT }}>
+                  Reset to ATO
+                </button>
+              )}
+            </div>
             <Slider label="Residual %" value={d.novatedResidualPct} info="residualATO" openModal={openModal} onChange={(v) => upd("novatedResidualPct", v)} min={0.28} max={0.65} step={0.01} fmt={fmtP} />
             {d.isEV && d.vehiclePrice <= LCT_FE && (
               <div style={{ background: C.orange100, borderRadius: 7, padding: "8px 10px", border: `1px solid ${C.orange300}`, fontSize: 11, color: C.orange700, fontWeight: 700 }}>
@@ -1543,12 +1567,32 @@ export default function App() {
 
           {/* OVERVIEW */}
           {tab === "overview" && <>
+            {/* Headline context strip */}
+            <div style={{ marginBottom: 12, padding: "12px 16px", background: C.surfaceAlt, borderRadius: 10, border: `1px solid ${C.border}` }}>
+              <div style={{ fontSize: 11, fontWeight: 700, color: C.muted, textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: 3 }}>True total cost of owning your {fmt(d.vehiclePrice)} car</div>
+              <div style={{ fontSize: 12, color: C.text, lineHeight: 1.6 }}>
+                {d.holdYears}-year hold · {d.state} · {d.annualKm.toLocaleString()} km/yr · includes all finance, on-costs, running costs, and exit value.
+              </div>
+            </div>
+
             <Panel ac={METHOD_META[sorted[0].method].color} sx={{ background: C.green100 }}>
               <div style={{ fontFamily: BODY_FONT, fontSize: 10, fontWeight: 600, color: C.muted, letterSpacing: "0.02em", marginBottom: 4, display: "flex", alignItems: "center", gap: 5 }}>Lowest modelled cost · {d.holdYears}-year hold · not a recommendation <InfoTip id="trueTotalCost" openModal={openModal} /></div>
               <div style={{ fontFamily: HEAD_FONT, fontSize: 18, fontWeight: 900, color: METHOD_META[sorted[0].method].color, letterSpacing: "-0.01em" }}>{METHOD_META[sorted[0].method].icon} {METHOD_META[sorted[0].method].label}</div>
               <div style={{ fontFamily: NUM, fontSize: 26, fontWeight: 700, color: C.text, margin: "3px 0 5px" }}>{fmt(sorted[0].totalCost)}</div>
               <div style={{ fontSize: 11, color: C.muted }}>
-                Modelled saving of {fmt(sorted[sorted.length - 1].totalCost - sorted[0].totalCost)} vs highest-cost option · {fmt(sorted[0].effectiveMonthly)}/mo effective · figures are estimates only
+                {(() => {
+                  const winner = sorted[0], loser = sorted[sorted.length - 1];
+                  const saving = loser.totalCost - winner.totalCost;
+                  const intDiff = (loser.totalInterest || 0) - (winner.totalInterest || 0);
+                  const reason = winner.method === "novated"
+                    ? `pre-tax salary sacrifice saves ${fmt(winner.taxSavingMonthly)}/mo in income tax${winner.fbtExempt ? " and FBT is waived (EV)" : ""}`
+                    : winner.method === "cash"
+                    ? `no interest cost, though opportunity cost of ${fmt(winner.opportunityCostTotal)} is included`
+                    : intDiff > 0
+                    ? `lower interest cost — saves ${fmt(intDiff)} vs ${METHOD_META[loser.method].label}`
+                    : `lower total outlay over the hold period`;
+                  return `Modelled saving of ${fmt(saving)} vs ${METHOD_META[loser.method].label} — ${reason}. Figures are estimates only.`;
+                })()}
               </div>
             </Panel>
 
@@ -1865,8 +1909,18 @@ export default function App() {
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 11, marginBottom: 16 }}>
             <thead>
               <tr style={{ background: "#1e40af", color: "white" }}>
-                {["Method", "True Total Cost", "Eff. Monthly", "Upfront", "Monthly Payment", "Total Interest", "Exit Value"].map(h => (
-                  <th key={h} style={{ padding: "8px 10px", textAlign: "left", fontWeight: 600 }}>{h}</th>
+                {[
+                  { h: "Method",        tip: "The finance structure being compared" },
+                  { h: "True Total Cost", tip: "Every dollar in minus exit sale value: purchase + on-costs + finance + running − what you sell for. The single most honest comparison number." },
+                  { h: "Eff. Monthly",  tip: "True total cost divided by the number of months in your hold period. Normalises different structures for fair comparison." },
+                  { h: "Upfront",       tip: "Cash required on day one: deposit + stamp duty. Does not include ongoing payments." },
+                  { h: "Monthly Payment", tip: "Finance repayment only — does not include running costs (fuel, insurance, rego, servicing). Add running costs for true monthly outflow." },
+                  { h: "Total Interest", tip: "All interest paid over the loan or lease term. For cash this is $0 (but opportunity cost applies). For novated, tax savings offset this." },
+                  { h: "Exit Value",    tip: "Estimated market value of the vehicle at the end of your hold period, based on the depreciation rates you set. Deducted from total cost." },
+                ].map(({ h, tip }) => (
+                  <th key={h} style={{ padding: "8px 10px", textAlign: "left", fontWeight: 600 }}>
+                    <span title={tip} style={{ cursor: "help", borderBottom: "1px dashed rgba(255,255,255,0.4)" }}>{h} ⓘ</span>
+                  </th>
                 ))}
               </tr>
             </thead>

@@ -762,14 +762,31 @@ function StepResults({ inputs }) {
 
       {/* Winner banner */}
       {winner && savings > 0 && (
-        <div style={{ background: `linear-gradient(135deg, #166534, #15803d)`, borderRadius: 10, padding: "14px 18px", marginBottom: 16, color: "white", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 }}>
-          <div>
-            <div style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", opacity: 0.8, marginBottom: 3 }}>Lowest modelled cost</div>
-            <div style={{ fontSize: 18, fontWeight: 800 }}>{winner.icon} {winner.label}</div>
+        <div style={{ background: `linear-gradient(135deg, #166534, #15803d)`, borderRadius: 10, padding: "16px 18px", marginBottom: 16, color: "white" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 8, marginBottom: 10 }}>
+            <div>
+              <div style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", opacity: 0.8, marginBottom: 3 }}>Lowest true cost — not a recommendation</div>
+              <div style={{ fontSize: 18, fontWeight: 800 }}>{winner.icon} {winner.label}</div>
+            </div>
+            <div style={{ textAlign: "right" }}>
+              <div style={{ fontSize: 11, opacity: 0.8 }}>Modelled saving vs highest</div>
+              <div style={{ fontSize: 22, fontWeight: 800 }}>{fmt(savings)}</div>
+            </div>
           </div>
-          <div style={{ textAlign: "right" }}>
-            <div style={{ fontSize: 11, opacity: 0.8 }}>Modelled saving vs highest</div>
-            <div style={{ fontSize: 22, fontWeight: 800 }}>{fmt(savings)}</div>
+          <div style={{ fontSize: 12, color: "rgba(255,255,255,0.8)", lineHeight: 1.6, borderTop: "1px solid rgba(255,255,255,0.15)", paddingTop: 10 }}>
+            {(() => {
+              const loser = results[results.length - 1];
+              const intDiff = (loser.totalInterest || 0) - (winner.totalInterest || 0);
+              if (winner.method === "novated") {
+                return `${winner.label} shows the lowest total because pre-tax salary sacrifice saves ${fmt(winner.taxSavingMonthly)}/mo in income tax${winner.fbtExempt ? " and your EV is FBT-exempt" : ""}. Over ${inputs.holdYears} years this adds up to ${fmt(winner.taxSavingMonthly * 12 * Math.min(inputs.holdYears, inputs.novatedTerm))} in tax savings compared to after-tax alternatives.`;
+              } else if (winner.method === "cash") {
+                return `${winner.label} shows the lowest total because there is no interest to pay. The opportunity cost of ${fmt(winner.opportunityCostTotal || 0)} is included in the figure. If your opportunity cost rate is higher, financing could narrow or reverse this gap.`;
+              } else if (intDiff > 500) {
+                return `${winner.label} shows the lowest total largely because it carries ${fmt(Math.abs(intDiff))} less interest than ${loser.label} over the full term. Lower interest rate or shorter term both reduce this cost.`;
+              } else {
+                return `${winner.label} shows the lowest total cost over the ${inputs.holdYears}-year hold period. All figures include stamp duty, running costs, and estimated exit value. General information only.`;
+              }
+            })()}
           </div>
         </div>
       )}
