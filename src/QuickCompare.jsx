@@ -140,13 +140,15 @@ function calcResults(inputs) {
     fuelPerL, fuelL100km, evEffKwh, evChargeRate,
     tyres, service, insurance, rego,
     dep1, dep2, depN, opportunityCost,
-    includeNovated, includeLoan, includeCash, includeDealer, dealerRate, dealerTerm, dealerDeposit = 2000,
+    includeNovated, includeLoan, includeCash, includeDealer, dealerRate, dealerTerm, dealerDeposit = 2000, applyLCT = false,
   } = inputs;
 
-  const stampDuty = calcStampDuty(vehiclePrice, state);
-  /* LCT: only applies if vehicle exceeds threshold (matches full calculator default) */
-  const lct = calcLCT(vehiclePrice, isEV);   /* returns 0 if under threshold */
-  const effectivePrice = vehiclePrice + stampDuty + lct;
+  /* LCT: only applied if applyLCT is true AND vehicle exceeds threshold
+     Matches full calculator toggle behaviour (default: off) */
+  const lct = applyLCT ? calcLCT(vehiclePrice, isEV) : 0;
+  /* Stamp duty applied on (vehiclePrice + lct) — matches full calc effPrice() */
+  const stampDuty = calcStampDuty(vehiclePrice + lct, state);
+  const effectivePrice = vehiclePrice + lct + stampDuty;
   const exitValue = vehVal(vehiclePrice, holdYears, dep1, dep2, depN);
   const runPerYear = runningCost({ annualKm, isEV, fuelPerL, fuelL100km, evEffKwh, evChargeRate, tyres, service, insurance, rego });
   const totalRunning = runPerYear * holdYears;
@@ -271,6 +273,7 @@ const STEPS = [
 const INITIAL = {
   vehiclePrice: 55000,
   state: "VIC",
+  applyLCT: false,   /* default off — matches full calculator */
   isEV: false,
   evType: "bev",
   annualKm: 15000,
@@ -435,13 +438,31 @@ function StepVehicle({ inputs, upd }) {
         )}
       </Field>
 
-      {/* Live stamp duty preview */}
+      {/* LCT toggle - only show if vehicle is above threshold */}
+      {calcLCT(inputs.vehiclePrice, inputs.isEV) > 0 && (
+        <Field label="Luxury Car Tax" hint={`This vehicle may attract LCT. The full calculator defaults to off — toggle on to include it.`}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 14px", background: C.bg, borderRadius: 8, border: `1px solid ${C.border}` }}>
+            <span style={{ fontSize: 13, color: C.muted }}>Apply LCT ({fmt(calcLCT(inputs.vehiclePrice, inputs.isEV))})</span>
+            <button role="switch" aria-checked={inputs.applyLCT}
+              onClick={() => upd("applyLCT", !inputs.applyLCT)}
+              style={{ width: 40, height: 22, borderRadius: 11, border: "none",
+                background: inputs.applyLCT ? "#16a34a" : "#cbd5e1",
+                cursor: "pointer", position: "relative", transition: "background 0.2s" }}>
+              <span style={{ position: "absolute", top: 2, left: inputs.applyLCT ? 20 : 2,
+                width: 18, height: 18, borderRadius: "50%", background: "white",
+                transition: "left 0.2s", boxShadow: "0 1px 3px rgba(0,0,0,0.2)" }} />
+            </button>
+          </div>
+        </Field>
+      )}
+
+      {/* Live on-costs preview */}
       <div style={{ background: "#eff6ff", border: `1px solid #bfdbfe`, borderRadius: 8, padding: "12px 14px", fontSize: 13, color: C.brand }}>
-        <strong>Stamp duty estimate ({inputs.state}):</strong>{" "}
-        {fmt(calcStampDuty(inputs.vehiclePrice, inputs.state))}
-        {calcLCT(inputs.vehiclePrice, inputs.isEV) > 0 && (
+        <strong>On-costs ({inputs.state}):</strong>{" "}
+        Stamp duty {fmt(calcStampDuty(inputs.vehiclePrice + (inputs.applyLCT ? calcLCT(inputs.vehiclePrice, inputs.isEV) : 0), inputs.state))}
+        {inputs.applyLCT && calcLCT(inputs.vehiclePrice, inputs.isEV) > 0 && (
           <span style={{ marginLeft: 12, color: C.warn }}>
-            + LCT: {fmt(calcLCT(inputs.vehiclePrice, inputs.isEV))}
+            + LCT {fmt(calcLCT(inputs.vehiclePrice, inputs.isEV))}
           </span>
         )}
       </div>
@@ -595,7 +616,6 @@ function InsightCards({ results, inputs }) {
   const novated       = results.find(r => r.method === "novated");
   const loan          = results.find(r => r.method === "loan");
   const cash          = results.find(r => r.method === "cash");
-// eslint-disable-next-line
   const dealer        = results.find(r => r.method === "dealer");
 
   const cards = [];
@@ -778,7 +798,7 @@ function StepResults({ inputs }) {
               const loser = results[results.length - 1];
               const intDiff = (loser.totalInterest || 0) - (winner.totalInterest || 0);
               if (winner.method === "novated") {
-                return `${winner.label} shows the lowest total because pre-tax salary sacrifice saves ${fmt(winner.taxSavingMonthly)}/mo in income tax${winner.fbtExempt ? " and your EV is FBT-exempt" : ""}. Over ${inputs.holdYears} years this adds up to ${fmt(winner.taxSavingMonthly * 12 * Math.min(inputs.holdYears, inputs.novatedTerm))} in tax savings compared to after-tax alternatives.`;
+                return `${winner.label} shows the lowest total because pre-tax salary sacrifice saves ${fmt(winner.taxSavingMonthly)}/mo in income tax${(winner.fbtExempt && inputs.isEV) ? " and your EV is FBT-exempt" : ""}. Over ${inputs.holdYears} years this adds up to ${fmt(winner.taxSavingMonthly * 12 * Math.min(inputs.holdYears, inputs.novatedTerm))} in tax savings compared to after-tax alternatives.`;
               } else if (winner.method === "cash") {
                 return `${winner.label} shows the lowest total because there is no interest to pay. The opportunity cost of ${fmt(winner.opportunityCostTotal || 0)} is included in the figure. If your opportunity cost rate is higher, financing could narrow or reverse this gap.`;
               } else if (intDiff > 500) {
