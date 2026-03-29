@@ -616,6 +616,7 @@ function InsightCards({ results, inputs }) {
   const novated       = results.find(r => r.method === "novated");
   const loan          = results.find(r => r.method === "loan");
   const cash          = results.find(r => r.method === "cash");
+// eslint-disable-next-line
   const dealer        = results.find(r => r.method === "dealer");
 
   const cards = [];
