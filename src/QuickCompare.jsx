@@ -169,13 +169,14 @@ function calcResults(inputs) {
     });
   }
 
-  /* Personal loan — mirrors calcLoan() in App.js */
+  /* Personal loan */
   if (includeLoan) {
     const financedAmount = Math.max(0, vehiclePrice - deposit);
     const months = loanTerm * 12;
     const mp = pmt(loanRate, months, financedAmount);
     const holdMonths = Math.min(holdYears * 12, months);
-    const totalPaid = deposit + stampDuty + holdMonths * mp;  /* stamp duty upfront */
+    /* LCT and stamp duty are upfront costs — not financed */
+    const totalPaid = deposit + lct + stampDuty + holdMonths * mp;
     const totalInt = mp * months - financedAmount;
     const totalCost = totalPaid + totalRunning - exitValue;
     results.push({
@@ -183,23 +184,22 @@ function calcResults(inputs) {
       monthlyPayment: Math.round(mp),
       totalCost: Math.round(totalCost),
       effectiveMonthly: Math.round(totalCost / (holdYears * 12)),
-      upfront: deposit + stampDuty,
+      upfront: Math.round(deposit + lct + stampDuty),
       totalInterest: Math.round(totalInt),
       note: `${(loanRate * 100).toFixed(2)}% interest rate, ${loanTerm}-year term`,
     });
   }
 
-  /* Dealer finance — mirrors calcLoan() in App.js exactly */
+  /* Dealer finance */
   if (includeDealer) {
     const dep = dealerDeposit;
     const balloon = vehiclePrice * 0.25;
-    /* Finance vehicle price minus deposit (stamp duty paid upfront, not financed) */
     const financedAmount = Math.max(0, vehiclePrice - dep);
     const months = dealerTerm * 12;
     const mp = pmt(dealerRate, months, financedAmount, -balloon);
     const holdMonths = Math.min(holdYears * 12, months);
-    const totalPaid = dep + stampDuty + holdMonths * mp;   /* stamp duty is upfront cash */
-    /* Remaining balloon at end of hold: if still in loan term, balloon still owing */
+    /* LCT and stamp duty are upfront costs — not financed */
+    const totalPaid = dep + lct + stampDuty + holdMonths * mp;
     const balloonOwing = holdYears >= dealerTerm ? balloon : 0;
     const totalInt = mp * months - (financedAmount - balloon);
     const totalCost = totalPaid + totalRunning - exitValue + Math.max(0, balloonOwing);
@@ -208,7 +208,7 @@ function calcResults(inputs) {
       monthlyPayment: Math.round(mp),
       totalCost: Math.round(totalCost),
       effectiveMonthly: Math.round(totalCost / (holdYears * 12)),
-      upfront: dep + stampDuty,
+      upfront: Math.round(dep + lct + stampDuty),
       totalInterest: Math.round(totalInt),
       balloonOwing: Math.round(balloonOwing),
       note: `25% balloon · $${dep.toLocaleString("en-AU")} deposit · ${(dealerRate * 100).toFixed(2)}% rate · ${dealerTerm}yr`,

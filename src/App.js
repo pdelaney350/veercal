@@ -511,7 +511,11 @@ const BOUNDS = {
 };
 
 function sanitise(key, val) {
-  if (val === "" || val === null || val === undefined || isNaN(val)) return DEFAULTS[key] ?? 0;
+  /* Pass strings through directly — isNaN("NSW") is true which would break
+     state/evType selectors. Only apply numeric bounds to numeric values. */
+  if (val === "" || val === null || val === undefined) return DEFAULTS[key] ?? 0;
+  if (typeof val === "string") return val;   /* state, evType etc — pass through */
+  if (isNaN(val)) return DEFAULTS[key] ?? 0;
   const b = BOUNDS[key];
   if (!b) return val;
   return Math.min(b.max, Math.max(b.min, val));
@@ -738,8 +742,7 @@ function Slider({ label, value, onChange, min, max, step = 1, fmt: f = (v) => v,
     setEditing(false);
     const parsed = parseFloat(draft);
     if (!isNaN(parsed) && parsed >= 0 && parsed <= 50) {
-      onChange(Math.round(parsed * 10000) / 1000000 * 100); /* careful: % -> decimal */
-      onChange(parsed / 100);
+      onChange(Math.round(parsed * 100) / 10000);  /* convert %% to decimal: 8.99 → 0.0899 */
     }
   };
   return (
