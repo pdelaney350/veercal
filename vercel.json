@@ -16,6 +16,9 @@
       "src": "/calculator/(.*)",
       "dest": "/index.html"
     },
+    { "src": "/disclaimer", 
+      "dest": "/disclaimer.html" 
+    },
     {
       "src": "/learn",
       "dest": "/learn/index.html"
