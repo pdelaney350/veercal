@@ -69,6 +69,8 @@ function getResidual(annualKm) {
   return r.over45;
 }
 function isEvFbtExempt(price, evType) {
+  /* Only call this when isEV is confirmed true — evType='bev' is the default
+     even for ICE vehicles, so the caller must guard with isEV first */
   if (evType === 'phev') return QC_RATES.phevFbtExemptActive;
   if (!QC_RATES.evFbtExemptActive) return false;
   return price <= QC_RATES.lctThresholdFE;
@@ -228,7 +230,7 @@ function calcResults(inputs) {
     const preTax = gf + runMo;
     const taxSaving = preTax * effectiveTaxRate;
     const netMo = preTax - taxSaving;
-    const evExempt = isEvFbtExempt(vehiclePrice, evType);
+    const evExempt = isEV && isEvFbtExempt(vehiclePrice, evType);  /* must check isEV — evType defaults to 'bev' even for ICE cars */
     const fbtMo = evExempt ? 0 : (vehiclePrice * QC_RATES.fbtStatutoryRate * QC_RATES.fbtGrossUpType1 * QC_RATES.fbtRate) / 12;
     const trueNetMo = netMo + fbtMo;
     /* Phase 1: lease payments; Phase 2: post-lease running only; + residual buyout */
