@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Car Stamp Duty Calculator Australia 2025 | Veercal</title>
+  <meta name="description" content="Calculate stamp duty and full on-costs for buying a car in any Australian state. Enter a drive-away price or base vehicle price — see the complete cost breakdown instantly." />
+  <meta name="author" content="Veercal" />
+  <meta name="copyright" content="© 2025 Veercal. All rights reserved." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.veercal.com/stamp-duty" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <meta property="og:title" content="Car Stamp Duty Calculator — All Australian States | Veercal" />
+  <meta property="og:description" content="The only calculator that works from both drive-away price and base price. See full on-costs for every state." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.veercal.com/stamp-duty" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How is stamp duty calculated on a car in Australia?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Stamp duty on cars (also called motor vehicle duty) is calculated as a percentage of the dutiable value — typically the purchase price. Each state applies its own tiered rate structure. For example, in Victoria the rate is 3.5% up to $57,000, then 5% up to $100,000, then 6% above $100,000."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is stamp duty included in drive-away price?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes — drive-away pricing typically includes stamp duty, registration, CTP insurance, and dealer delivery charges. However the exact split varies between dealers."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do electric vehicles pay stamp duty in Australia?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "It depends on the state. NSW exempts new battery EVs under $78,000 from stamp duty. ACT exempts zero-emission vehicles. Other states apply standard rates, though this is changing rapidly — verify with your state revenue office."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --brand:        #1e40af;
+      --brand-mid:    #2563eb;
+      --dark:         #1e293b;
+      --bg:           #f1f5f9;
+      --white:        #ffffff;
+      --border:       #e2e8f0;
+      --text:         #1e293b;
+      --muted:        #64748b;
+      --green:        #16a34a;
+      --green-bg:     #f0fdf4;
+      --green-border: #bbf7d0;
+      --amber:        #d97706;
+      --amber-bg:     #fffbeb;
+      --amber-border: #fde68a;
+      --red:          #dc2626;
+      --red-bg:       #fef2f2;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: linear-gradient(135deg, #2d3eb0 0%, #1e40af 100%);
+      padding: 0 32px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.2);
+    }
+    .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-wordmark { font-family: 'Arial Black', Arial, sans-serif; font-weight: 900; font-size: 20px; color: #fff; letter-spacing: -0.09em; }
+    .nav-links { display: flex; gap: 8px; align-items: center; }
+    .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 13px; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.15s; }
+    .nav-links a:hover { color: white; background: rgba(255,255,255,0.1); }
+    .nav-links a.active { color: white; font-weight: 700; }
+    .nav-cta { background: white; color: #1e40af !important; font-weight: 700 !important; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, #2d3eb0 0%, #1e40af 55%, #1a35a0 100%);
+      padding: 48px 32px 44px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 24px 24px;
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.9);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .hero h1 {
+      font-size: 34px;
+      font-weight: 800;
+      color: white;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+      position: relative;
+    }
+    .hero p {
+      font-size: 16px;
+      color: rgba(255,255,255,0.75);
+      max-width: 520px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* ── LAYOUT ── */
+    .page-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 36px 20px 80px;
+    }
+
+    /* ── MAIN CALCULATOR CARD ── */
+    .calc-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(30,41,59,0.08);
+      margin-bottom: 24px;
+    }
+
+    /* ── MODE TOGGLE ── */
+    .mode-toggle-wrap {
+      padding: 24px 28px 20px;
+      border-bottom: 1.5px solid var(--border);
+      background: #fafbfc;
+    }
+    .mode-toggle-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .mode-toggle {
+      display: inline-flex;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 3px;
+      gap: 2px;
+    }
+    .mode-btn {
+      padding: 9px 22px;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.18s;
+      font-family: 'Inter', sans-serif;
+      white-space: nowrap;
+    }
+    .mode-btn.active {
+      background: var(--white);
+      color: var(--brand);
+      box-shadow: 0 1px 4px rgba(30,41,59,0.12);
+    }
+    .mode-hint {
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* ── INPUTS ── */
+    .inputs-section { padding: 24px 28px; }
+    .inputs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .input-group { display: flex; flex-direction: column; gap: 6px; }
+    .input-group.full { grid-column: 1 / -1; }
+    .input-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.02em;
+    }
+    .input-sublabel {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .input-prefix {
+      position: absolute;
+      left: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--muted);
+      pointer-events: none;
+    }
+    input[type="text"], select {
+      width: 100%;
+      padding: 10px 12px 10px 26px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      outline: none;
+      transition: border-color 0.15s;
+      appearance: none;
+    }
+    select { padding-left: 12px; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2364748b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; }
+    input[type="text"]:focus, select:focus { border-color: var(--brand-mid); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+
+    /* Type pills */
+    .type-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+    .type-pill {
+      padding: 7px 16px;
+      border-radius: 8px;
+      border: 1.5px solid var(--border);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s;
+      background: var(--white);
+      font-family: 'Inter', sans-serif;
+    }
+    .type-pill.active {
+      background: #eff6ff;
+      border-color: var(--brand-mid);
+      color: var(--brand);
+    }
+
+    /* Expand toggle */
+    .expand-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 28px 20px;
+      background: none;
+      border: none;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--brand);
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+    }
+    .expand-toggle:hover { color: var(--brand-mid); }
+    .expand-arrow { transition: transform 0.2s; font-size: 10px; }
+    .expand-arrow.open { transform: rotate(180deg); }
+
+    .advanced-inputs {
+      display: none;
+      padding: 0 28px 24px;
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+    }
+    .advanced-inputs.visible { display: block; }
+    .advanced-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+    }
+
+    /* ── CALCULATE BTN ── */
+    .calc-btn-wrap {
+      padding: 0 28px 28px;
+    }
+    .calc-btn {
+      width: 100%;
+      background: var(--brand);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.15s;
+      letter-spacing: -0.01em;
+    }
+    .calc-btn:hover { background: var(--brand-mid); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(30,64,175,0.3); }
+
+    /* ── RESULTS ── */
+    .results-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(30,41,59,0.08);
+      margin-bottom: 24px;
+      display: none;
+    }
+    .results-card.visible { display: block; }
+
+    .results-header {
+      background: linear-gradient(135deg, #1e293b, #1e3a5f);
+      padding: 20px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .results-header-left h2 {
+      font-size: 14px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.7);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 4px;
+    }
+    .results-total {
+      font-size: 32px;
+      font-weight: 800;
+      color: white;
+      letter-spacing: -0.02em;
+    }
+    .results-subtitle {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      margin-top: 2px;
+    }
+    .results-mode-badge {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.85);
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* Breakdown rows */
+    .breakdown-section { padding: 24px 28px; }
+    .breakdown-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 11px 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .breakdown-row:last-child { border-bottom: none; }
+    .breakdown-label {
+      font-size: 14px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .breakdown-label strong { color: var(--text); font-weight: 600; }
+    .breakdown-icon { font-size: 16px; width: 24px; text-align: center; }
+    .breakdown-value {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
+    }
+    .breakdown-value.highlight { color: var(--brand); }
+    .breakdown-value.zero { color: #94a3b8; font-weight: 500; }
+    .breakdown-value.exempt {
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 700;
+      background: var(--green-bg);
+      padding: 3px 8px;
+      border-radius: 20px;
+      border: 1px solid var(--green-border);
+    }
+
+    .breakdown-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 8px 0;
+    }
+    .breakdown-total-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0 4px;
+    }
+    .breakdown-total-label {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .breakdown-total-value {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--brand);
+      letter-spacing: -0.02em;
+    }
+
+    /* Insight box */
+    .insight-box {
+      margin: 0 28px 24px;
+      background: #eff6ff;
+      border: 1.5px solid #bfdbfe;
+      border-radius: 10px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .insight-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+    .insight-text { font-size: 13px; color: #1e40af; line-height: 1.6; }
+    .insight-text strong { font-weight: 700; }
+
+    /* EV savings box */
+    .ev-box {
+      margin: 0 28px 24px;
+      background: var(--green-bg);
+      border: 1.5px solid var(--green-border);
+      border-radius: 10px;
+      padding: 14px 18px;
+      display: none;
+    }
+    .ev-box.visible { display: flex; align-items: flex-start; gap: 10px; }
+    .ev-box .insight-text { color: #14532d; }
+
+    /* Reverse translation */
+    .translation-box {
+      margin: 0 28px 24px;
+      background: var(--amber-bg);
+      border: 1.5px solid var(--amber-border);
+      border-radius: 10px;
+      padding: 14px 18px;
+      display: none;
+    }
+    .translation-box.visible { display: flex; align-items: flex-start; gap: 10px; }
+    .translation-box .insight-text { color: #78350f; }
+
+    /* ── STATE COMPARISON TABLE ── */
+    .compare-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(30,41,59,0.08);
+      margin-bottom: 24px;
+      display: none;
+    }
+    .compare-card.visible { display: block; }
+    .compare-header {
+      padding: 18px 28px 16px;
+      border-bottom: 1.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .compare-header h3 {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .compare-header p {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    thead th {
+      padding: 10px 16px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      background: #fafbfc;
+      border-bottom: 1.5px solid var(--border);
+    }
+    thead th:not(:first-child) { text-align: right; }
+    tbody tr { transition: background 0.12s; }
+    tbody tr:hover { background: #fafbfc; }
+    tbody tr.current-state { background: #eff6ff; }
+    tbody td {
+      padding: 11px 16px;
+      border-bottom: 1px solid #f1f5f9;
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
+    }
+    tbody td:first-child { font-weight: 600; }
+    tbody td:not(:first-child) { text-align: right; }
+    tbody tr:last-child td { border-bottom: none; }
+    .state-diff-pos { color: var(--red); font-size: 11px; font-weight: 600; }
+    .state-diff-neg { color: var(--green); font-size: 11px; font-weight: 600; }
+    .state-badge { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 20px; margin-left: 6px; background: #dbeafe; color: var(--brand); }
+    .ev-exempt-badge { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 20px; background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+
+    /* ── CALCULATOR CTA ── */
+    .cta-card {
+      background: var(--dark);
+      border-radius: 14px;
+      padding: 28px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+    .cta-text h3 { font-size: 18px; font-weight: 800; color: white; margin-bottom: 5px; }
+    .cta-text p { font-size: 13px; color: #94a3b8; }
+    .cta-btn {
+      background: var(--brand-mid);
+      color: white;
+      padding: 12px 22px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13px;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .cta-btn:hover { background: var(--brand); }
+
+    /* ── DISCLAIMER ── */
+    .disclaimer-bar {
+      background: var(--amber-bg);
+      border: 1.5px solid var(--amber-border);
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-size: 12px;
+      color: #78350f;
+      margin-bottom: 32px;
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      color: rgba(255,255,255,0.5);
+      padding: 32px;
+      text-align: center;
+      font-size: 12px;
+    }
+    footer a { color: rgba(255,255,255,0.6); text-decoration: none; margin: 0 10px; }
+    footer a:hover { color: white; }
+    .footer-brand { font-family: 'Arial Black', Arial, sans-serif; font-size: 16px; font-weight: 900; color: white; letter-spacing: -0.09em; margin-bottom: 12px; }
+    .footer-links { margin: 10px 0 14px; }
+    .footer-copy { font-size: 11px; color: rgba(255,255,255,0.3); }
+
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 26px; }
+      .inputs-grid { grid-template-columns: 1fr; }
+      .advanced-grid { grid-template-columns: 1fr 1fr; }
+      .mode-btn { padding: 8px 14px; font-size: 12px; }
+      nav .nav-links a:not(.nav-cta) { display: none; }
+      .results-total { font-size: 26px; }
+      table { font-size: 12px; }
+      thead th, tbody td { padding: 9px 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/" class="nav-brand">
+      <svg width="28" height="28" viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="46" stroke="white" stroke-width="2" fill="none"/>
+        <rect x="28" y="48" width="8" height="18" fill="white" rx="0.5"/>
+        <rect x="39" y="40" width="8" height="26" fill="white" rx="0.5"/>
+        <rect x="50" y="30" width="8" height="36" fill="white" rx="0.5"/>
+        <rect x="61" y="38" width="8" height="28" fill="white" rx="0.5"/>
+        <path d="M 26 66 A 6 6 0 0 0 38 66 Z" fill="white"/>
+        <path d="M 59 66 A 6 6 0 0 0 71 66 Z" fill="white"/>
+      </svg>
+      <span class="nav-wordmark">VEERCAL</span>
+    </a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/calculator">Calculator</a>
+      <a href="/learn">Learn</a>
+      <a href="/faq">FAQ</a>
+      <a href="/calculator" class="nav-cta">Open Calculator</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">🧮 Free Calculator</div>
+    <h1>Car Stamp Duty Calculator</h1>
+    <p>Enter a drive-away price or base vehicle price — see the full on-costs breakdown for any Australian state, including EV concessions.</p>
+  </div>
+
+  <div class="page-wrap">
+
+    <!-- MAIN CALCULATOR -->
+    <div class="calc-card">
+
+      <!-- Mode toggle -->
+      <div class="mode-toggle-wrap">
+        <div class="mode-toggle-label">How do you want to enter the price?</div>
+        <div class="mode-toggle">
+          <button class="mode-btn active" id="btnDriveAway" onclick="setMode('driveaway')">
+            Drive-away price
+          </button>
+          <button class="mode-btn" id="btnBasePrice" onclick="setMode('base')">
+            Base vehicle price
+          </button>
+        </div>
+        <div class="mode-hint" id="modeHint">
+          Drive-away includes stamp duty, rego, CTP, and delivery — we'll estimate the split for you.
+        </div>
+      </div>
+
+      <!-- Inputs -->
+      <div class="inputs-section">
+        <div class="inputs-grid">
+
+          <div class="input-group">
+            <div class="input-label" id="priceLabel">Drive-away price</div>
+            <div class="input-sublabel" id="priceSublabel">As advertised by the dealer</div>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input type="text" id="priceInput" placeholder="45,000" inputmode="numeric"
+                oninput="formatNumberInput(this)" onblur="calculate()" onkeydown="if(event.key==='Enter')calculate()" />
+            </div>
+          </div>
+
+          <div class="input-group">
+            <div class="input-label">State / Territory</div>
+            <div class="input-sublabel">Where the vehicle is registered</div>
+            <div class="input-wrap">
+              <select id="stateSelect" onchange="calculate()">
+                <option value="VIC">VIC — Victoria</option>
+                <option value="NSW">NSW — New South Wales</option>
+                <option value="QLD">QLD — Queensland</option>
+                <option value="WA">WA — Western Australia</option>
+                <option value="SA">SA — South Australia</option>
+                <option value="TAS">TAS — Tasmania</option>
+                <option value="ACT">ACT — Aust. Capital Territory</option>
+                <option value="NT">NT — Northern Territory</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Vehicle type pills -->
+          <div class="input-group full">
+            <div class="input-label">Vehicle type</div>
+            <div class="input-sublabel">Affects stamp duty rates and EV concessions</div>
+            <div class="type-pills">
+              <button class="type-pill active" onclick="setVehicleType('new', this)">🚗 New vehicle</button>
+              <button class="type-pill" onclick="setVehicleType('used', this)">🔄 Used vehicle</button>
+              <button class="type-pill" onclick="setVehicleType('ev', this)">⚡ Battery EV (BEV)</button>
+              <button class="type-pill" onclick="setVehicleType('phev', this)">🔌 Plug-in Hybrid (PHEV)</button>
+            </div>
+          </div>
+
+          <!-- Vehicle body type -->
+          <div class="input-group full" id="bodyTypeGroup">
+            <div class="input-label">Vehicle body</div>
+            <div class="input-sublabel" id="bodyTypeSublabel">VIC and SA have lower duty rates for utes, vans and commercial goods vehicles</div>
+            <div class="type-pills">
+              <button class="type-pill active" onclick="setBodyType('passenger', this)">&#128663; Passenger car / SUV</button>
+              <button class="type-pill" onclick="setBodyType('commercial', this)">&#128699; Ute / van / commercial</button>
+            </div>
+          </div>
+
+          <!-- Purchase type pills -->
+          <div class="input-group full">
+            <div class="input-label">Purchase type</div>
+            <div class="input-sublabel">Private sales use market/agreed value; dealer sales use purchase price</div>
+            <div class="type-pills">
+              <button class="type-pill active" onclick="setPurchaseType('dealer', this)">&#127970; Dealer / new</button>
+              <button class="type-pill" onclick="setPurchaseType('private', this)">&#129309; Private sale</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Advanced inputs toggle -->
+      <button class="expand-toggle" onclick="toggleAdvanced(this)">
+        <span class="expand-arrow" id="expandArrow">▼</span>
+        Adjust on-cost estimates
+      </button>
+
+      <div class="advanced-inputs" id="advancedInputs">
+        <div class="advanced-grid">
+          <div class="input-group">
+            <div class="input-label">Annual rego</div>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input type="text" id="regoInput" value="900" inputmode="numeric"
+                oninput="formatNumberInput(this)" onblur="calculate()" />
+            </div>
+          </div>
+          <div class="input-group">
+            <div class="input-label">CTP insurance</div>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input type="text" id="ctpInput" value="600" inputmode="numeric"
+                oninput="formatNumberInput(this)" onblur="calculate()" />
+            </div>
+          </div>
+          <div class="input-group">
+            <div class="input-label">Dealer delivery</div>
+            <div class="input-wrap">
+              <span class="input-prefix">$</span>
+              <input type="text" id="deliveryInput" value="1500" inputmode="numeric"
+                oninput="formatNumberInput(this)" onblur="calculate()" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Calculate button -->
+      <div class="calc-btn-wrap">
+        <button class="calc-btn" onclick="calculate()">Calculate stamp duty and on-costs →</button>
+      </div>
+
+    </div>
+
+    <!-- RESULTS -->
+    <div class="results-card" id="resultsCard">
+
+      <div class="results-header">
+        <div class="results-header-left">
+          <h2>On-costs breakdown</h2>
+          <div class="results-total" id="resultsDriveaway">$0</div>
+          <div class="results-subtitle" id="resultsSubtitle">Drive-away price</div>
+        </div>
+        <div class="results-mode-badge" id="resultsBadge">VIC · New</div>
+      </div>
+
+      <div class="breakdown-section">
+        <div class="breakdown-row">
+          <div class="breakdown-label">
+            <span class="breakdown-icon">🚗</span>
+            <strong>Vehicle price</strong>
+          </div>
+          <div class="breakdown-value" id="rowVehiclePrice">—</div>
+        </div>
+        <div class="breakdown-row" id="rowLctWrap">
+          <div class="breakdown-label">
+            <span class="breakdown-icon">💎</span>
+            <strong>Luxury Car Tax (LCT)</strong>
+            <span style="font-size:11px;color:#94a3b8;margin-left:4px;">ATO</span>
+          </div>
+          <div class="breakdown-value" id="rowLct">$0</div>
+        </div>
+        <div class="breakdown-row">
+          <div class="breakdown-label">
+            <span class="breakdown-icon">🏛️</span>
+            <strong>Stamp duty</strong>
+            <span style="font-size:11px;color:#94a3b8;margin-left:4px;" id="rowSdNote"></span>
+          </div>
+          <div class="breakdown-value highlight" id="rowStampDuty">—</div>
+        </div>
+        <div class="breakdown-row">
+          <div class="breakdown-label">
+            <span class="breakdown-icon">📋</span>
+            <strong>Registration</strong>
+          </div>
+          <div class="breakdown-value" id="rowRego">—</div>
+        </div>
+        <div class="breakdown-row">
+          <div class="breakdown-label">
+            <span class="breakdown-icon">🛡️</span>
+            <strong>CTP insurance</strong>
+          </div>
+          <div class="breakdown-value" id="rowCtp">—</div>
+        </div>
+        <div class="breakdown-row">
+          <div class="breakdown-label">
+            <span class="breakdown-icon">🏭</span>
+            <strong>Dealer delivery</strong>
+          </div>
+          <div class="breakdown-value" id="rowDelivery">—</div>
+        </div>
+
+        <div class="breakdown-divider"></div>
+
+        <div class="breakdown-total-row">
+          <div class="breakdown-total-label">Total drive-away price</div>
+          <div class="breakdown-total-value" id="rowTotal">—</div>
+        </div>
+        <div style="font-size:12px;color:#94a3b8;margin-top:4px;">
+          Government charges: <strong id="govtChargesTotal" style="color:#1e293b;">—</strong>
+          &nbsp;·&nbsp;
+          <span id="govtChargesPct" style="color:#1e293b;">—</span> of drive-away
+        </div>
+      </div>
+
+      <!-- Insight box -->
+      <div class="insight-box" id="insightBox">
+        <span class="insight-icon">💡</span>
+        <span class="insight-text" id="insightText"></span>
+      </div>
+
+      <!-- EV savings box -->
+      <div class="ev-box" id="evBox">
+        <span class="insight-icon">⚡</span>
+        <span class="insight-text" id="evText"></span>
+      </div>
+
+      <!-- State methodology note (QLD/ACT) -->
+      <div class="translation-box" id="stateMethodNote" style="display:none;">
+        <span class="insight-icon">ℹ️</span>
+        <span class="insight-text" id="stateMethodNoteText"></span>
+      </div>
+
+      <!-- Drive-away translation box -->
+      <div class="translation-box" id="translationBox">
+        <span class="insight-icon">⚠️</span>
+        <span class="insight-text" id="translationText"></span>
+      </div>
+
+    </div>
+
+    <!-- STATE COMPARISON TABLE -->
+    <div class="compare-card" id="compareCard">
+      <div class="compare-header">
+        <div>
+          <h3>Stamp duty comparison — all states</h3>
+          <p>How much stamp duty you'd pay on this vehicle in every Australian state</p>
+        </div>
+      </div>
+      <div style="overflow-x:auto;">
+        <table id="compareTable">
+          <thead>
+            <tr>
+              <th>State</th>
+              <th>Stamp duty</th>
+              <th>Duty rate (eff.)</th>
+              <th>vs your state</th>
+            </tr>
+          </thead>
+          <tbody id="compareBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-card">
+      <div class="cta-text">
+        <h3>Ready to compare finance options?</h3>
+        <p>The Veercal calculator uses these exact stamp duty figures in its true cost analysis — cash, loan, novated lease, and more.</p>
+      </div>
+      <a href="/calculator" class="cta-btn" id="ctaLink">Open full calculator →</a>
+    </div>
+
+    <!-- DISCLAIMER -->
+    <div class="disclaimer-bar">
+      <span>⚠️</span>
+      <span><strong>Estimates only.</strong> Stamp duty rates are verified against official state revenue office guidance as at April 2026 (VIC SRO, Revenue NSW, QLD Transport, WA OSR, Revenue SA, SRO TAS, ACT Revenue, NT Treasury). QLD duty is cylinder-based — figures shown are estimates for a standard 4-cylinder vehicle. ACT duty is emissions-based — figures shown use Category C (standard petrol). EV concession eligibility, private sale valuations, and exact rego/CTP costs vary by circumstance. Always confirm with your state revenue office before purchase. This tool does not constitute financial or legal advice. <a href="/disclaimer" style="color:#92400e;text-decoration:underline;">Read full disclaimer.</a></span>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">VEERCAL</div>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/calculator">Calculator</a>
+      <a href="/compare">Quick Compare</a>
+      <a href="/learn">Learn</a>
+      <a href="/faq">FAQ</a>
+      <a href="/stamp-duty">Stamp Duty</a>
+      <a href="/disclaimer">Disclaimer</a>
+      <a href="/terms">Terms</a>
+      <a href="/privacy">Privacy</a>
+    </div>
+    <div class="footer-copy">© <span id="yr"></span> Veercal Pty. Ltd. All rights reserved. · General information only — not financial advice. · Rates verified April 2026.</div>
+  </footer>
+
+  <script>
+    document.getElementById('yr').textContent = new Date().getFullYear();
+
+    /* ─── STATE ─────────────────────────────────────────────────────────── */
+    let mode = 'driveaway';   // 'driveaway' | 'base'
+    let vehicleType = 'new';  // 'new' | 'used' | 'ev' | 'phev'
+    let purchaseType = 'dealer';
+    let bodyType = 'passenger'; // 'passenger' | 'commercial'
+
+    /* ─── RATES (verified April 2026 against state revenue offices) ─────── */
+    const RATES = {
+
+      /* ATO LCT thresholds FY2025-26 */
+      lctStd:  80567,
+      lctFE:   91387,   /* fuel-efficient / EVs */
+      lctRate: 0.33,
+
+      /*
+       * ── Stamp duty / motor vehicle duty by state ───────────────────────
+       * Source: each state revenue office, verified April 2026.
+       * Rates are for passenger cars (new or used) unless otherwise noted.
+       * VIC/SA have separate commercial vehicle rates — see stampDutyCommercial.
+       *
+       * VIC: Duties Act 2000 s.218, SRO current rates (unchanged FY2025-26)
+       *   Value rounded up to nearest $200, then × rate per $200.
+       *   ≤ $80,567 (LCT threshold):   $8.40 / $200  = 4.2%
+       *   $80,568 – $100,000:          $10.40 / $200 = 5.2%
+       *   $100,001 – $150,000:         $14.00 / $200 = 7%
+       *   > $150,000:                  $18.00 / $200 = 9%
+       *   Green/EV (≤120g CO₂/km):    $8.40 / $200 flat regardless of value
+       *
+       * NSW: Revenue NSW — 3% under $45k, $1,350 + 5% above $45k
+       * QLD: Duties Act 2001 Sch 4C — cylinder/engine based. Simplified here
+       *   to standard rate (~3.1% up to $100k, 5% above). EV/hybrid ~2%.
+       *   Note: actual QLD duty depends on cylinder count — use QLD Govt
+       *   calculator for precision: qld.gov.au/transport/registration/fees/duty
+       * WA: Duties Act 2008 — 2.75% up to $25k; sliding to 6.5% at $50k;
+       *   flat 6.5% above $50k.
+       * SA: Stamp Duties Act 1923 — non-commercial: $60 + 4% of (p – $3,000)
+       *   Commercial vehicle rate differs — see stampDutyCommercial.
+       * TAS: Duties Act 2001 Sch 1 — tiered: $3/$100 up to $35k; step at
+       *   $35k-$40k; 4% of full value above $40k.
+       * ACT: Duties Act 1999 — emissions-based. Simplified here as Category C
+       *   (standard petrol, 176-220g CO₂/km): 3% under $45k, 5% above.
+       *   EV/zero-emission (Category AAA) fully exempt — see evConcession.
+       * NT: Taxation Administration Act — flat 3%.
+       * ───────────────────────────────────────────────────────────────────
+       */
+      stampDuty: {
+        VIC: {
+          label: "Victoria",
+          /* VIC: $8.40/$10.40/$14/$18 per $200 by band. Round up to nearest $200. */
+          calc: p => {
+            const v = Math.ceil(p / 200) * 200;
+            if (p <= 80567)  return (v / 200) * 8.40;
+            if (p <= 100000) return (v / 200) * 10.40;
+            if (p <= 150000) return (v / 200) * 14.00;
+            return (v / 200) * 18.00;
+          },
+          /* Green/EV flat rate regardless of value */
+          calcGreen: p => (Math.ceil(p / 200) * 200 / 200) * 8.40,
+        },
+        NSW: {
+          label: "New South Wales",
+          /* Revenue NSW: 3% under $45k, $1,350 + 5% of excess above $45k */
+          calc: p => p < 45000 ? p * 0.03 : 1350 + (p - 45000) * 0.05,
+        },
+        QLD: {
+          label: "Queensland",
+          /* Simplified: ~3% up to $100k, 5% above. Actual rate is cylinder-based. */
+          calc: p => p <= 100000 ? p * 0.03 : p * 0.05,
+          note: 'QLD duty is cylinder-based — this is an estimate for a standard 4-cyl vehicle.',
+        },
+        WA: {
+          label: "Western Australia",
+          /* WA OSR: 2.75% up to $25k; sliding R% from 2.75→6.5% for $25k-$50k; 6.5% above $50k */
+          calc: p => {
+            if (p <= 25000) return p * 0.0275;
+            if (p <= 50000) {
+              const R = 2.75 + (p - 25000) / 6666.66;
+              return p * R / 100;
+            }
+            return p * 0.065;
+          },
+        },
+        SA: {
+          label: "South Australia",
+          /* Stamp Duties Act 1923: non-commercial — $60 + $4 per $100 over $3,000 */
+          calc: p => p <= 1000 ? Math.ceil(p/100) : p <= 2000 ? 10 + (p-1000)*0.02 : p <= 3000 ? 30 + (p-2000)*0.03 : 60 + (p-3000)*0.04,
+        },
+        TAS: {
+          label: "Tasmania",
+          /* SRO TAS: $20 flat ≤$600; $3/$100 up to $35k; $1,050+$11/$100 for $35-40k; 4% above $40k */
+          calc: p => {
+            if (p <= 600)   return 20;
+            if (p <= 35000) return Math.ceil(p / 100) * 3;
+            if (p <= 40000) return 1050 + Math.ceil((p - 35000) / 100) * 11;
+            return p * 0.04;
+          },
+        },
+        ACT: {
+          label: "Australian Capital Territory",
+          /* ACT: emissions-based. Category C (standard petrol): 3% under $45k, $1,350+5% above.
+             EV/zero-emission: fully exempt (see evConcession). */
+          calc: p => p < 45000 ? p * 0.03 : 1350 + (p - 45000) * 0.05,
+          note: 'ACT duty is emissions-based. This estimate uses Category C (standard petrol). EVs are fully exempt.',
+        },
+        NT: {
+          label: "Northern Territory",
+          /* Flat 3% for all passenger vehicles. EVs ≤$50k get concession up to $1,500 until Jun 2027. */
+          calc: p => p * 0.03,
+        },
+      },
+
+      /*
+       * Commercial vehicle / ute rates — only SA and VIC have materially
+       * different duty rates for non-passenger vehicles (utes, vans, goods vehicles).
+       * SA commercial: $30 + $3 per $100 over $2,000
+       * VIC non-passenger (new): $5.40 per $200 = 2.7%
+       * Other states use same rate as passenger cars for light commercial.
+       */
+      stampDutyCommercial: {
+        VIC: { calc: p => (Math.ceil(p / 200) * 200 / 200) * 5.40 },  /* $5.40/$200 new non-passenger */
+        SA:  { calc: p => p <= 1000 ? Math.ceil(p/100) : p <= 2000 ? 10 + (p-1000)*0.02 : 30 + (p-2000)*0.03 },
+      },
+
+      /* EV stamp duty exemptions / concessions (as at April 2026) */
+      evConcession: {
+        NSW: { type: 'exempt', threshold: 78000, label: 'Exempt under $78,000 (Battery EV / hydrogen only)' },
+        ACT: { type: 'exempt', threshold: Infinity, label: 'Zero-emission vehicles fully exempt' },
+        VIC: { type: 'none',   threshold: 0,        label: 'Standard rates apply' },
+        QLD: { type: 'none',   threshold: 0,        label: 'Standard rates apply' },
+        WA:  { type: 'none',   threshold: 0,        label: 'Standard rates apply' },
+        SA:  { type: 'none',   threshold: 0,        label: 'Standard rates apply' },
+        TAS: { type: 'none',   threshold: 0,        label: 'Standard rates apply' },
+        NT:  { type: 'none',   threshold: 0,        label: 'Standard rates apply' },
+      },
+
+      /* Typical govt charges by state (rego + CTP bundled estimate) */
+      regoDefaults: {
+        VIC: { rego: 900, ctp: 600 },
+        NSW: { rego: 380, ctp: 550 },
+        QLD: { rego: 350, ctp: 450 },
+        WA:  { rego: 300, ctp: 500 },
+        SA:  { rego: 700, ctp: 0   },  /* SA bundles CTP into rego */
+        TAS: { rego: 420, ctp: 350 },
+        ACT: { rego: 750, ctp: 0   },  /* ACT bundles */
+        NT:  { rego: 300, ctp: 400 },
+      }
+    };
+
+    /* ─── HELPERS ────────────────────────────────────────────────────────── */
+    function fmt(n) {
+      if (n === null || n === undefined || isNaN(n)) return '—';
+      return '$' + Math.round(n).toLocaleString('en-AU');
+    }
+    function pct(n, total) {
+      if (!total) return '';
+      return (n / total * 100).toFixed(1) + '%';
+    }
+    function parseInput(id) {
+      const raw = document.getElementById(id).value.replace(/[^0-9.]/g, '');
+      return parseFloat(raw) || 0;
+    }
+    function formatNumberInput(el) {
+      const raw = el.value.replace(/[^0-9]/g, '');
+      if (raw) el.value = parseInt(raw).toLocaleString('en-AU');
+    }
+
+    /* LCT calc */
+    function calcLCT(vehiclePrice, vType) {
+      const isFE = (vType === 'ev' || vType === 'phev');
+      const threshold = isFE ? RATES.lctFE : RATES.lctStd;
+      if (vehiclePrice <= threshold) return 0;
+      return ((vehiclePrice - threshold) / 1.1) * RATES.lctRate;
+    }
+
+    /* Stamp duty — respects EV concessions, commercial rates, and VIC green car flat rate */
+    function calcSD(dutiableValue, state, vType, isCommercial) {
+      const isEV = (vType === 'ev');
+      const isGreen = (vType === 'ev' || vType === 'phev'); /* VIC green flat rate */
+
+      /* EV exemption check first */
+      const conc = RATES.evConcession[state];
+      if (isEV && conc && conc.type === 'exempt' && dutiableValue <= conc.threshold) return 0;
+
+      /* NT EV concession — reduce duty by up to $1,500 for EVs ≤$50k until Jun 2027 */
+      const stateRates = RATES.stampDuty[state] || RATES.stampDuty.VIC;
+
+      /* Commercial vehicle rates (VIC/SA only — other states use same rate) */
+      if (isCommercial && RATES.stampDutyCommercial[state]) {
+        return RATES.stampDutyCommercial[state].calc(dutiableValue);
+      }
+
+      /* VIC green/EV flat rate */
+      if (state === 'VIC' && isGreen && stateRates.calcGreen) {
+        return stateRates.calcGreen(dutiableValue);
+      }
+
+      return stateRates.calc(dutiableValue);
+    }
+
+    /* ─── MODE & TYPE SETTERS ────────────────────────────────────────────── */
+    function setMode(m) {
+      mode = m;
+      document.getElementById('btnDriveAway').classList.toggle('active', m === 'driveaway');
+      document.getElementById('btnBasePrice').classList.toggle('active', m === 'base');
+      document.getElementById('priceLabel').textContent   = m === 'driveaway' ? 'Drive-away price' : 'Vehicle price (ex on-costs)';
+      document.getElementById('priceSublabel').textContent = m === 'driveaway'
+        ? 'As advertised by the dealer'
+        : 'Base price before stamp duty and other charges';
+      document.getElementById('modeHint').textContent = m === 'driveaway'
+        ? "Drive-away includes stamp duty, rego, CTP, and delivery — we'll estimate the split for you."
+        : "We'll calculate stamp duty and all other charges on top of this base price.";
+      document.getElementById('priceInput').placeholder = m === 'driveaway' ? '48,000' : '43,000';
+      calculate();
+    }
+
+    function setBodyType(t, btn) {
+      bodyType = t;
+      document.querySelectorAll('#bodyTypeGroup .type-pill').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      calculate();
+    }
+
+    function setVehicleType(t, btn) {
+      vehicleType = t;
+      document.querySelectorAll('.type-pills .type-pill').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      /* Update rego/CTP defaults for EV if needed */
+      const state = document.getElementById('stateSelect').value;
+      updateRegoDefaults(state);
+      calculate();
+    }
+
+    function setPurchaseType(t, btn) {
+      purchaseType = t;
+      document.querySelectorAll('.type-pills')[1].querySelectorAll('.type-pill').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      calculate();
+    }
+
+    function updateRegoDefaults(state) {
+      const def = RATES.regoDefaults[state] || RATES.regoDefaults.VIC;
+      const regoEl = document.getElementById('regoInput');
+      const ctpEl  = document.getElementById('ctpInput');
+      /* Only update if user hasn't customised */
+      if (!regoEl.dataset.dirty) regoEl.value = def.rego.toLocaleString('en-AU');
+      if (!ctpEl.dataset.dirty)  ctpEl.value  = def.ctp.toLocaleString('en-AU');
+    }
+
+    document.getElementById('regoInput').addEventListener('input',    function(){ this.dataset.dirty='1'; });
+    document.getElementById('ctpInput').addEventListener('input',     function(){ this.dataset.dirty='1'; });
+    document.getElementById('stateSelect').addEventListener('change', function(){
+      delete document.getElementById('regoInput').dataset.dirty;
+      delete document.getElementById('ctpInput').dataset.dirty;
+      updateRegoDefaults(this.value);
+      calculate();
+    });
+
+    function toggleAdvanced(btn) {
+      const panel = document.getElementById('advancedInputs');
+      const arrow = document.getElementById('expandArrow');
+      const open  = panel.classList.toggle('visible');
+      arrow.classList.toggle('open', open);
+      btn.querySelector('.expand-toggle span:first-child') && (btn.innerHTML = (open ? '▲' : '▼') + btn.innerHTML.slice(1));
+    }
+
+    /* ─── MAIN CALCULATE ─────────────────────────────────────────────────── */
+    function calculate() {
+      const rawPrice = parseInput('priceInput');
+      if (!rawPrice) return;
+
+      const state    = document.getElementById('stateSelect').value;
+      const rego     = parseInput('regoInput');
+      const ctp      = parseInput('ctpInput');
+      const delivery = parseInput('deliveryInput');
+
+      let vehiclePrice, stampDuty, lct, driveaway;
+      let isEstimated = false;
+
+      if (mode === 'base') {
+        /* FORWARD: base price → calculate everything.
+           Dutiable value = vehicle price + dealer delivery + LCT.
+           Most state revenue offices define dutiable value as the full
+           purchase price paid, which includes dealer delivery charges. */
+        vehiclePrice = rawPrice;
+        lct          = calcLCT(vehiclePrice, vehicleType);
+        stampDuty    = calcSD(vehiclePrice + delivery + lct, state, vehicleType, bodyType === 'commercial');
+        driveaway    = vehiclePrice + lct + stampDuty + rego + ctp + delivery;
+
+      } else {
+        /* REVERSE: drive-away → estimate vehicle price.
+           Delivery stays IN the dutiable value (it's part of what you paid),
+           so we only subtract rego + CTP as fixed govt charges.
+           Solver: vehiclePrice + lct + SD(vehiclePrice + delivery + lct) + delivery = priceExRego */
+        isEstimated  = true;
+        driveaway    = rawPrice;
+        const priceExRego = driveaway - rego - ctp;
+
+        /* Iteratively solve for vehicle price */
+        vehiclePrice = solveVehiclePrice(priceExRego, delivery, state, vehicleType);
+        lct          = calcLCT(vehiclePrice, vehicleType);
+        stampDuty    = calcSD(vehiclePrice + delivery + lct, state, vehicleType, bodyType === 'commercial');
+        /* Recalculate driveaway from solved components for consistency */
+        driveaway    = vehiclePrice + lct + stampDuty + rego + ctp + delivery;
+      }
+
+      /* Add QLD/ACT methodology note if applicable */
+      const stateNote = RATES.stampDuty[state] && RATES.stampDuty[state].note;
+      const noteEl = document.getElementById('stateMethodNote');
+      if (noteEl) {
+        noteEl.style.display = stateNote ? 'flex' : 'none';
+        if (stateNote) document.getElementById('stateMethodNoteText').textContent = stateNote;
+      }
+
+      const govtCharges = stampDuty + lct + rego + ctp;
+      const isEVExempt  = vehicleType === 'ev' && stampDuty === 0 && (state === 'NSW' || state === 'ACT');
+
+      /* ── Update results UI ── */
+      document.getElementById('resultsCard').classList.add('visible');
+      document.getElementById('compareCard').classList.add('visible');
+
+      document.getElementById('resultsDriveaway').textContent = fmt(driveaway);
+      document.getElementById('resultsSubtitle').textContent  = mode === 'driveaway' ? 'Drive-away price' : 'Total drive-away cost';
+      document.getElementById('resultsBadge').textContent     = state + ' · ' + labelType(vehicleType);
+
+      document.getElementById('rowVehiclePrice').textContent  = fmt(vehiclePrice);
+      document.getElementById('rowLct').textContent           = lct > 0 ? fmt(lct) : '$0';
+      document.getElementById('rowLctWrap').style.display     = lct > 0 ? 'flex' : 'none';
+
+      if (isEVExempt) {
+        document.getElementById('rowStampDuty').className = 'breakdown-value exempt';
+        document.getElementById('rowStampDuty').textContent = 'EXEMPT';
+        document.getElementById('rowSdNote').textContent = '— EV concession';
+      } else {
+        document.getElementById('rowStampDuty').className = 'breakdown-value highlight';
+        document.getElementById('rowStampDuty').textContent = fmt(stampDuty);
+        document.getElementById('rowSdNote').textContent = '';
+      }
+
+      document.getElementById('rowRego').textContent     = fmt(rego);
+      document.getElementById('rowCtp').textContent      = ctp > 0 ? fmt(ctp) : '$0 (bundled)';
+      document.getElementById('rowDelivery').textContent = fmt(delivery);
+      document.getElementById('rowTotal').textContent    = fmt(driveaway);
+
+      document.getElementById('govtChargesTotal').textContent = fmt(govtCharges);
+      document.getElementById('govtChargesPct').textContent   = pct(govtCharges, driveaway) + ' of drive-away';
+
+      /* Insight box */
+      const sdPct = (stampDuty / vehiclePrice * 100).toFixed(1);
+      document.getElementById('insightText').innerHTML =
+        `<strong>Government charges account for ${fmt(govtCharges)}</strong> of the total drive-away cost — ` +
+        `that's ${pct(govtCharges, driveaway)} of what you pay. Stamp duty alone adds ${fmt(stampDuty)} ` +
+        `(${sdPct}% of vehicle price). ${lct > 0 ? `Luxury Car Tax adds a further ${fmt(lct)}.` : ''}`;
+
+      /* EV box */
+      const evEl = document.getElementById('evBox');
+      if (vehicleType === 'ev') {
+        const conc = RATES.evConcession[state];
+        evEl.classList.add('visible');
+        if (conc && conc.type === 'exempt' && vehiclePrice <= conc.threshold) {
+          const saving = (RATES.stampDuty[state] || RATES.stampDuty.VIC).calc(vehiclePrice + lct);
+          document.getElementById('evText').innerHTML =
+            `<strong>EV stamp duty exemption applies in ${state}.</strong> ${conc.label}. ` +
+            `You save approximately ${fmt(saving)} compared to an equivalent petrol vehicle.`;
+        } else if (conc && conc.type === 'exempt') {
+          document.getElementById('evText').innerHTML =
+            `<strong>EV exemption exists in ${state} but does not apply at this price.</strong> ${conc.label}.`;
+        } else {
+          document.getElementById('evText').innerHTML =
+            `<strong>No EV stamp duty concession in ${state}.</strong> Standard rates apply. ` +
+            `NSW and ACT both offer exemptions — see the state comparison below.`;
+        }
+      } else {
+        evEl.classList.remove('visible');
+      }
+
+      /* Drive-away translation box */
+      const transEl = document.getElementById('translationBox');
+      if (isEstimated) {
+        transEl.classList.add('visible');
+        document.getElementById('translationText').innerHTML =
+          `<strong>Estimated breakdown.</strong> Drive-away reverse calculation assumes dealer delivery of ${fmt(delivery)}, ` +
+          `rego of ${fmt(rego)}, and CTP of ${fmt(ctp)}. Actual splits vary by dealer — use "Adjust on-cost estimates" to refine. ` +
+          `For exact figures, ask your dealer to itemise each component.`;
+      } else {
+        transEl.classList.remove('visible');
+      }
+
+      /* State comparison table */
+      buildCompareTable(vehiclePrice, lct, delivery, state, vehicleType);
+
+      /* Wire CTA to calculator with pre-filled vehicle price */
+      document.getElementById('ctaLink').href = `/calculator#vp=${Math.round(vehiclePrice)}`;
+    }
+
+    /* ─── ITERATIVE SOLVER for drive-away reverse calc ────────────────────
+       Solves: vehiclePrice + LCT(vehiclePrice) + SD(vehiclePrice + delivery + LCT) + delivery = target
+       Delivery is included in dutiable value (it's part of the purchase price).
+       Uses 40 iterations of bisection — converges to <$1 accuracy.
+    ─────────────────────────────────────────────────────────────────────── */
+    function solveVehiclePrice(target, delivery, state, vType) {
+      const isComm = bodyType === 'commercial';
+      let lo = 0, hi = target;
+      for (let i = 0; i < 40; i++) {
+        const mid = (lo + hi) / 2;
+        const lct = calcLCT(mid, vType);
+        const sd  = calcSD(mid + delivery + lct, state, vType, isComm);
+        const val = mid + lct + sd + delivery;
+        if (val < target) lo = mid; else hi = mid;
+      }
+      return Math.round((lo + hi) / 2);
+    }
+
+    /* ─── STATE COMPARISON TABLE ─────────────────────────────────────────── */
+    function buildCompareTable(vehiclePrice, lct, delivery, currentState, vType) {
+      const tbody  = document.getElementById('compareBody');
+      const states = ['VIC','NSW','QLD','WA','SA','TAS','ACT','NT'];
+      const isComm = bodyType === 'commercial';
+      const dutiable   = vehiclePrice + delivery + lct;
+      const currentSD  = calcSD(dutiable, currentState, vType, isComm);
+
+      const rows = states.map(s => {
+        const sd    = calcSD(dutiable, s, vType, isComm);
+        const eff   = vehiclePrice > 0 ? (sd / (vehiclePrice + delivery) * 100).toFixed(2) + '%' : '—';
+        const diff  = sd - currentSD;
+        const isEV  = vType === 'ev';
+        const conc  = RATES.evConcession[s];
+        const exempt = isEV && conc && conc.type === 'exempt' && dutiable <= conc.threshold;
+        return { s, sd, eff, diff, exempt };
+      }).sort((a, b) => a.sd - b.sd);
+
+      tbody.innerHTML = rows.map(r => {
+        const isCurrent = r.s === currentState;
+        const diffStr = r.s === currentState ? '<span style="color:#94a3b8;font-size:11px;">your state</span>' :
+          r.diff > 0
+            ? `<span class="state-diff-pos">+${fmt(r.diff)}</span>`
+            : `<span class="state-diff-neg">${fmt(r.diff)}</span>`;
+
+        const sdDisplay = r.exempt
+          ? '<span class="ev-exempt-badge">EXEMPT</span>'
+          : fmt(r.sd);
+
+        const stateName = RATES.stampDuty[r.s].label;
+
+        return `<tr class="${isCurrent ? 'current-state' : ''}">
+          <td>${stateName}${isCurrent ? '<span class="state-badge">current</span>' : ''}</td>
+          <td>${sdDisplay}</td>
+          <td>${r.exempt ? '—' : r.eff}</td>
+          <td>${diffStr}</td>
+        </tr>`;
+      }).join('');
+    }
+
+    function labelType(t) {
+      return { new: 'New', used: 'Used', ev: 'BEV', phev: 'PHEV' }[t] || t;
+    }
+
+    /* ─── INIT ───────────────────────────────────────────────────────────── */
+    updateRegoDefaults('VIC');
+  </script>
+
+</body>
+</html>
