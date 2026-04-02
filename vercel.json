@@ -35,6 +35,10 @@
       "dest": "/privacy.html"
     },
     {
+      "src": "/stamp-duty",
+      "dest": "/stamp-duty.html"
+    },
+    {
       "src": "/terms",
       "dest": "/terms.html"
     },
